@@ -433,6 +433,10 @@
       <pre *ngSwitchCase="'test'">ng test</pre>
       <pre *ngSwitchCase="'build'">ng build --prod</pre>
   </div>
+  
+  <app-ts-idle *ngIf="idleTimer"
+                [allowedIdleTimeInSeconds] = "5"
+                [warningTimeInSeconds] = "2"></app-ts-idle>
 
   <!-- Links -->
   <div class="card-container">

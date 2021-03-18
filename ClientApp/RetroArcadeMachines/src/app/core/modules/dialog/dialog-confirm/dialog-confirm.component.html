@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+    <ng-template #target></ng-template>
+</div>
+<div 
+    class="dialog-actions"
+    mat-dialog-actions
+    align="end">
+    <button id="dialogClose"
+            mat-stroked-button
+            class="modal-button outline"
+            [disabled]="isCancelDisabled"
+            (click)="cancel()">
+            {{data.closeButtonText}}
+    </button>
+    <button id="dialogClose"
+        mat-raised-button
+        color="primary"
+        class="modal-button primary"
+        [disabled]="isSaveDisabled"
+        (click)="confirm()"
+        cdkFocusInitial>
+        {{data.confirmButtonText}}
+    </button>
+</div>
