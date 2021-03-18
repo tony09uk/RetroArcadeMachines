@@ -1,2 +1,2 @@
 # RetroArcadeMachines
-An application that allows user to find locations of retro arcade machines
+An application that allows users to find locations of retro arcade machines
