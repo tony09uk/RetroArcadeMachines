@@ -1,4 +1,5 @@
 {
     "git.ignoreLimitWarning": true,
-    "typescript.preferences.quoteStyle": "single"
+    "typescript.preferences.quoteStyle": "single",
+    "html.format.wrapAttributes": "force-aligned"
 }

@@ -1,0 +1,114 @@
+
+.f_bg{
+    background: #eff2f9;
+    box-shadow: 0px -1px 0px 0px rgba(231, 236, 246, 0.004);
+}
+.footer_top{
+    border-bottom: 1px solid #e0e3ef;
+    padding: 115px 0px 100px;
+}
+.f_widget{
+    .widget-wrap{
+        margin-top: 35px;
+        p{
+            span{
+                color: $h_dk;
+            }
+            a{
+                color: #677294;
+                transition: color 0.2s linear;
+            }
+        }
+    }
+    &.company_widget{
+        .mchimp-errmessage,.mchimp-sucmessage{
+            position: absolute;
+        }
+    }
+    &.about-widget{
+        .f_list{
+            margin-bottom: 0px;
+            li{
+                margin-bottom: 15px;
+                a{
+                    font: 300 16px/20px $pop;
+                    color: #677294;
+                    position: relative;
+                    transition: color 0.2s linear;
+                    display: inline-block;
+                    &:before{
+                        content: "";
+                        width: 0;
+                        height: 1px;
+                        background: #6754e2;
+                        right: 0;
+                        left: auto;
+                        bottom: 0;
+                        position: absolute;
+                        transition: width 0.2s linear;
+                    }
+                    &:hover{
+                        &:before{
+                            width: 100%;
+                            right: auto;
+                            left: 0;
+                        }
+                    }
+                }
+                &:last-child{
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
+}
+.footer_bottom{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    color: #7f88a6;
+    padding: 27px 0px;
+    p{
+        a{
+            transition: color 0.2s linear;
+        }
+    }
+    .f_menu{
+        margin-bottom: 0px;
+        li{
+            display: inline-block;
+            position: relative;
+            a{
+                color: #7f88a6;
+                transition: color 0.2s linear;
+                &:hover{
+                    color: #6754e2; 
+                }
+            }
+            & + li{
+                margin-left: 16px;
+                &:before{
+                    content: "";
+                    width: 1px;
+                    height: 12px;
+                    background: #b1b7ca;
+                    display: inline-block;
+                    margin-right: 18px;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+    a{
+        &:hover{
+            color: #6754e2; 
+        }
+    }
+}
+.f_social_icon_two{
+    a{
+        font-size: 14px;
+        color: #969db4;
+        margin: 0px 8px;
+    }
+}

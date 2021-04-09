@@ -1,0 +1,26 @@
+.clock{
+    bottom: 190px;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+    .timer{
+        display: inline-block;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.40);
+        border-radius: 5px;
+        padding: 20px 30px;
+        margin: 0px 8px;
+        span{
+            font-size: 50px;
+            font-weight: 500;
+            line-height: 50px;
+        }
+        .smalltext{
+            font-size: 18px;
+        }
+    }
+}
+
+.n_banner_content{
+    padding-top: 0;
+}

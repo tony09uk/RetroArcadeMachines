@@ -4,7 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TsIdleModule } from './core/modules/ts-idle/ts-idle.module';
+import { HeaderModule } from './shared/modules/header/header.module';
+import { FooterModule } from './shared/modules/footer/footer.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TsIdleModule } from './core/modules/ts-idle/ts-idle.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    TsIdleModule
+    FooterModule,
+    HeaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
