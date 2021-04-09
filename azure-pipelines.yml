@@ -6,6 +6,10 @@
 trigger:
 - main
 
+variables:
+- name: clientDir
+  value: $(System.DefaultWorkingDirectory)/ClientApp/RetroArcadeMachines
+
 pool:
   vmImage: ubuntu-latest
 
@@ -16,7 +20,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    cd '$(System.DefaultWorkingDirectory)/ClientApp/RetroArcadeMachines'
+    cd ${{variables.clientDir}}
     npm install -g @angular/cli
     npm install
     ng build --prod
