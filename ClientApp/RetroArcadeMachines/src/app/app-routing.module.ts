@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./feature-modules/home/home.module').then(h => h.HomeModule) },
-  { path: 'roadmap', loadChildren: () => import('./feature-modules/site-plan/site-plan.module').then(h => h.SitePlanModule) },
+  { path: 'roadmap', loadChildren: () => import('./feature-modules/roadmap/roadmap.module').then(h => h.RoadmapModule) },
   { path: 'games', loadChildren: () => import('./feature-modules/games/games.module').then(h => h.GamesModule) },
   { path: 'locations', loadChildren: () => import('./feature-modules/locations/locations.module').then(h => h.LocationsModule) },
   { path: 'tasks', loadChildren: () => import('./feature-modules/site-tasks/site-tasks.module').then(h => h.SiteTasksModule) },

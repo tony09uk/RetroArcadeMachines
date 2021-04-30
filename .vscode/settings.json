@@ -1,0 +1,5 @@
+{
+    "tslint.suppressWhileTypeErrorsPresent": true,
+    "tslint.configFile": "tslint.json",
+    "html.format.wrapAttributes": "force-aligned"
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RetroArcadeMachines.AzureFunctions.Read": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --useHttps --cors *"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+table {
+    width: 100%;
+    margin: 20px 0px 35px 0px;
+}
+
+a {
+    font: 500 15px "Poppins", sans-serif; // todo get access to $pop
+    color: white; // todo get access to $h_d
+    padding: 0px;
+    transition: color 0.3s ease 0s;
+    position: relative;
+    text-decoration: none;
+    &:before {
+        content: "";
+        width: 0;
+        height: 1px;
+        background: #6754e2;
+        position: absolute;
+        bottom: 0;
+        left: auto;
+        right: 0;
+        transition: all 0.2s linear;
+    }
+    &:after {
+        display: none;
+    }
+
+    &.underline {
+        text-decoration: underline;
+    }
+}
+
+.mat-cell {
+    padding: 10px 10px 10px 0;
+}

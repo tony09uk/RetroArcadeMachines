@@ -1,0 +1,23 @@
+<table mat-table
+       [dataSource]="tableDataSource"
+       class="mat-elevation-z8">
+
+    <ng-container *ngFor="let key of displayedColumns"
+                  [matColumnDef]="key">
+        <th mat-header-cell
+            [hidden]="setVisisibility(key)"
+            *matHeaderCellDef="let element">
+            {{getFriendlyName(key)}}
+        </th>
+        <td mat-cell
+            [hidden]="setVisisibility(key)"
+            *matCellDef="let element">
+            {{getValue(key, element)}}
+        </td>
+    </ng-container>
+
+    <tr mat-header-row
+        *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row
+        *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
