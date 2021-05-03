@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { RuntimeConfigLoaderModule } from 'runtime-config-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './shared/modules/header/header.module';
 import { FooterModule } from './shared/modules/footer/footer.module';
 
@@ -15,12 +17,17 @@ import { FooterModule } from './shared/modules/footer/footer.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    RuntimeConfigLoaderModule.forRoot(
+      { configUrl: './assets/config.json' }
+    ),
     FooterModule,
     HeaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() { }
+ }

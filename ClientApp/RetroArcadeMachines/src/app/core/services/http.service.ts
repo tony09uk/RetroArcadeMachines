@@ -3,17 +3,21 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { ConfigService } from './config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class HttpService {
     private _headers: HttpHeaders;
-    private _baseUrl = 'https://localhost:7071/api/'; // todo: make configurable
+    private _baseUrl;
 
-    constructor(private _http: HttpClient) {
+    constructor(
+        private _http: HttpClient,
+        private _configService: ConfigService) {
         this._headers = new HttpHeaders().set('Content-Type', 'application/json');
-     }
+        this._baseUrl = this._configService.api_url;
+    }
 
     public get<T>(url: string, params: HttpParams = new HttpParams()): Observable<T> {
         url = this.createUrl(url);
