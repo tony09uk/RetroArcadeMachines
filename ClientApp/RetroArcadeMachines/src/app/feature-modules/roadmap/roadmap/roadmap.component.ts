@@ -11,6 +11,7 @@ import { RoadmapResponse } from '../models/roadmap-response';
 import { RoapmapService } from '../services/roapmap.service';
 import { Column } from '@shared/modules/table/models/column.model';
 import { PipeTransform } from '@angular/core';
+import { AddPercentSymbolPipe } from '@shared/pipes/add-percent-symbol.pipe';
 
 @Component({
   selector: 'app-roadmap',
@@ -42,13 +43,18 @@ export class RoadmapComponent implements OnInit {
     let columns: [Column[]];
 
     value.forEach((item: RoadmapResponse) => {
-      const nameColumn = createColumn('name', 'Name', item.name, TableSupportedDataTypes.string);
-      const descColumn = createColumn('description', 'Detail', item.description, TableSupportedDataTypes.string);
-      const isStartedColumn = createColumn('isStarted', 'Started', item.isStarted.toString(), TableSupportedDataTypes.boolean);
-      const perCompleteColumn = createColumn('percentageCompleted', 'Progress', item.percentageCompleted.toString(), TableSupportedDataTypes.number);
-      const row:Column[] = [nameColumn, descColumn, isStartedColumn, perCompleteColumn];
-      
-      if(columns) {
+      const nameColumn = createColumn(
+        'name', 'Name', item.name, TableSupportedDataTypes.string);
+      const descColumn = createColumn(
+        'description', 'Detail', item.description, TableSupportedDataTypes.string);
+      const isStartedColumn = createColumn(
+        'isStarted', 'Started', item.isStarted.toString(), TableSupportedDataTypes.boolean, 820, new YesNoPipe());
+      const perCompleteColumn = createColumn(
+        'percentageCompleted', 'Progress', item.percentageCompleted.toString(), TableSupportedDataTypes.number, 750, new AddPercentSymbolPipe());
+
+      const row: Column[] = [nameColumn, descColumn, isStartedColumn, perCompleteColumn];
+
+      if (columns) {
         columns.push(row);
       } else {
         columns = [row];
@@ -62,7 +68,13 @@ export class RoadmapComponent implements OnInit {
     };
   }
 
-  private createColumn(columnDef: string, friendlyName: string, value: string, dataType: TableSupportedDataTypes, shouldHideAtPixels?: number, pipe?: PipeTransform): Column {
+  private createColumn(
+    columnDef: string,
+    friendlyName: string,
+    value: string,
+    dataType: TableSupportedDataTypes,
+    shouldHideAtPixels?: number,
+    pipe?: PipeTransform): Column {
     return {
       columnDef: columnDef,
       friendlyName: friendlyName,

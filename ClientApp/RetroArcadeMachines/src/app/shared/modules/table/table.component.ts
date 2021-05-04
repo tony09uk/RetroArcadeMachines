@@ -45,7 +45,7 @@ export class TableComponent implements OnInit {
   }
 
   shouldHideColumnValue(key: any, element: any): boolean {
-    if(!element) {
+    if (!element) {
       return false;
     }
 
@@ -58,13 +58,13 @@ export class TableComponent implements OnInit {
 
   getValue(key: any, element: [Column]): string {
     const column = this.getColumn(key, element);
-    if(!column) {
+    if (!column) {
       return '';
     }
 
     const value = column.data[0];
 
-    if(column.pipe) {
+    if (column.pipe) {
       return column.pipe.transform(value);
     }
 
