@@ -12,7 +12,7 @@ import { FooterModule } from './shared/modules/footer/footer.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
