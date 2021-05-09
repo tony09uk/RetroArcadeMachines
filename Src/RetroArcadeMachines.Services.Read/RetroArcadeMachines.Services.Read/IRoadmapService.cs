@@ -1,10 +1,11 @@
 ﻿using RetroArcadeMachines.Services.Read.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.Services.Read
 {
     public interface IRoadmapService
     {
-        IEnumerable<RoadmapItemDto>Get();
+        Task<IEnumerable<RoadmapItemDto>> Get();
     }
 }

@@ -2,8 +2,8 @@
 using RetroArcadeMachines.Data.Read;
 using RetroArcadeMachines.Data.Read.Models;
 using RetroArcadeMachines.Services.Read.ViewModels;
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.Services.Read
 {
@@ -16,13 +16,13 @@ namespace RetroArcadeMachines.Services.Read
             IMapper mapper,
             IRoadmapRepository roadmapRepository)
         {
-            _roadmapRepository = new RoadmapRepository();
+            _roadmapRepository = roadmapRepository;
             _mapper = mapper;
         }
 
-        public IEnumerable<RoadmapItemDto> Get()
+        public async Task<IEnumerable<RoadmapItemDto>> Get()
         {
-            IEnumerable<RoadmapItemModel> roadmapitems = _roadmapRepository.Get();
+            IEnumerable<RoadmapItemModel> roadmapitems = await _roadmapRepository.Get();
             return _mapper.Map<IEnumerable<RoadmapItemDto>>(roadmapitems);
         }
     }

@@ -32,7 +32,7 @@ namespace RetroArcadeMachines.AzureFunctions.Read
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var result = _roadmapService.Get();
+            var result = await _roadmapService.Get();
             var response = new OkObjectResult(result);
 
             return response;
