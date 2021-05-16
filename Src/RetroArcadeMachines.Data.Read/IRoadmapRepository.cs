@@ -7,5 +7,10 @@ namespace RetroArcadeMachines.Data.Read
     public interface IRoadmapRepository
     {
         Task<IEnumerable<RoadmapItemModel>> Get();
+        Task Add(RoadmapItemModel roadmapItem);
+        Task<RoadmapItemModel> Get(string id);
+        Task Update(RoadmapItemModel roadmapItem);
+        Task AddMany(List<RoadmapItemModel> roadmapItems);
+        Task Delete(string id);
     }
 }

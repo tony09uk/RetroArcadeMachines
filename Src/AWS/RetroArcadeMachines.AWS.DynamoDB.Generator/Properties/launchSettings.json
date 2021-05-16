@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "RetroArcadeMachines.AWS.DynamoDB.Generator": {
+      "commandName": "Project"
+    }
+  }
+}

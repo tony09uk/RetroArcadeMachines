@@ -24,11 +24,13 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp", "ClientApp\", "
 		SlnRelativePath = "ClientApp\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AzureFunctions.Read", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read\RetroArcadeMachines.AzureFunctions.Read.csproj", "{11D1122B-FED6-49F6-A18D-9038E181461C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Read", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read\RetroArcadeMachines.AzureFunctions.Read.csproj", "{11D1122B-FED6-49F6-A18D-9038E181461C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Services.Read", "Src\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read.csproj", "{0C31B8E1-952C-4B45-BC22-4D5FCAD265BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Services.Read", "Src\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read.csproj", "{0C31B8E1-952C-4B45-BC22-4D5FCAD265BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Data.Read", "Src\RetroArcadeMachines.Data.Read\RetroArcadeMachines.Data.Read.csproj", "{F2D81E3A-5504-4CA5-954C-3FE3344ABAA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Data.Read", "Src\RetroArcadeMachines.Data.Read\RetroArcadeMachines.Data.Read.csproj", "{F2D81E3A-5504-4CA5-954C-3FE3344ABAA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AWS.DynamoDB.Generator", "Src\AWS\RetroArcadeMachines.AWS.DynamoDB.Generator\RetroArcadeMachines.AWS.DynamoDB.Generator.csproj", "{A1733E62-A7DC-494B-9C6F-0086BCA10A1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{F2D81E3A-5504-4CA5-954C-3FE3344ABAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D81E3A-5504-4CA5-954C-3FE3344ABAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D81E3A-5504-4CA5-954C-3FE3344ABAA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1733E62-A7DC-494B-9C6F-0086BCA10A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1733E62-A7DC-494B-9C6F-0086BCA10A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1733E62-A7DC-494B-9C6F-0086BCA10A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1733E62-A7DC-494B-9C6F-0086BCA10A1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

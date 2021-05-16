@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using Amazon.DynamoDBv2.DataModel;
+using Newtonsoft.Json;
 
 namespace RetroArcadeMachines.Data.Read.Models
 {
+    [DynamoDBTable("Roadmaps")]
     public class RoadmapItemModel
     {
-        [JsonProperty(PropertyName = "id")]
+        [DynamoDBHashKey]
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
