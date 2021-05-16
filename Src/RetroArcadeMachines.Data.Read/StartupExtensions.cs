@@ -1,4 +1,5 @@
-﻿using Amazon.DynamoDBv2;
+﻿using Amazon;
+using Amazon.DynamoDBv2;
 using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
@@ -48,6 +49,7 @@ namespace RetroArcadeMachines.Data.Read
             var accessKey = configuration.GetValue<string>("AWS:AccessKey");
             var secretKey = configuration.GetValue<string>("AWS:SecretKey");
             awsOptions.Credentials = new BasicAWSCredentials(accessKey, secretKey);
+            awsOptions.Region = RegionEndpoint.EUWest2;
 #endif
 
             return awsOptions;
