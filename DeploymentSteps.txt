@@ -1,0 +1,14 @@
+#THIS FILE IS CREATED AS A CHECKLIST TO "REPLACE" AUTOMATION UNTIL I HAVE TIME TO PROPERLY IMPLEMENT IT
+
+To deploy a change in the UI publish/run project in the following order
+The full set may not always need to be if a change hasn't happend downstream
+
+* Update appSettings.json to include
+* Run RetroArcadeMachines.AWS.DynamoDB.Generator
+* Check the required tables have been created
+* Update appSettings.json to include AWS keys
+* Publish RetroArcadeMachines.AzureFunctions.Read
+* Update appSettings.json to REMOVE AWS keys (so that they are not published too source control)
+* Update ClientApp config.json with the azure values
+* Publish ClientApp
+* Update ClientApp config.json with the development values

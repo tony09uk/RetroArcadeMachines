@@ -30,7 +30,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Data.Read", "Src\RetroArcadeMachines.Data.Read\RetroArcadeMachines.Data.Read.csproj", "{F2D81E3A-5504-4CA5-954C-3FE3344ABAA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AWS.DynamoDB.Generator", "Src\AWS\RetroArcadeMachines.AWS.DynamoDB.Generator\RetroArcadeMachines.AWS.DynamoDB.Generator.csproj", "{A1733E62-A7DC-494B-9C6F-0086BCA10A1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AWS.DynamoDB.Generator", "Src\AWS\RetroArcadeMachines.AWS.DynamoDB.Generator\RetroArcadeMachines.AWS.DynamoDB.Generator.csproj", "{A1733E62-A7DC-494B-9C6F-0086BCA10A1B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39F0B490-B103-464D-94A4-1031AE04D068}"
+	ProjectSection(SolutionItems) = preProject
+		DeploymentSteps.txt = DeploymentSteps.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
