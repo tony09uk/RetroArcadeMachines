@@ -42,7 +42,7 @@ namespace RetroArcadeMachines.Data.Read
             if (isProfileExists)
             {
                 awsOptions.Credentials =
-                    new BasicAWSCredentials(credentialProfile.Options.SecretKey, credentialProfile.Options.AccessKey);
+                    new BasicAWSCredentials(credentialProfile.Options.AccessKey, credentialProfile.Options.SecretKey);
             }
 #else
             var accessKey = configuration.GetValue<string>("AWS:AccessKey");

@@ -3,7 +3,7 @@
 To deploy a change in the UI publish/run project in the following order
 The full set may not always need to be if a change hasn't happend downstream
 
-* Update appSettings.json to include
+* Update appSettings.json to include AWS: secrect key and access key if required
 * Run RetroArcadeMachines.AWS.DynamoDB.Generator
 * Check the required tables have been created
 * Update appSettings.json to include AWS keys

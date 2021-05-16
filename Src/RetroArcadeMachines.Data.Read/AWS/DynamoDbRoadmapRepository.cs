@@ -1,5 +1,6 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2.DocumentModel;
 using RetroArcadeMachines.Data.Read.Models;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,8 @@ namespace RetroArcadeMachines.Data.Read.AWS
 
         public async Task<IEnumerable<RoadmapItemModel>> Get()
         {
-            //await CreateTable();
             var context = new DynamoDBContext(_dynamoDBClient);
-            return new List<RoadmapItemModel>();
+            return await context.ScanAsync<RoadmapItemModel>(new List<ScanCondition>()).GetRemainingAsync();
         }
 
         public Task<RoadmapItemModel> Get(string id)
