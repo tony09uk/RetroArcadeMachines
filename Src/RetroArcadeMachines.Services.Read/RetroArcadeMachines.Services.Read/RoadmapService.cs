@@ -2,6 +2,7 @@
 using RetroArcadeMachines.Data.Read;
 using RetroArcadeMachines.Data.Read.Models;
 using RetroArcadeMachines.Services.Read.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,9 +24,16 @@ namespace RetroArcadeMachines.Services.Read
 
         public async Task<IEnumerable<RoadmapItemDto>> Get()
         {
-            IEnumerable<RoadmapItemModel> roadmapitems = await _roadmapRepository.Get();
-            var roadMapItems = _mapper.Map<IEnumerable<RoadmapItemDto>>(roadmapitems);
-            return roadMapItems.OrderBy(x => x.Order);
+            try
+            {
+                IEnumerable<RoadmapItemModel> roadmapitems = await _roadmapRepository.Get();
+                var roadMapItems = _mapper.Map<IEnumerable<RoadmapItemDto>>(roadmapitems);
+                return roadMapItems.OrderBy(x => x.Order);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
