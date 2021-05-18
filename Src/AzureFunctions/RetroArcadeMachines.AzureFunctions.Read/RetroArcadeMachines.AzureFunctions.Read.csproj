@@ -16,9 +16,6 @@
     <ProjectReference Include="..\..\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
