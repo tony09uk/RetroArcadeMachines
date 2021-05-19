@@ -6,7 +6,6 @@ describe('YesNoPipe', () => {
     expect(pipe).toBeTruthy();
   });
 
-  // todo: add tests for null, undefined, empty string
   const transformScenarios = [
     { description: 'should return Yes when value is true', input: 'true', expected: 'Yes'},
     { description: 'should return No when value is false', input: 'false', expected: 'No'},
