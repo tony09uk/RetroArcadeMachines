@@ -9,6 +9,7 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 import { RoadmapRoutingModule as RoadmapRoutingModule } from './roadmap-routing.module';
 import { RoadmapComponent } from './roadmap/roadmap.component';
+import { ElementsModule } from '@shared/modules/elements/elements.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { RoadmapComponent } from './roadmap/roadmap.component';
     ComingSoonModule,
     PipesModule,
     TableModule,
-    MatTableModule
+    MatTableModule,
+    ElementsModule
   ]
 })
 export class RoadmapModule { }
