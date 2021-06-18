@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using RetroArcadeMachines.Services.Read;
 
 namespace RetroArcadeMachines.AzureFunctions.Read
 {
@@ -32,11 +33,10 @@ namespace RetroArcadeMachines.AzureFunctions.Read
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             name = name ?? data?.name;
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            var locationsSerive = new LocationsService();
+            var result = await locationsSerive.Get();
 
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(result);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using RetroArcadeMachines.Services.Read.ViewModels;
+﻿using RetroArcadeMachines.Services.Read.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

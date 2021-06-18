@@ -1,11 +1,7 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RetroArcadeMachines.Data.Read;
 using RetroArcadeMachines.Services.Read;
-using System;
-using System.Configuration;
-using System.IO;
 
 [assembly: FunctionsStartup(typeof(RetroArcadeMachines.AzureFunctions.Read.Startup))]
 namespace RetroArcadeMachines.AzureFunctions.Read
@@ -23,7 +19,8 @@ namespace RetroArcadeMachines.AzureFunctions.Read
             builder.Services.AddHttpClient();
 
             builder.Services.AddScoped<IRoadmapService, RoadmapService>();
-            
+            builder.Services.AddScoped<IGamesService, GamesService>();
+
             var configuration = builder.GetContext().Configuration;
             builder.Services.AddRetroArcadeMachinesDataRead(configuration);
             builder.Services.AddAutoMapper(typeof(Startup), typeof(MappingConfiguration));

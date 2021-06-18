@@ -18,6 +18,8 @@
     "importHelpers": true,
     "target": "es2015",
     "paths": {
+      "@core/modules/*": ["src/app/core/modules/*"],
+      "@core/services/*": ["src/app/core/services/*"],
       "@shared/modules/*": ["src/app/shared/modules/*"],
       "@shared/pipes/*": ["src/app/shared/pipes/*"]
     },

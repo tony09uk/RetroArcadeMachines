@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
 using RetroArcadeMachines.Data.Read.Models;
-using RetroArcadeMachines.Services.Read.ViewModels;
+using RetroArcadeMachines.Services.Read.Models;
 
 namespace RetroArcadeMachines.Services.Read
 {
@@ -12,6 +9,7 @@ namespace RetroArcadeMachines.Services.Read
         public MappingConfiguration()
         {
             CreateMap<RoadmapItemModel, RoadmapItemDto>();
+            CreateMap<GameModel, GameOverviewDto>();
         }
     }
 }

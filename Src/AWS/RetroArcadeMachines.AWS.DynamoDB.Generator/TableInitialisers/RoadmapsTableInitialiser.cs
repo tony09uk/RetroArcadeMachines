@@ -1,6 +1,7 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
-using RetroArcadeMachines.Data.Read;
+using RetroArcadeMachines.Data.Read.AWS;
+using RetroArcadeMachines.Data.Read.Interfaces;
 using RetroArcadeMachines.Data.Read.Models;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
     class RoadmapsTableInitialiser : ITableInitialiser
     {
-        private static string _tableName = "Roadmaps";
+        private static string _tableName = DynamoDbRoadmapRepository.TableName;
         private readonly IRoadmapRepository _roadmapRepository;
 
         public RoadmapsTableInitialiser(IRoadmapRepository roadmapRepository)

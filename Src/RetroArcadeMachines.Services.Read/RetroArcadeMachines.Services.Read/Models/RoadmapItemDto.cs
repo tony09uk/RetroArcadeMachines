@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RetroArcadeMachines.Services.Read.ViewModels
+namespace RetroArcadeMachines.Services.Read.Models
 {
     public class RoadmapItemDto
     {

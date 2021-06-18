@@ -1,5 +1,6 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using RetroArcadeMachines.Data.Read.Interfaces;
 using RetroArcadeMachines.Data.Read.Models;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,14 @@ namespace RetroArcadeMachines.Data.Read.AWS
 {
     public class DynamoDbRoadmapRepository : IRoadmapRepository
     {
-        private readonly IAmazonDynamoDB _dynamoDBClient;
+        //private readonly IAmazonDynamoDB _dynamoDBClient;
+        public const string TableName = "Roadmaps";
+
         private readonly IDynamoDBContext _context;
 
         public DynamoDbRoadmapRepository(IAmazonDynamoDB dynamoDBClient, IDynamoDBContext context)
         {
-            _dynamoDBClient = dynamoDBClient;
+            //_dynamoDBClient = dynamoDBClient;
             _context = context;
         }
 

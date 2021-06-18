@@ -7,6 +7,7 @@ using Amazon.Runtime.CredentialManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RetroArcadeMachines.Data.Read.AWS;
+using RetroArcadeMachines.Data.Read.Interfaces;
 using System;
 using System.Configuration;
 
@@ -23,6 +24,9 @@ namespace RetroArcadeMachines.Data.Read
             services.AddTransient<IDynamoDBContext, DynamoDBContext>();
 
             services.AddSingleton<IRoadmapRepository, DynamoDbRoadmapRepository>();
+            services.AddSingleton<IGamesRepository, DynamoDbGamesRepository>();
+            services.AddSingleton<IDevelopersRepository, DynamoDbDevelopersRepository>();
+            services.AddSingleton<IGenresRepository, DynamoDbGenreRepository>();
 
             return services;
         }
@@ -31,6 +35,11 @@ namespace RetroArcadeMachines.Data.Read
         {
             var accessKey = Environment.GetEnvironmentVariable("AWS:AccessKey");
             var secretKey = Environment.GetEnvironmentVariable("AWS:SecretKey");
+
+            if (accessKey == null || secretKey == null)
+            {
+                throw new NullReferenceException("AWS:AccessKey or AWS:SecretKey EnvironmentVariables are null. Both are required");
+            }
 
             var awsOptions = configuration.GetAWSOptions();
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace RetroArcadeMachines.Data.Read
+namespace RetroArcadeMachines.Data.Read.Interfaces
 {
     public interface IRoadmapRepository
     {

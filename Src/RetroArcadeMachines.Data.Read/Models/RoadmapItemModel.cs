@@ -1,9 +1,9 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using Newtonsoft.Json;
+using RetroArcadeMachines.Data.Read.AWS;
 
 namespace RetroArcadeMachines.Data.Read.Models
 {
-    [DynamoDBTable("Roadmaps")]
+    [DynamoDBTable(DynamoDbRoadmapRepository.TableName)]
     public class RoadmapItemModel
     {
         [DynamoDBHashKey]

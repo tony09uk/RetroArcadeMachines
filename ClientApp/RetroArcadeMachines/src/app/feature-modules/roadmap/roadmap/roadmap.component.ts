@@ -23,8 +23,8 @@ export class RoadmapComponent implements OnInit {
 
   constructor(private _roadmapService: RoapmapService) { }
 
-  displayedColumns: string[] = ['name', 'description', 'isStarted', 'percentageCompleted'];
-  roadmapTableDataSource: RoadmapResponse[] = [];
+  // displayedColumns: string[] = ['name', 'description', 'isStarted', 'percentageCompleted'];
+  // roadmapTableDataSource: RoadmapResponse[] = [];
   table: Table;
 
   ngOnInit(): void {
@@ -32,9 +32,9 @@ export class RoadmapComponent implements OnInit {
       .get()
       .pipe(
         take(1),
-        map(val => this.createTable(val, this.createColumn))
+        map((val: RoadmapResponse[]) => this.createTable(val, this.createColumn))
       ).subscribe(
-        value => {this.table = value;  console.log(this.table)},
+        (value: Table) => { this.table = value; },
         error => console.log(error)
       );
   }
@@ -83,6 +83,6 @@ export class RoadmapComponent implements OnInit {
       shouldHideAtPixels: shouldHideAtPixels,
       filter: null,
       pipe: pipe
-    }
+    };
   }
 }

@@ -32,6 +32,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             return new ServiceCollection()
                     .AddRetroArcadeMachinesDataRead(configuration)
                     .RegisterAllTypes<ITableInitialiser>(new[] { typeof(Program).Assembly }, ServiceLifetime.Singleton)
+                    .RegisterAllTypes<ISeedTable<object>>(new[] { typeof(Program).Assembly }, ServiceLifetime.Singleton)
                     .AddSingleton<IInitialiser, Initialiser>()
                     .BuildServiceProvider();
         }

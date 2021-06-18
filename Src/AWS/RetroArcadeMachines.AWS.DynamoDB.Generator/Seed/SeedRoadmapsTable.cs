@@ -1,19 +1,18 @@
 ﻿using RetroArcadeMachines.Data.Read.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
-    class SeedRoadmapsTable
+    class SeedRoadmapsTable : ISeedTable<RoadmapItemModel>
     {
-        public static List<RoadmapItemModel> Data()
+        public List<RoadmapItemModel> Data()
         {
             return new List<RoadmapItemModel>
             {
                 new RoadmapItemModel
                 {
-                    Id = Guid.NewGuid().ToString().ToString(),
+                    Id = Guid.NewGuid().ToString(),
                     Name = "Create Roadmap",
                     Description = "List upcoming features in the order that will be worked on",
                     IsStarted = true,

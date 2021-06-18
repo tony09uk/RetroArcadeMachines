@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using RetroArcadeMachines.Data.Read;
+using RetroArcadeMachines.Data.Read.Interfaces;
 using RetroArcadeMachines.Data.Read.Models;
-using RetroArcadeMachines.Services.Read.ViewModels;
+using RetroArcadeMachines.Services.Read.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

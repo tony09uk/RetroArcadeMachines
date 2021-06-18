@@ -5,6 +5,8 @@ import { ComingSoonModule } from '@shared/modules/coming-soon/coming-soon.module
 
 import { LocationsRoutingModule } from './locations-routing.module';
 import { LocationsComponent } from './locations.component';
+import { TableModule } from '@shared/modules/table/table.module';
+import { ElementsModule } from '@shared/modules/elements/elements.module';
 
 
 @NgModule({
@@ -12,7 +14,8 @@ import { LocationsComponent } from './locations.component';
   imports: [
     CommonModule,
     LocationsRoutingModule,
-    ComingSoonModule
+    ElementsModule,
+    TableModule
   ]
 })
 export class LocationsModule { }
