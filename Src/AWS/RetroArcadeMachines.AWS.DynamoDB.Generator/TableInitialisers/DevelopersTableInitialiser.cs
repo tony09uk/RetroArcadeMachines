@@ -10,20 +10,23 @@ using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
-    class GamesTableInitialiser : ITableInitialiser
+    class DevelopersTableInitialiser : ITableInitialiser
     {
-        private static string _tableName = DynamoDbGamesRepository.TableName;
-        private readonly IGamesRepository _gamesRepository;
-        private readonly ISeedTable<GameModel> _seedTable;
+        private static string _tableName = DynamoDbDevelopersRepository.TableName;
+        private readonly IDevelopersRepository _developersRepository;
+        private readonly ISeedTable<DeveloperModel> _seedTable;
 
-        public GamesTableInitialiser(
-            IGamesRepository gamesRepository,
-            ISeedTable<GameModel> seedTable)
+        public DevelopersTableInitialiser(
+            IDevelopersRepository generesRepository,
+            ISeedTable<DeveloperModel> seedTable)
         {
-            _gamesRepository = gamesRepository;
+            _developersRepository = generesRepository;
             _seedTable = seedTable;
         }
 
+        //TODO: update mapping to include genre
+        //TODO: refactor all TableInitialisers to use the same base class
+        //TODO: refactor all Repositories to use the same base class
         public async Task Create(IAmazonDynamoDB dynamoDBClient)
         {
             try
@@ -48,7 +51,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 
         public void Seed()
         {
-            _gamesRepository.AddMany(_seedTable.Data());
+            _developersRepository.AddMany(_seedTable.Data());
         }
 
         public string TableName()
@@ -62,12 +65,12 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             {
                 new AttributeDefinition
                 {
-                    AttributeName = nameof(GameModel.Id),
+                    AttributeName = nameof(GenreModel.Id),
                     AttributeType = ScalarAttributeType.S
                 },
                 new AttributeDefinition
                 {
-                    AttributeName = nameof(GameModel.ReleaseYear),
+                    AttributeName = nameof(GenreModel.Name),
                     AttributeType = ScalarAttributeType.N
                 }
             };
@@ -79,12 +82,12 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             {
                 new KeySchemaElement
                 {
-                    AttributeName = nameof(GameModel.Id),
+                    AttributeName = nameof(GenreModel.Id),
                     KeyType = KeyType.HASH
                 },
                 new KeySchemaElement
                 {
-                    AttributeName = nameof(GameModel.ReleaseYear),
+                    AttributeName = nameof(GenreModel.Name),
                     KeyType = KeyType.RANGE //sort key
                 }
             };
