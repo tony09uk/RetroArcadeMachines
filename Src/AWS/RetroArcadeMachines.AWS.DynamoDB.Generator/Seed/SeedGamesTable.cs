@@ -1,4 +1,4 @@
-﻿using RetroArcadeMachines.Data.Read.Models;
+﻿using RetroArcadeMachines.Data.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,13 +40,13 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGcYgCsKOfGEWMF_d9Y0oyVUI7VcAYGDEr2w&usqp=CAU",
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4Lrmf6Cvot6aQRBmvvIPfQdDljTz78MrC6w&usqp=CAU"
                     },
-                    GenreList = new List<Guid>
+                    GenreList = new List<string>
                     {
-                        fightingGenre.Id
+                        fightingGenre.Name
                     },
-                    DeveloperList = new List<Guid>
+                    DeveloperList = new List<string>
                     {
-                        konamaniDeveloper.Id
+                        konamaniDeveloper.Name
                     }
                 },
             };

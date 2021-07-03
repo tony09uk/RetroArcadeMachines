@@ -1,9 +1,8 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using RetroArcadeMachines.Data.Read.AWS;
 
-namespace RetroArcadeMachines.Data.Read.Models
+namespace RetroArcadeMachines.Data.Contracts
 {
-    [DynamoDBTable(DynamoDbRoadmapRepository.TableName)]
+    [DynamoDBTable("Roadmaps")] // todo: how to stop duplicating the table name in here in repository
     public class RoadmapItemModel
     {
         [DynamoDBHashKey]

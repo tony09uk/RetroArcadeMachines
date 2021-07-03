@@ -1,11 +1,10 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using RetroArcadeMachines.Data.Read.AWS;
 using System;
 using System.Collections.Generic;
 
-namespace RetroArcadeMachines.Data.Read.Models
+namespace RetroArcadeMachines.Data.Contracts
 {
-    [DynamoDBTable(DynamoDbGamesRepository.TableName)]
+    [DynamoDBTable("Games")] // todo: how to stop duplicating the table name in here in repository
     public class GameModel
     {
         [DynamoDBHashKey]
@@ -17,9 +16,9 @@ namespace RetroArcadeMachines.Data.Read.Models
         public string VideoClipUrl { get; set; }
         public string Description { get; set; }
 
-        public IEnumerable<string> ImageUrlList { get; set; }
-        public IEnumerable<Guid> DeveloperList { get; set; }
-        public IEnumerable<Guid> GenreList { get; set; }
-        public IEnumerable<int> RatingList { get; set; }
+        public List<string> ImageUrlList { get; set; }
+        public List<string> DeveloperList { get; set; }
+        public List<string> GenreList { get; set; }
+        public List<int> RatingList { get; set; }
     }
 }

@@ -5,8 +5,8 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
     interface ITableInitialiser
     {
-        Task Create(IAmazonDynamoDB dynamoDBClient);
-        void Seed();
+        Task Create();
+        Task<bool> Seed();
         string TableName();
     }
 }

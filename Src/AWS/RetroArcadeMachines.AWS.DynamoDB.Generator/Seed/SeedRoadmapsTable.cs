@@ -1,4 +1,4 @@
-﻿using RetroArcadeMachines.Data.Read.Models;
+﻿using RetroArcadeMachines.Data.Contracts;
 using System;
 using System.Collections.Generic;
 

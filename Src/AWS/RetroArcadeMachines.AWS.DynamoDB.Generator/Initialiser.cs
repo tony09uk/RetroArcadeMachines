@@ -23,18 +23,24 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             try
             {
                 var tableList = await _dynamoDBClient.ListTablesAsync();
-
+                var dataEntryList = new List<Task>();
                 foreach (var tableInitialiser in _tableInitialisers)
                 {
                     if (IsTableCreationRequired(tableList.TableNames, tableInitialiser.TableName()))
                     {
-                        await tableInitialiser.Create(_dynamoDBClient);
-                        tableInitialiser.Seed();
+                        await tableInitialiser.Create();
+                        Task addData = tableInitialiser.Seed();
+                        dataEntryList.Add(addData);
                     }
                     else
                     {
                         Console.WriteLine($"{tableInitialiser.TableName()} already exists");
                     }
+                }
+
+                if(dataEntryList.Count > 0)
+                {
+                    await Task.WhenAll(dataEntryList);
                 }
             }
             catch (Exception ex)

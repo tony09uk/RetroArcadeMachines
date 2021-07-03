@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using RetroArcadeMachines.Data.Contracts;
 using RetroArcadeMachines.Data.Read.Interfaces;
-using RetroArcadeMachines.Data.Read.Models;
 using RetroArcadeMachines.Services.Read.Models;
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,12 @@ namespace RetroArcadeMachines.Services.Read
 {
     public class RoadmapService : IRoadmapService
     {
-        private readonly IRoadmapRepository _roadmapRepository;
+        private readonly IReadRepository<RoadmapItemModel> _roadmapRepository;
         private readonly IMapper _mapper;
 
         public RoadmapService(
             IMapper mapper,
-            IRoadmapRepository roadmapRepository)
+            IReadRepository<RoadmapItemModel> roadmapRepository)
         {
             _roadmapRepository = roadmapRepository;
             _mapper = mapper;

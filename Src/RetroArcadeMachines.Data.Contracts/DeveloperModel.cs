@@ -1,10 +1,9 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using RetroArcadeMachines.Data.Read.AWS;
 using System;
 
-namespace RetroArcadeMachines.Data.Read.Models
+namespace RetroArcadeMachines.Data.Contracts
 {
-    [DynamoDBTable(DynamoDbGamesRepository.TableName)]
+    [DynamoDBTable("Developers")] // todo: how to stop duplicating the table name in here in repository
     public class DeveloperModel
     {
         [DynamoDBHashKey]

@@ -6,11 +6,11 @@ using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RetroArcadeMachines.Data.Contracts;
-using RetroArcadeMachines.Data.Read.AWS;
-using RetroArcadeMachines.Data.Read.Interfaces;
+using RetroArcadeMachines.Data.Write.AWS;
+using RetroArcadeMachines.Data.Write.Interfaces;
 using System;
 
-namespace RetroArcadeMachines.Data.Read
+namespace RetroArcadeMachines.Data.Write
 {
     public static class StartupExtensions
     {
@@ -22,10 +22,10 @@ namespace RetroArcadeMachines.Data.Read
             services.AddAWSService<IAmazonDynamoDB>();
             services.AddTransient<IDynamoDBContext, DynamoDBContext>();
 
-            services.AddSingleton<IReadRepository<RoadmapItemModel>, DynamoDbRoadmapRepository>();
-            services.AddSingleton<IReadRepository<GameModel>, DynamoDbGamesRepository>();
-            services.AddSingleton<IReadRepository<DeveloperModel>, DynamoDbDevelopersRepository>();
-            services.AddSingleton<IReadRepository<GenreModel>, DynamoDbGenreRepository>();
+            services.AddSingleton<IWriteRepository<RoadmapItemModel>, DynamoDbRoadmapRepository>();
+            services.AddSingleton<IWriteRepository<GameModel>, DynamoDbGamesRepository>();
+            services.AddSingleton<IWriteRepository<DeveloperModel>, DynamoDbDevelopersRepository>();
+            services.AddSingleton<IWriteRepository<GenreModel>, DynamoDbGenreRepository>();
 
             return services;
         }

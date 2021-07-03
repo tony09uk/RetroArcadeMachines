@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RetroArcadeMachines.Data.Read;
+using RetroArcadeMachines.Data.Contracts;
+using RetroArcadeMachines.Data.Write;
 using System;
 using System.Threading.Tasks;
 
@@ -32,7 +33,10 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             return new ServiceCollection()
                     .AddRetroArcadeMachinesDataRead(configuration)
                     .RegisterAllTypes<ITableInitialiser>(new[] { typeof(Program).Assembly }, ServiceLifetime.Singleton)
-                    .RegisterAllTypes<ISeedTable<object>>(new[] { typeof(Program).Assembly }, ServiceLifetime.Singleton)
+                    .AddSingleton<ISeedTable<DeveloperModel>, SeedDevelopersTable>()
+                    .AddSingleton<ISeedTable<GameModel>, SeedGamesTable>()
+                    .AddSingleton<ISeedTable<GenreModel>, SeedGenresTable>()
+                    .AddSingleton<ISeedTable<RoadmapItemModel>, SeedRoadmapsTable>()
                     .AddSingleton<IInitialiser, Initialiser>()
                     .BuildServiceProvider();
         }

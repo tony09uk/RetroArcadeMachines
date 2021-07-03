@@ -1,7 +1,7 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
 using RetroArcadeMachines.Data.Contracts;
 
-namespace RetroArcadeMachines.Data.Read.AWS
+namespace RetroArcadeMachines.Data.Write.AWS
 {
     public class DynamoDbGenreRepository : DynamoDbBaseRepository<GenreModel>
     {

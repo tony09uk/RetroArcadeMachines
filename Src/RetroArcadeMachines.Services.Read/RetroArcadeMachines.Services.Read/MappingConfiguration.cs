@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using RetroArcadeMachines.Data.Read.Models;
+using RetroArcadeMachines.Data.Contracts;
 using RetroArcadeMachines.Services.Read.Models;
 
 namespace RetroArcadeMachines.Services.Read
