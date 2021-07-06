@@ -27,9 +27,6 @@ namespace RetroArcadeMachines.Services.Read
             try
             {
                 IEnumerable<GameModel> games = await _gamesRepository.Get();
-                //todo: need to get genres
-                //todo: need to get developers
-                //todo: map the above
                 var gameOverviewItems = _mapper.Map<IEnumerable<GameOverviewDto>>(games);
                 return gameOverviewItems.OrderBy(x => x.Title);
             }

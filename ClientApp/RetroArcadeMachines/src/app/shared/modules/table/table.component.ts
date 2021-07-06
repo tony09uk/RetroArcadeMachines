@@ -13,12 +13,11 @@ import { Table } from './models/table.model';
 })
 export class TableComponent implements OnInit {
 
-  @Input() tableDef: Table
+  @Input() tableDef: Table;
   constructor() { }
 
   objectKeys = Object?.keys;
   displayedColumns: string[] = [];
-  // todo: refactor data being passed into datasource. currently it is inefficent due to multiple loop occouring
   tableDataSource = new MatTableDataSource<any>();
   hideIsStarted = false;
   hideProgress = false;

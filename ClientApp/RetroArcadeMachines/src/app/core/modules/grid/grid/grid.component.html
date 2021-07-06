@@ -1,0 +1,51 @@
+<div class="mat-elevation-z8">
+    <table mat-table
+           [dataSource]="tableDataSource">
+
+        <ng-container *ngFor="let key of displayedColumns"
+                      [matColumnDef]="key">
+            <th mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                [disabled]="gridConfig.disableSort"
+                [hidden]="gridConfig.columnHeader[key].hideProperty">
+                {{gridConfig.columnHeader[key].friendlyName}}
+            </th>
+            <td mat-cell
+                *matCellDef="let element"
+                [title]="element[key]"
+                [hidden]="gridConfig.columnHeader[key].hideProperty">
+                <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Icon">
+                    <mat-icon>{{format(element, gridConfig.columnHeader[key].pipe, key,
+                        gridConfig.columnHeader[key].formatParam)}}</mat-icon>
+                </div>
+                <div
+                     *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Text || !gridConfig.columnHeader[key].headerType">
+                    {{format(element, gridConfig.columnHeader[key].pipe, key,
+                    gridConfig.columnHeader[key].formatParam)}}
+                </div>
+                <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Widget">
+                    <!--todo: add widget stuff here-->
+                    <p>not implemented!</p>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container *ngFor="let key of objectKeys(gridConfig.columnHeader)"
+                      [matColumnDef]="getFilterDef(key)">
+            <th mat-header-cell
+                *matHeaderCellDef
+                [hidden]="columnHeader[key].hideProperty">
+                <app-filter-selector [columnName]="key"></app-filter-selector>
+            </th>
+        </ng-container>
+
+        <tr mat-row
+            *matRowDef="let row; columns: objectKeys(gridConfig.columnHeader);"
+            [hidden]="row.property"
+            (click)="rowClicked(row)"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                   [pageSize]="10"
+                   showFirstLastButtons></mat-paginator>
+</div>

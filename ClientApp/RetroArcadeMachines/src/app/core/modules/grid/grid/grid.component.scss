@@ -1,0 +1,19 @@
+table {
+    width: 100%;
+    margin: 20px 0px 35px 0px;
+}
+
+.mat-cell {
+    padding: 10px 10px 10px 0;
+}
+
+.mat-row {
+    &:nth:child(even) {
+        background-color: #f7f7f7;
+    }
+
+    &:hover {
+        background-color: rgb(235, 235, 235);
+        cursor: pointer;
+    }
+}
