@@ -9,4 +9,6 @@ export interface HeaderItem {
   formatParam?: any;
   appliedFilters: string[];
   width?: number;
+  hideProperty: boolean;
+  shouldHideAtPixels?: number;
 }

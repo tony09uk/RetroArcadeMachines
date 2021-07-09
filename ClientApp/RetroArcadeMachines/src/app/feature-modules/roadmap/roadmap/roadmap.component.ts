@@ -12,6 +12,8 @@ import { RoapmapService } from '../services/roapmap.service';
 import { Column } from '@shared/modules/table/models/column.model';
 import { PipeTransform } from '@angular/core';
 import { AddPercentSymbolPipe } from '@shared/pipes/add-percent-symbol.pipe';
+import { GridConfig } from '@core/modules/grid/models/grid-config.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-roadmap',
@@ -23,66 +25,17 @@ export class RoadmapComponent implements OnInit {
 
   constructor(private _roadmapService: RoapmapService) { }
 
-  // displayedColumns: string[] = ['name', 'description', 'isStarted', 'percentageCompleted'];
-  // roadmapTableDataSource: RoadmapResponse[] = [];
-  table: Table;
+  table: GridConfig<RoadmapResponse>;
 
   ngOnInit(): void {
     this._roadmapService
       .get()
       .pipe(
         take(1),
-        map((val: RoadmapResponse[]) => this.createTable(val, this.createColumn))
       ).subscribe(
-        (value: Table) => { this.table = value; },
-        error => console.log(error)
+        (response: GridConfig<RoadmapResponse>) => { this.table = response; },
+        (error: HttpErrorResponse) => { console.log(error); }
       );
   }
 
-  private createTable(value: RoadmapResponse[], createColumn: any): Table {
-    let columns: [Column[]];
-
-    value.forEach((item: RoadmapResponse) => {
-      const nameColumn = createColumn(
-        'name', 'Name', item.name, TableSupportedDataTypes.string);
-      const descColumn = createColumn(
-        'description', 'Detail', item.description, TableSupportedDataTypes.string);
-      const isStartedColumn = createColumn(
-        'isStarted', 'Started', item.isStarted.toString(), TableSupportedDataTypes.boolean, 820, new YesNoPipe());
-      const perCompleteColumn = createColumn(
-        'percentageCompleted', 'Progress', item.percentageCompleted.toString(), TableSupportedDataTypes.number, 750, new AddPercentSymbolPipe());
-
-      const row: Column[] = [nameColumn, descColumn, isStartedColumn, perCompleteColumn];
-
-      if (columns) {
-        columns.push(row);
-      } else {
-        columns = [row];
-      }
-    });
-
-    return {
-      columns: columns,
-      shouldUsePagination: false,
-      shouldShowFilters: false
-    };
-  }
-
-  private createColumn(
-    columnDef: string,
-    friendlyName: string,
-    value: string,
-    dataType: TableSupportedDataTypes,
-    shouldHideAtPixels?: number,
-    pipe?: PipeTransform): Column {
-    return {
-      columnDef: columnDef,
-      friendlyName: friendlyName,
-      displayOrder: 0,
-      data: [value, dataType],
-      shouldHideAtPixels: shouldHideAtPixels,
-      filter: null,
-      pipe: pipe
-    };
-  }
 }

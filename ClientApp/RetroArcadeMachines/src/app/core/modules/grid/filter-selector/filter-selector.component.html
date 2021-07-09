@@ -1,16 +1,14 @@
-<div ngIf="column.filterType === filterTypes.DateRange">
-    <!-- todo: implement this -->
-    <p>not implemented</p>
-</div>
-<div ngIf="column.filterType === filterTypes.NumberRange">
-    <!-- todo: implement this -->
-    <p>not implemented</p>
-</div>
-<div ngIf="column.filterType === filterTypes.MultiSelect">
-    <!-- todo: implement this -->
-    <p>not implemented</p>
-</div>
-<div ngIf="column.filterType === filterTypes.String">
-    <!-- todo: implement this -->
-    <p>not implemented</p>
+<div [ngSwitch]="column.filterType">
+    <div *ngSwitchCase="filterTypes.DateRange">
+        <app-date-range-filter></app-date-range-filter>
+    </div>
+    <div *ngSwitchCase="filterTypes.NumberRange">
+        <app-number-range-filter></app-number-range-filter>
+    </div>
+    <div *ngSwitchCase="filterTypes.MultiSelect">
+        <app-multiselect-filter></app-multiselect-filter>
+    </div>
+    <div *ngSwitchCase="filterTypes.String">
+        <app-string-filter></app-string-filter>
+    </div>    
 </div>

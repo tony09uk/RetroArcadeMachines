@@ -5,46 +5,51 @@ import {
   Input,
   OnInit,
   Output,
+  PipeTransform,
   ViewChild
 } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort/sort';
-import { MatTableDataSource } from '@angular/material/table/table-data-source';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { KeyValuePair } from 'src/app/shared/models/key-value-pair.model'; //todo: use alias
 
-import { KeyValuePair } from 'src/app/shared/models/key-value-pair.model';
 import { FilterTypes } from '../enums/filter-types.enum';
 import { HeaderTypes } from '../enums/header-types.enum';
 import { Column } from '../models/column.model';
 import { GridConfig } from '../models/grid-config.model';
 
-import { Table } from '../models/table.model';
 import { GridFilterService } from '../services/grid-filter-service';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
-  providers: [ GridFilterService ]
+  providers: [GridFilterService]
 })
-export class GridComponent<T, K, V> implements OnInit {
+export class GridComponent<T> implements OnInit {
 
-  @Input() gridConfig: GridConfig<T, K, V>; // todo: be aware this generic type on a component could cause issues
+  @Input() gridConfig: GridConfig<T>; // todo: be aware this generic type on a component could cause issues
 
   @Output() rowClickedEvent = new EventEmitter<T>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<T>();
+  hideColumnValues: KeyValuePair<string, boolean>[] = [];
   columnFilters: string[] = [];
   isFiltered: boolean = false;
   objectKeys = Object?.keys;
   headerTypes = HeaderTypes;
   filterValues = {};
 
-
   constructor(private _gridFilterService: GridFilterService) { }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.setColumnVisibility();
+  }
 
   ngOnInit(): void {
     this.dataSource.filterPredicate = this.createFilter();
@@ -56,14 +61,14 @@ export class GridComponent<T, K, V> implements OnInit {
     this._gridFilterService
       .watchColumnFilterChanged()
       .subscribe(
-        column => this.filterValue(column),
-        error => console.log(error) // todo: log this error
-      );
+        column => { this.filterValue(column); } );
 
     for (const objKey of Object.keys(this.gridConfig.columnHeader)) {
       const filterName = this.getFilterDef(objKey);
       this.columnFilters.push(filterName);
     }
+
+    this.setColumnVisibility();
   }
 
   clearFilters(): void {
@@ -71,17 +76,16 @@ export class GridComponent<T, K, V> implements OnInit {
     this.isFiltered = false;
   }
 
-  // todo: can pipeFormatter be a type of pipeTransform?
-  format(value: any, pipeFormatter: any, key: string, pipeFormatParam?: string) {
-    if(!pipeFormatter) {
+  format(value: any, pipeFormatter: PipeTransform, key: string, pipeFormatParam?: string) {
+    if (!pipeFormatter) {
       return value[key];
     }
 
-    if(!pipeFormatParam) {
+    if (!pipeFormatParam) {
       return value = pipeFormatter.transform(value[key]);
     }
 
-    return pipeFormatter.transorm(value[key], pipeFormatParam);
+    return pipeFormatter.transform(value[key], pipeFormatParam);
   }
 
   rowClicked(row: T): void {
@@ -92,18 +96,53 @@ export class GridComponent<T, K, V> implements OnInit {
     return propertyName + '-description';
   }
 
-  getRecord(name: any, key:string): {
+  shouldHideColumnValue(key: any, element: any): boolean {
+    if (!element) {
+      return false;
+    }
 
+    const item = element as [Column];
+
+    const column = item.find(x => x.name === key);
+    const pixelCount = column !== undefined && column?.shouldHideAtPixels !== undefined ? column.shouldHideAtPixels : 0;
+    return this.shouldHideColumn(pixelCount);
+  }
+
+  setVisisibility(key: string, alwaysHide: boolean): boolean {
+    if (alwaysHide) {
+      return true;
+    }
+
+    const shouldHide = this.hideColumnValues.find(x => x.key === key);
+    return !shouldHide ? false : shouldHide.value;
+  }
+
+  private setColumnVisibility(): void {
+    Object.keys(this.gridConfig.columnHeader).forEach((key: string) => {
+      const hiddenValue = this.hideColumnValues.find(x => x.key === key);
+      const column = this.gridConfig.columnHeader[key] as Column;
+      const pixelValue = !column.shouldHideAtPixels ? 0 : column.shouldHideAtPixels;
+
+      if (hiddenValue) {
+        hiddenValue.value = this.shouldHideColumn(pixelValue);
+      } else {
+        this.hideColumnValues.push({key: key, value: this.shouldHideColumn(pixelValue)});
+      }
+    });
+  }
+
+  private shouldHideColumn(widthToHide: number): boolean {
+    return window.innerWidth < widthToHide ? true : false; // todo: make this simpler by removeing true : false
   }
 
   private filterValue(column: Column): void {
     if (!column.appliedFilters || column.appliedFilters.length === 0) {
-      delete this.filterValues[column.name];
+      // delete this.filterValues[column.name];
       if (Object.keys(this.filterValues).length === 0) {
         this.isFiltered = false;
       }
     } else {
-      this.filterValues[column.name] = column;
+      // this.filterValues[column.name] = column;
       this.isFiltered = true;
     }
     this.dataSource.filter = JSON.stringify(this.filterValues);
@@ -138,7 +177,7 @@ export class GridComponent<T, K, V> implements OnInit {
             showRecordForFilters = true;
           }
         } else {
-          for(let index = 0; index < searchTerm.appliedFilters.length; index++) {
+          for (let index = 0; index < searchTerm.appliedFilters.length; index++) {
             const filterEntry = searchTerm.appliedFilters[index] as string;
             if (filterEntry && data[searchTerm.name]) {
               if (searchTerm.filterType === FilterTypes.MultiSelect) {
@@ -148,106 +187,16 @@ export class GridComponent<T, K, V> implements OnInit {
               }
             } else {
               if (filterEntry === '') {
-                showRecordForFilters = showRecordForFilters || data[searchTerm.name] === filterEntry || ! data[searchTerm.name];
+                showRecordForFilters = showRecordForFilters || data[searchTerm.name] === filterEntry || !data[searchTerm.name];
               } else {
-                showRecordForFilters = showRecordForFilters || data[searchTerm.name] === filterEntry || ! data[searchTerm.name];
+                showRecordForFilters = showRecordForFilters || data[searchTerm.name] === filterEntry || !data[searchTerm.name];
               }
             }
           }
         }
-        
+
       }
       return showRecord;
     };
   }
 }
-
-  // @Input() tableDef: Table;
-  // constructor() { }
-
-  // objectKeys = Object?.keys;
-  // displayedColumns: string[] = [];
-  // // todo: refactor data being passed into datasource. currently it is inefficent due to multiple loop occouring
-  // tableDataSource = new MatTableDataSource<any>();
-  // hideIsStarted = false;
-  // hideProgress = false;
-
-  // hideColumnValues: KeyValuePair<string, boolean>[] = [];
-  // friendlyNames: KeyValuePair<string, string>[] = [];
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event: Event): void {
-  //   this.setColumnVisibility();
-  // }
-
-  // ngOnInit(): void {
-  //   this.tableDef.columns[0].forEach((item: Column) => {
-  //     this.displayedColumns.push(item.columnDef);
-  //     this.friendlyNames.push({key: item.columnDef, value: item.friendlyName});
-
-  //     const pixelValue = !item.shouldHideAtPixels ? 0 : item.shouldHideAtPixels;
-  //     this.hideColumnValues.push({key: item.columnDef, value: this.shouldHideColumn(pixelValue)})
-  //   });
-
-  //   this.tableDataSource.data = this.tableDef.columns;
-  //   this.setColumnVisibility();
-  // }
-
-  // shouldHideColumnValue(key: any, element: any): boolean {
-  //   if (!element) {
-  //     return false;
-  //   }
-
-  //   const item = element as [Column];
-
-  //   const column = item.find(x => x.columnDef === key);
-  //   const pixelCount = column !== undefined && column?.shouldHideAtPixels !== undefined ? column.shouldHideAtPixels : 0;
-  //   return this.shouldHideColumn(pixelCount);
-  // }
-
-  // getValue(key: any, element: [Column]): string {
-  //   const column = this.getColumn(key, element);
-  //   if (!column) {
-  //     return '';
-  //   }
-
-  //   const value = column.data[0];
-
-  //   if (column.pipe) {
-  //     return column.pipe.transform(value);
-  //   }
-
-  //   return value;
-  // }
-
-  // getFriendlyName(key: string): string | undefined {
-  //   return this.friendlyNames.find(x => x.key === key)?.value;
-  // }
-
-  // setVisisibility(key: string): boolean {
-  //   const shouldHide = this.hideColumnValues.find(x => x.key === key);
-  //   return !shouldHide ? false : shouldHide.value;
-  // }
-
-  // private getColumn(key: any, element: [Column]): Column | undefined {
-  //   const column = element.find(x => x.columnDef === key);
-  //   return column;
-  // }
-
-  // private setColumnVisibility(): void {
-  //   for (let column of this.tableDataSource.data[0]) {
-  //     column = column as Column; // todo: remove this when data dataType is defined in matDataSource
-  //     const hiddenValue = this.hideColumnValues.find(x => x.key === column.columnDef);
-
-  //     if (!hiddenValue) {
-  //       continue;
-  //     }
-
-  //     hiddenValue.value = this.shouldHideColumn(column.shouldHideAtPixels);
-  //   }
-  // }
-
-  // private shouldHideColumn(widthToHide: number): boolean {
-  //   return window.innerWidth < widthToHide ? true : false;
-  // }
-// }

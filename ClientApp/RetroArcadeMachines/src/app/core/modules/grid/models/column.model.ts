@@ -11,6 +11,7 @@ export interface Column {
   appliedFilters: string[];
   width?: number;
   widget?: any;
+  shouldHideAtPixels?: number;
 }
 
 

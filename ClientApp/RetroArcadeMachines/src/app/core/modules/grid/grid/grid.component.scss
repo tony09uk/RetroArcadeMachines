@@ -1,10 +1,14 @@
 table {
     width: 100%;
-    margin: 20px 0px 35px 0px;
 }
 
+.spacing {
+    margin: 20px 0;
+}
+
+th.mat-header-cell,
 .mat-cell {
-    padding: 10px 10px 10px 0;
+    padding: 0 10px;
 }
 
 .mat-row {

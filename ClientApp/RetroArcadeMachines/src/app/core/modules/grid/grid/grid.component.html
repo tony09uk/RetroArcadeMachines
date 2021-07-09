@@ -1,28 +1,23 @@
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8 spacing">
+    <!--todo: add matsort-->
     <table mat-table
-           [dataSource]="tableDataSource">
-
-        <ng-container *ngFor="let key of displayedColumns"
+           [dataSource]="dataSource">
+        <ng-container *ngFor="let key of objectKeys(gridConfig.columnHeader)"
                       [matColumnDef]="key">
             <th mat-header-cell
                 *matHeaderCellDef
-                mat-sort-header
-                [disabled]="gridConfig.disableSort"
-                [hidden]="gridConfig.columnHeader[key].hideProperty">
+                [hidden]="setVisisibility(key, gridConfig.columnHeader[key].hideProperty)">
                 {{gridConfig.columnHeader[key].friendlyName}}
             </th>
             <td mat-cell
                 *matCellDef="let element"
-                [title]="element[key]"
-                [hidden]="gridConfig.columnHeader[key].hideProperty">
+                [hidden]="setVisisibility(key, gridConfig.columnHeader[key].hideProperty)"
+                [title]="element[key]">
                 <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Icon">
-                    <mat-icon>{{format(element, gridConfig.columnHeader[key].pipe, key,
-                        gridConfig.columnHeader[key].formatParam)}}</mat-icon>
+                    <mat-icon>{{format(element, gridConfig.columnHeader[key].pipe, key, gridConfig.columnHeader[key].formatParam)}}</mat-icon>
                 </div>
-                <div
-                     *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Text || !gridConfig.columnHeader[key].headerType">
-                    {{format(element, gridConfig.columnHeader[key].pipe, key,
-                    gridConfig.columnHeader[key].formatParam)}}
+                <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Text || !gridConfig.columnHeader[key].headerType">
+                    {{format(element, gridConfig.columnHeader[key].pipe, key, gridConfig.columnHeader[key].formatParam)}}
                 </div>
                 <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Widget">
                     <!--todo: add widget stuff here-->
@@ -35,11 +30,18 @@
                       [matColumnDef]="getFilterDef(key)">
             <th mat-header-cell
                 *matHeaderCellDef
-                [hidden]="columnHeader[key].hideProperty">
+                [hidden]="setVisisibility(key, gridConfig.columnHeader[key].hideProperty)">
                 <app-filter-selector [columnName]="key"></app-filter-selector>
             </th>
         </ng-container>
 
+        <tr mat-header-row
+            *matHeaderRowDef="objectKeys(gridConfig.columnHeader)"></tr>
+
+        <tr mat-header-row
+            *matHeaderRowDef="columnFilters">
+        </tr>
+        
         <tr mat-row
             *matRowDef="let row; columns: objectKeys(gridConfig.columnHeader);"
             [hidden]="row.property"
