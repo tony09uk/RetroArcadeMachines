@@ -31,7 +31,8 @@ export class GridFilterService {
                 filterType: headerItem.filterType,
                 distinctData: selectedValues,
                 widget: headerItem.width,
-                pipe: headerItem.pipe
+                pipe: headerItem.pipe,
+                appliedFilters: headerItem.appliedFilters
             } as Column;
 
             this.columns.push(column);
@@ -48,6 +49,12 @@ export class GridFilterService {
             column.appliedFilters = [];
             this.filterChanged$.next(column);
         }
+    }
+
+    updateFilter(columnName: string, value: string[]): void {
+        const column = this.columns.find(x => x.name === columnName);
+        column.appliedFilters = value;
+        this.filterChanged$.next(column);
     }
 
     getColumn(name: string): Column {

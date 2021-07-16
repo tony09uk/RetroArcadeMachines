@@ -1,1 +1,18 @@
-<p>string-filter works!</p>
+<mat-form-field>
+    <mat-label>Filter by {{columnName}}</mat-label>
+    <input matInput
+           (keyup)="onChange($event)"
+           type="text"
+           placeholder="value 1, value 2"
+           matTooltip="tip: seperate by commas to search multiple values"
+           [(ngModel)]="filter">
+    <button mat-button
+            [style.visibility]="filter ? 'visible' : 'hidden'"
+            matSuffix
+            mat-icon-button
+            matTooltip="clear filter"
+            aria-label="clear"
+            (click)="onClear()">
+            <mat-icon>close</mat-icon>
+    </button>
+</mat-form-field>

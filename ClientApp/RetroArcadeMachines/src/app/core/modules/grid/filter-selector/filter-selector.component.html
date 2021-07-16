@@ -9,6 +9,7 @@
         <app-multiselect-filter></app-multiselect-filter>
     </div>
     <div *ngSwitchCase="filterTypes.String">
-        <app-string-filter></app-string-filter>
+        <app-string-filter [columnName]="columnName"
+                           [filterValue]="column.appliedFilters"></app-string-filter>
     </div>    
 </div>

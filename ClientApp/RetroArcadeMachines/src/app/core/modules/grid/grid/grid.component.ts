@@ -29,7 +29,7 @@ import { GridFilterService } from '../services/grid-filter-service';
 })
 export class GridComponent<T> implements OnInit {
 
-  @Input() gridConfig: GridConfig<T>; // todo: be aware this generic type on a component could cause issues
+  @Input() gridConfig: GridConfig<T>;
 
   @Output() rowClickedEvent = new EventEmitter<T>();
 
@@ -42,7 +42,7 @@ export class GridComponent<T> implements OnInit {
   isFiltered: boolean = false;
   objectKeys = Object?.keys;
   headerTypes = HeaderTypes;
-  filterValues = {};
+  filterValues: { [key: string]: Column } = { };
 
   constructor(private _gridFilterService: GridFilterService) { }
 
@@ -52,7 +52,8 @@ export class GridComponent<T> implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dataSource.filterPredicate = this.createFilter();
+    // this.dataSource.filterPredicate = this.createFilter();
+    this.setDataSourceFilterPredicate();
     this.dataSource.data = this.gridConfig.tableData;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -137,20 +138,20 @@ export class GridComponent<T> implements OnInit {
 
   private filterValue(column: Column): void {
     if (!column.appliedFilters || column.appliedFilters.length === 0) {
-      // delete this.filterValues[column.name];
+      delete this.filterValues[column.name];
       if (Object.keys(this.filterValues).length === 0) {
         this.isFiltered = false;
       }
     } else {
-      // this.filterValues[column.name] = column;
+      this.filterValues[column.name] = column;
       this.isFiltered = true;
     }
     this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 
   // todo: change any to T once test is in progress
-  private createFilter(): (data: any, filter: string) => boolean {
-    return (data, filter) => {
+  setDataSourceFilterPredicate(): void {
+    this.dataSource.filterPredicate = function customFilter(data: any, filter): boolean {
       const searchTerms = JSON.parse(filter);
       let showRecord = true;
 
@@ -181,9 +182,9 @@ export class GridComponent<T> implements OnInit {
             const filterEntry = searchTerm.appliedFilters[index] as string;
             if (filterEntry && data[searchTerm.name]) {
               if (searchTerm.filterType === FilterTypes.MultiSelect) {
-                showRecordForFilters = showRecordForFilters || data[searchTerm.name].toString().toLower() === filterEntry.toLowerCase();
+                showRecordForFilters = showRecordForFilters || (data[searchTerm.name].toString().toLowerCase() === filterEntry.toLowerCase());
               } else {
-                showRecordForFilters = showRecordForFilters || data[searchTerm.name].toString().toLower().indexOf(filterEntry.toLowerCase()) !== -1;
+                showRecordForFilters = showRecordForFilters || (data[searchTerm.name].toString().toLowerCase().indexOf(filterEntry.toLowerCase()) !== -1);
               }
             } else {
               if (filterEntry === '') {
@@ -194,7 +195,7 @@ export class GridComponent<T> implements OnInit {
             }
           }
         }
-
+        showRecord = showRecord && showRecordForFilters;
       }
       return showRecord;
     };

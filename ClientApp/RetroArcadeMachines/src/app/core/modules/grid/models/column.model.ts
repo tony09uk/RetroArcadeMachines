@@ -13,5 +13,3 @@ export interface Column {
   widget?: any;
   shouldHideAtPixels?: number;
 }
-
-
