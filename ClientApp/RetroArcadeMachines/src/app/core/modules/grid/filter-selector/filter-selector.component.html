@@ -6,10 +6,11 @@
         <app-number-range-filter></app-number-range-filter>
     </div>
     <div *ngSwitchCase="filterTypes.MultiSelect">
-        <app-multiselect-filter></app-multiselect-filter>
+        <app-multiselect-filter [columnName]="columnName"
+                                [data]="column.distinctData"></app-multiselect-filter>
     </div>
     <div *ngSwitchCase="filterTypes.String">
         <app-string-filter [columnName]="columnName"
                            [filterValue]="column.appliedFilters"></app-string-filter>
-    </div>    
+    </div>
 </div>

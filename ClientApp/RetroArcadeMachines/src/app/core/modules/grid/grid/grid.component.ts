@@ -52,7 +52,6 @@ export class GridComponent<T> implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.dataSource.filterPredicate = this.createFilter();
     this.setDataSourceFilterPredicate();
     this.dataSource.data = this.gridConfig.tableData;
     this.dataSource.paginator = this.paginator;
@@ -133,7 +132,7 @@ export class GridComponent<T> implements OnInit {
   }
 
   private shouldHideColumn(widthToHide: number): boolean {
-    return window.innerWidth < widthToHide ? true : false; // todo: make this simpler by removeing true : false
+    return window.innerWidth < widthToHide;
   }
 
   private filterValue(column: Column): void {
@@ -150,7 +149,7 @@ export class GridComponent<T> implements OnInit {
   }
 
   // todo: change any to T once test is in progress
-  setDataSourceFilterPredicate(): void {
+  private setDataSourceFilterPredicate(): void {
     this.dataSource.filterPredicate = function customFilter(data: any, filter): boolean {
       const searchTerms = JSON.parse(filter);
       let showRecord = true;
@@ -182,7 +181,11 @@ export class GridComponent<T> implements OnInit {
             const filterEntry = searchTerm.appliedFilters[index] as string;
             if (filterEntry && data[searchTerm.name]) {
               if (searchTerm.filterType === FilterTypes.MultiSelect) {
-                showRecordForFilters = showRecordForFilters || (data[searchTerm.name].toString().toLowerCase() === filterEntry.toLowerCase());
+                if (typeof filterEntry === 'boolean') {
+                  showRecordForFilters = showRecordForFilters || (data[searchTerm.name] === filterEntry);
+                } else {
+                  showRecordForFilters = showRecordForFilters || (data[searchTerm.name].toString().toLowerCase() === filterEntry.toLowerCase());
+                }
               } else {
                 showRecordForFilters = showRecordForFilters || (data[searchTerm.name].toString().toLowerCase().indexOf(filterEntry.toLowerCase()) !== -1);
               }
@@ -190,7 +193,7 @@ export class GridComponent<T> implements OnInit {
               if (filterEntry === '') {
                 showRecordForFilters = showRecordForFilters || data[searchTerm.name] === filterEntry || !data[searchTerm.name];
               } else {
-                showRecordForFilters = showRecordForFilters || data[searchTerm.name] === filterEntry || !data[searchTerm.name];
+                showRecordForFilters = showRecordForFilters || data[searchTerm.name] === filterEntry;
               }
             }
           }

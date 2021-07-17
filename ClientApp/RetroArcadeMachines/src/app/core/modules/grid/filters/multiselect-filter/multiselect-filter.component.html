@@ -1,1 +1,10 @@
-<p>multiselect-filter works!</p>
+<mat-form-field>
+    <!--how to add width here-->
+    <mat-label>Filter by {{friendlyName}}</mat-label>
+    <mat-select [formControl]="multiSelect"
+                (selectionChange)="onChange($event.value)"
+                multiple>
+        <mat-option *ngFor="let selectItem of multiSelectList"
+                    [value]="selectItem">{{pipeValue(selectItem)}}</mat-option>
+    </mat-select>
+</mat-form-field>

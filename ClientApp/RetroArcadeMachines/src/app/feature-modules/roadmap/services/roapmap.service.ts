@@ -11,6 +11,7 @@ import { RoadmapResponse } from '../models/roadmap-response';
 import { RoadmapTable } from '../models/roadmap-table.model';
 import { HeaderItem } from '@core/modules/grid/models/header-item';
 import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
+import { YesNoPipe } from '@shared/pipes/yes-no.pipe';
 
 @Injectable()
 export class RoapmapService {
@@ -60,7 +61,8 @@ export class RoapmapService {
         filterType: FilterTypes.MultiSelect,
         appliedFilters: [],
         hideProperty: false,
-        shouldHideAtPixels: 820
+        shouldHideAtPixels: 820,
+        pipe: new YesNoPipe()
       } as HeaderItem,
       percentageCompleted: {
         friendlyName: 'Progress',
