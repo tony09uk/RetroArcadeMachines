@@ -33,7 +33,8 @@ export class NumberRangeFilterComponent implements OnInit {
     this._column = this._gridFilterService.getColumn(this.columnName);
 
     if (this._column.width){
-      const calculatedWidth = this._column.width / 2;
+      const headerPadding = 10;
+      const calculatedWidth = this._column.width / 2 - headerPadding;
       this.width = calculatedWidth.toString();
     }
 

@@ -48,7 +48,8 @@ export class RoapmapService {
         friendlyName: 'Name',
         filterType: FilterTypes.String,
         appliedFilters: [],
-        hideProperty: false
+        hideProperty: false,
+        width: 150
       } as HeaderItem,
       description: {
         friendlyName: 'Description',

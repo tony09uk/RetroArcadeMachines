@@ -6,6 +6,7 @@
                       [matColumnDef]="key">
             <th mat-header-cell
                 *matHeaderCellDef
+                [width]="gridConfig.columnHeader[key].width"
                 [hidden]="setVisisibility(key, gridConfig.columnHeader[key].hideProperty)">
                 {{gridConfig.columnHeader[key].friendlyName}}
             </th>
