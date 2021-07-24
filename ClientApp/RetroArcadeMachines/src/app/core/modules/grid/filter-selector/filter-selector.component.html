@@ -3,7 +3,8 @@
         <app-date-range-filter></app-date-range-filter>
     </div>
     <div *ngSwitchCase="filterTypes.NumberRange">
-        <app-number-range-filter></app-number-range-filter>
+        <app-number-range-filter [columnName]="columnName"
+                                 [data]="column.distinctData"></app-number-range-filter>
     </div>
     <div *ngSwitchCase="filterTypes.MultiSelect">
         <app-multiselect-filter [columnName]="columnName"

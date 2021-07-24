@@ -1,5 +1,4 @@
-<mat-form-field>
-    <!--how to add width here-->
+<mat-form-field [style.width.px]="width">
     <mat-label>Filter by {{friendlyName}}</mat-label>
     <mat-select [formControl]="multiSelect"
                 (selectionChange)="onChange($event.value)"

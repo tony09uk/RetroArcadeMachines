@@ -1,2 +1,15 @@
-$h_dk:#051441;
-$p-color:#677294;
+@import "~@angular/material/theming";
+@include mat-core();
+
+$primary: mat-palette($mat-purple);
+$accent: mat-palette($mat-amber);
+$warn: mat-palette($mat-red);
+
+:root {
+    --color-primary: #{mat-color($primary)};
+    --color-accent: #{mat-color($accent)};
+    --color-warn: #{mat-color($warn)};
+}
+
+$h_dk: #051441;
+$p-color: #677294;

@@ -54,7 +54,7 @@ export class RoapmapService {
         friendlyName: 'Description',
         filterType: FilterTypes.String,
         appliedFilters: [],
-        hideProperty: false
+        hideProperty: false,
       } as HeaderItem,
       isStarted: {
         friendlyName: 'Is Started',
@@ -62,14 +62,16 @@ export class RoapmapService {
         appliedFilters: [],
         hideProperty: false,
         shouldHideAtPixels: 820,
-        pipe: new YesNoPipe()
+        pipe: new YesNoPipe(),
+        width: 60
       } as HeaderItem,
       percentageCompleted: {
         friendlyName: 'Progress',
         filterType: FilterTypes.NumberRange,
         appliedFilters: [],
         hideProperty: false,
-        shouldHideAtPixels: 750
+        shouldHideAtPixels: 750,
+        width: 100
       } as HeaderItem,
       order: {
         friendlyName: '',

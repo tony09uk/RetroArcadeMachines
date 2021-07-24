@@ -13,6 +13,9 @@ import { HeaderItem } from '../models/header-item';
 export class GridFilterService {
     columns: Column[];
     filterChanged$: Subject<Column> = new Subject<Column>();
+    get delimiter(): string {
+        return '-';
+    }
 
     initFilters(headers: any, data: any): void {
         this.columns = [];
@@ -30,9 +33,9 @@ export class GridFilterService {
                 friendlyName: headerItem.friendlyName,
                 filterType: headerItem.filterType,
                 distinctData: selectedValues,
-                widget: headerItem.width,
+                width: headerItem.width,
                 pipe: headerItem.pipe,
-                appliedFilters: headerItem.appliedFilters
+                appliedFilters: headerItem.appliedFilters,
             } as Column;
 
             this.columns.push(column);

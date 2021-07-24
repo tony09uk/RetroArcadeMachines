@@ -150,6 +150,7 @@ export class GridComponent<T> implements OnInit {
 
   // todo: change any to T once test is in progress
   private setDataSourceFilterPredicate(): void {
+    const self = this;
     this.dataSource.filterPredicate = function customFilter(data: any, filter): boolean {
       const searchTerms = JSON.parse(filter);
       let showRecord = true;
@@ -158,17 +159,17 @@ export class GridComponent<T> implements OnInit {
         const searchTerm = searchTerms[searchTermKey] as Column;
 
         let showRecordForFilters = false;
-        if (searchTerms.filterType === FilterTypes.NumberRange) {
-          const appliedFilter = searchTerm.appliedFilters[0].split('to');
+        if (searchTerm.filterType === FilterTypes.NumberRange) {
+          const appliedFilter = searchTerm.appliedFilters[0].split(self._gridFilterService.delimiter);
           const fromFilter = Number(appliedFilter[0]);
           const toFilter = Number(appliedFilter[1]);
 
           const dataItem = Number(data[searchTerm.name]);
-          if (dataItem <= fromFilter && dataItem >= toFilter) {
+          if (dataItem <= toFilter && dataItem >= fromFilter) {
             showRecordForFilters = true;
           }
-        } else if (searchTerms.filterType === FilterTypes.DateRange) {
-          const appliedFilter = searchTerm.appliedFilters[0].split(' - ');
+        } else if (searchTerm.filterType === FilterTypes.DateRange) {
+          const appliedFilter = searchTerm.appliedFilters[0].split(self._gridFilterService.delimiter);
           const fromFilter = new Date(appliedFilter[0] + 'T00:00:00');
           const toFilter = new Date(appliedFilter[1] + 'T23:59:59');
 

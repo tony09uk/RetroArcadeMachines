@@ -14,7 +14,7 @@ export class StringFilterComponent implements OnInit, OnDestroy {
   @Input() filterValue: string[];
   filter: string;
   hide: boolean = false;
-  width: number;
+  width: string;
 
   constructor(private _gridFilterService: GridFilterService) { }
 
@@ -24,7 +24,7 @@ export class StringFilterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._column = this._gridFilterService.getColumn(this.columnName);
     this.filter = this._column.appliedFilters.join(',');
-    this.width = this._column.width;
+    this.width = this._column.width?.toString();
 
     this._gridFilterService
       .watchColumnFilterChanged()

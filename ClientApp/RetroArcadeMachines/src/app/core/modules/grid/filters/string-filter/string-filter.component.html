@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field [style.width.px]="width">
     <mat-label>Filter by {{columnName}}</mat-label>
     <input matInput
            (keyup)="onChange($event)"

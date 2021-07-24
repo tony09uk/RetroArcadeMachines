@@ -18,6 +18,7 @@ import { StringFilterComponent } from './filters/string-filter/string-filter.com
 import { MultiselectFilterComponent } from './filters/multiselect-filter/multiselect-filter.component';
 import { NumberRangeFilterComponent } from './filters/number-range-filter/number-range-filter.component';
 import { DateRangeFilterComponent } from './filters/date-range-filter/date-range-filter.component';
+import { SliderModule } from '../slider/slider.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DateRangeFilterComponent } from './filters/date-range-filter/date-range
     MatInputModule,
     MatTooltipModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    SliderModule
   ],
   exports: [
     GridComponent

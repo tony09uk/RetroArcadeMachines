@@ -1,1 +1,25 @@
-<p>number-range-filter works!</p>
+<!--todo: implement app-slider-->
+<!--not done because: needs styling work, handles drag functionaility needs improving-->
+<!-- <div [style.width.px]="width">
+    <app-slider [min]="minValue"
+                [max]="maxValue"
+                [minSelected]="minSelected"
+                [maxSelected]="maxSelected"
+                (onChange)="onSliderChange($event)"></app-slider>
+</div> -->
+<mat-form-field [style.width.px]="width">
+    <mat-label>From</mat-label>
+    <input matInput
+           type="text"
+           [placeholder]="minValue.toString()"
+           [(ngModel)]="minSelected"
+           (keyup)="onChangeMin()">
+</mat-form-field>
+<mat-form-field [style.width.px]="width">
+    <mat-label>To</mat-label>
+    <input matInput
+           type="text"
+           [placeholder]="maxValue.toString()"
+           [(ngModel)]="maxSelected"
+           (keyup)="onChangeMax()">
+</mat-form-field>

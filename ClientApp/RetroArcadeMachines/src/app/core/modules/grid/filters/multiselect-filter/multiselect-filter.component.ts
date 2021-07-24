@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnDestroy, OnInit, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -19,7 +20,7 @@ export class MultiselectFilterComponent implements OnInit, OnDestroy {
   multiSelect: FormControl = new FormControl();
   multiSelectList: string[] = [];
   friendlyName: string;
-  width: number;
+  width: string;
 
   constructor(private _gridFilterService: GridFilterService) { }
 
@@ -30,7 +31,8 @@ export class MultiselectFilterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._column = this._gridFilterService.getColumn(this.columnName);
     this._pipe = this._column.pipe;
-    this.width = this._column.width;
+
+    this.width = this._column.width?.toString();
     this.friendlyName = this._column.friendlyName.toLocaleLowerCase();
 
     this.multiSelectList = this._column.distinctData;

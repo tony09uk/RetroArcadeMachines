@@ -1,0 +1,142 @@
+/*
+* Color Variables: Theme Colors
+*/
+$main-color: #71b357;
+$bar-background-color: #e8e8e8;
+$text-color:#908f90;
+$light-color: lighten($color: $main-color, $amount: 26%);
+$tooltip-border-color: lighten($color: $main-color, $amount: 10%);
+$tooltip-background-color: lighten($color: $main-color, $amount: 35%);
+
+.slider,
+.slider * {
+  box-sizing: border-box
+}
+
+.slider {
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 4px 10px;
+  cursor: default;
+  font-size: 12px;
+  .bar {
+    width: 100%;
+    background: $bar-background-color;
+    height: 10px;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: inset 1px 1px 5px darken($bar-background-color, 18%);
+    &>span.left-handle,
+    &>span.right-handle {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      background: $light-color;
+      border: 7px solid $main-color;
+      border-radius: 50%;
+      position: absolute;
+      top: -7px;
+      margin-left: -10px;
+      z-index: 1;
+      cursor: pointer;
+      transition: left 0.2s ease;
+      &.last-active {
+        z-index: 2;
+      }
+      & .handle-tooltip {
+        display: block;
+        position: absolute;
+        top: -34px;
+        left: -14px;
+        border: 1px solid $tooltip-border-color;
+        border-radius: 4px;
+        padding: 1px 4px;
+        min-width: 20px;
+        text-align: center;
+        background: $tooltip-background-color;
+        color: $main-color;
+        font-weight: bold;
+        transition: opacity 0.2s ease;
+        opacity: 0;
+        &:before {
+          content: "";
+          border: 5px solid transparent;
+          border-top-color: $tooltip-border-color;
+          position: absolute;
+          top: 104%;
+          left: 33%;
+        }
+        &:after {
+          content: "";
+          border: 5px solid transparent;
+          border-top-color: $tooltip-background-color;
+          position: absolute;
+          top: 100%;
+          left: 33%;
+        }
+      }
+      &:hover>.handle-tooltip,
+      &.active>.handle-tooltip {
+        opacity: 1;
+      }
+    }
+    div.filler {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 5px;
+      border: 1px solid $light-color;
+      &>span {
+        display: inline-block;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        background: $light-color;
+        transition: all 0.2s ease;
+      }
+      &>div.step-indicators {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        &>span {
+          width: 1px;
+          display: inline-block;
+          height: 10px;
+          background: $main-color;
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
+  }
+  .values {
+    display: block;
+    font-weight: bold;
+    margin-top: 4px;
+    width: 102%;
+    margin-left: -1%;
+    color: $text-color;
+  }
+  .values span:first-child {
+    float: left;
+  }
+  .values span:last-child {
+    float: right;
+  }
+  &.disabled {
+    opacity: 0.4;
+    .bar {
+      box-shadow: none !important;
+      &>span.left-handle,
+      &>span.right-handle {
+        cursor: not-allowed;
+        & .handle-tooltip {
+          display: none;
+        }
+      }
+    }
+  }
+}
