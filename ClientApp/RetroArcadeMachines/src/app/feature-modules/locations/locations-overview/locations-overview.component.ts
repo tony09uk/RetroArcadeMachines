@@ -8,6 +8,7 @@ import { TableSupportedDataTypes } from '@shared/modules/table/models/table-supp
 import { Table } from '@shared/modules/table/models/table.model';
 import { LocationOverview } from '../models/location-overview.model';
 import { LocationService } from '../services/location.service';
+import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 
 @Component({
   selector: 'app-locations-overview',
@@ -17,7 +18,7 @@ import { LocationService } from '../services/location.service';
 })
 export class LocationsOverviewComponent implements OnInit {
 
-  table: Table;
+  table: GridConfig<LocationOverview>;
 
   constructor(private _locationService: LocationService) { }
 
@@ -26,65 +27,10 @@ export class LocationsOverviewComponent implements OnInit {
       .get()
       .pipe(
         take(1),
-        map((val: LocationOverview[]) => this.createTable(val, this.createColumn))
       )
       .subscribe(
-        (value: Table) => { this.table = value; },
+        (value: GridConfig<LocationOverview>) => { this.table = value; },
         (error: any) => { console.log(error); }
       );
   }
-
-  private createTable(value: LocationOverview[], createColumn: any): Table {
-    let columns: [Column[]];
-
-    value.forEach((item: LocationOverview) => {
-      const nameColumn = createColumn( // todo: support imagesUrls
-        'name', 'Name', item.name, TableSupportedDataTypes.string);
-      const priceColumn = createColumn(
-        'entryPrice', 'Entry Price', item.entryPrice, TableSupportedDataTypes.string);
-      const yearColumn = createColumn(
-        'rating', 'Rating', item.rating, TableSupportedDataTypes.string);
-      const townColumn = createColumn(
-        'town', 'Town', item.town, TableSupportedDataTypes.string);
-      const isChildFriendlyColumn = createColumn(
-        'isChildFriendly', 'Child Friendly', item.isChildFriendly, TableSupportedDataTypes.boolean);
-      const isFoodServedColumn = createColumn(
-        'isFoodServed', 'Food Served', item.isFoodServed, TableSupportedDataTypes.string);
-      const detailsColumn = createColumn( // todo: support navigation
-        'locationDetails', 'Details', item.id, TableSupportedDataTypes.string);
-
-      const row: Column[] = [nameColumn, priceColumn, yearColumn, townColumn, isChildFriendlyColumn, isFoodServedColumn, detailsColumn];
-
-      if (columns) {
-        columns.push(row);
-      } else {
-        columns = [row];
-      }
-    });
-
-    return {
-      columns: columns,
-      shouldUsePagination: false,
-      shouldShowFilters: false
-    };
-  }
-
-  private createColumn(
-    columnDef: string,
-    friendlyName: string,
-    value: string,
-    dataType: TableSupportedDataTypes,
-    shouldHideAtPixels?: number,
-    pipe?: PipeTransform): Column {
-    return {
-      columnDef: columnDef,
-      friendlyName: friendlyName,
-      displayOrder: 0,
-      data: [value, dataType],
-      shouldHideAtPixels: shouldHideAtPixels,
-      filter: null,
-      pipe: pipe
-    };
-  }
-
 }
