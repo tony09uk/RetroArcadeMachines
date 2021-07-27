@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/internal/Observable';
 
-import { HttpService } from '@core/services/http.service';
-import { LocationOverview } from '../models/location-overview.model';
-import { LocationOverviewTable } from '../models/location-overview-table.model';
 import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
 import { HeaderItem } from '@core/modules/grid/models/header-item';
 import { GridDataFactoryService } from '@core/modules/grid/services/grid-data-factory.service';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
+import { HttpService } from '@core/services/http.service';
+
+import { LocationOverview } from '../models/location-overview.model';
+import { LocationOverviewTable } from '../models/location-overview-table.model';
 
 @Injectable()
 export class LocationService extends GridDataFactoryService {
@@ -19,8 +20,6 @@ export class LocationService extends GridDataFactoryService {
 
     get(): Observable<GridConfig<LocationOverview>> {
         return this.create<LocationOverview, LocationOverviewTable>('locations', this.createColumnHeaders());
-        // return this._httpService
-        //         .get<LocationOverview[]>('locations');
     }
 
     private createColumnHeaders(): LocationOverviewTable {
@@ -41,7 +40,7 @@ export class LocationService extends GridDataFactoryService {
                 friendlyName: 'Entry Price',
                 filterType: FilterTypes.NumberRange,
                 appliedFilters: [],
-                hideProperty: false
+                hideProperty: false,
             } as HeaderItem,
             rating: {
                 friendlyName: 'Rating',
@@ -59,13 +58,15 @@ export class LocationService extends GridDataFactoryService {
                 friendlyName: 'Child Friendly',
                 filterType: FilterTypes.MultiSelect,
                 appliedFilters: [],
-                hideProperty: false
+                hideProperty: false,
+                width: 80
             } as HeaderItem,
             foodServed: {
                 friendlyName: 'Food Served',
                 filterType: FilterTypes.MultiSelect,
                 appliedFilters: [],
-                hideProperty: false
+                hideProperty: false,
+                width: 80
             } as HeaderItem,
         } as LocationOverviewTable;
     }
