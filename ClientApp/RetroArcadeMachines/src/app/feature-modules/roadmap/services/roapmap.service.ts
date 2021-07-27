@@ -1,39 +1,26 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/internal/Observable';
-import { map } from 'rxjs/internal/operators/map';
-import { take } from 'rxjs/internal/operators/take';
 
+import { YesNoPipe } from '@shared/pipes/yes-no.pipe';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 import { HttpService } from '@core/services/http.service';
+import { GridDataFactoryService } from '@core/modules/grid/services/grid-data-factory.service';
+import { HeaderItem } from '@core/modules/grid/models/header-item';
+import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
 
 import { RoadmapResponse } from '../models/roadmap-response';
 import { RoadmapTable } from '../models/roadmap-table.model';
-import { HeaderItem } from '@core/modules/grid/models/header-item';
-import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
-import { YesNoPipe } from '@shared/pipes/yes-no.pipe';
 
 @Injectable()
-export class RoapmapService {
+export class RoapmapService extends GridDataFactoryService {
 
-  constructor(private _httpService: HttpService) { }
-
-  get(): Observable<GridConfig<RoadmapResponse>> {
-    return this._httpService
-      .get<RoadmapResponse[]>('roadmaps')
-      .pipe(
-        take(1),
-        map((value: RoadmapResponse[]) => this.createGridConfig(this, value))
-      );
+  constructor(httpService: HttpService) {
+    super(httpService);
   }
 
-  private createGridConfig(self: RoapmapService, data: RoadmapResponse[]): GridConfig<RoadmapResponse> {
-    const gridConfig = new GridConfig<RoadmapResponse>();
-    gridConfig.tableData = data;
-
-    gridConfig.columnHeader = self.createColumnHeaders();
-
-    return gridConfig;
+  get(): Observable<GridConfig<RoadmapResponse>> {
+    return this.create<RoadmapResponse, RoadmapTable>('roadmaps', this.createColumnHeaders());
   }
 
   private createColumnHeaders(): RoadmapTable {

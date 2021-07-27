@@ -1,19 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { take } from 'rxjs/internal/operators/take';
-import { map } from 'rxjs/operators';
 
-import { TableSupportedDataTypes } from '@shared/modules/table/models/table-supported-data-types.model';
-import { Table } from '@shared/modules/table/models/table.model';
-import { YesNoPipe } from '@shared/pipes/yes-no.pipe';
+import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 
 import { RoadmapResponse } from '../models/roadmap-response';
 import { RoapmapService } from '../services/roapmap.service';
-import { Column } from '@shared/modules/table/models/column.model';
-import { PipeTransform } from '@angular/core';
-import { AddPercentSymbolPipe } from '@shared/pipes/add-percent-symbol.pipe';
-import { GridConfig } from '@core/modules/grid/models/grid-config.model';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-roadmap',
@@ -23,9 +16,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class RoadmapComponent implements OnInit {
 
-  constructor(private _roadmapService: RoapmapService) { }
-
   table: GridConfig<RoadmapResponse>;
+
+  constructor(private _roadmapService: RoapmapService) { }
 
   ngOnInit(): void {
     this._roadmapService
@@ -37,5 +30,4 @@ export class RoadmapComponent implements OnInit {
         (error: HttpErrorResponse) => { console.log(error); }
       );
   }
-
 }

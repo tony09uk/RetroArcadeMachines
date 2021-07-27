@@ -1,0 +1,13 @@
+<div *ngIf="columnHeaderData.cellContentType === cellContentTypes.Icon">
+    <mat-icon>{{format(value, columnHeaderData.pipe, columnHeaderKey, columnHeaderData.formatParam)}}</mat-icon>
+</div>
+<div *ngIf="columnHeaderData.cellContentType === cellContentTypes.Image">
+    <img height="100" width="100" src="{{format(value, columnHeaderData.pipe, columnHeaderKey, columnHeaderData.formatParam)}}" />
+</div>
+<div *ngIf="columnHeaderData.cellContentType === cellContentTypes.Text || !columnHeaderData.cellContentType">
+    {{format(value, columnHeaderData.pipe, columnHeaderKey, columnHeaderData.formatParam)}}
+</div>
+<div *ngIf="columnHeaderData.cellContentType === cellContentTypes.Widget">
+    <!--todo: add widget stuff here-->
+    <p>not implemented!</p>
+</div>

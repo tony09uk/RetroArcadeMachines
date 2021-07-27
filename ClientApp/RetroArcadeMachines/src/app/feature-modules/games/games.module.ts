@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TableModule } from '@shared/modules/table/table.module';
-import { ComingSoonModule } from '@shared/modules/coming-soon/coming-soon.module';
+import { GridModule } from '@core/modules/grid/grid.module';
 import { ElementsModule } from '@shared/modules/elements/elements.module';
 
 import { GamesRoutingModule } from './games-routing.module';
-import { GamesComponent } from './games.component';
+import { GamesOverviewComponent } from './games-overview/games-overview.component';
 
 @NgModule({
-  declarations: [GamesComponent],
+  declarations: [
+    GamesOverviewComponent
+  ],
   imports: [
     CommonModule,
     GamesRoutingModule,
     ElementsModule,
-    TableModule
+    GridModule
   ]
 })
 export class GamesModule { }

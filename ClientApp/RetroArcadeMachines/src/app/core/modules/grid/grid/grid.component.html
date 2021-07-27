@@ -14,16 +14,9 @@
                 *matCellDef="let element"
                 [hidden]="setVisisibility(key, gridConfig.columnHeader[key].hideProperty)"
                 [title]="element[key]">
-                <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Icon">
-                    <mat-icon>{{format(element, gridConfig.columnHeader[key].pipe, key, gridConfig.columnHeader[key].formatParam)}}</mat-icon>
-                </div>
-                <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Text || !gridConfig.columnHeader[key].headerType">
-                    {{format(element, gridConfig.columnHeader[key].pipe, key, gridConfig.columnHeader[key].formatParam)}}
-                </div>
-                <div *ngIf="gridConfig.columnHeader[key].headerType === headerTypes.Widget">
-                    <!--todo: add widget stuff here-->
-                    <p>not implemented!</p>
-                </div>
+                <app-cell-content-selector [columnHeaderData]="gridConfig.columnHeader[key]"
+                                           [value]="element"
+                                           [columnHeaderKey]="key"></app-cell-content-selector>
             </td>
         </ng-container>
 

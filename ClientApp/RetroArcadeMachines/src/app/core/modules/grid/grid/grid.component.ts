@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { KeyValuePair } from 'src/app/shared/models/key-value-pair.model'; //todo: use alias
 
 import { FilterTypes } from '../enums/filter-types.enum';
-import { HeaderTypes } from '../enums/header-types.enum';
+import { CellContentTypes } from '../enums/cell-content-types.enum';
 import { Column } from '../models/column.model';
 import { GridConfig } from '../models/grid-config.model';
 
@@ -41,7 +41,7 @@ export class GridComponent<T> implements OnInit {
   columnFilters: string[] = [];
   isFiltered: boolean = false;
   objectKeys = Object?.keys;
-  headerTypes = HeaderTypes;
+  cellContentTypes = CellContentTypes;
   filterValues: { [key: string]: Column } = { };
 
   constructor(private _gridFilterService: GridFilterService) { }

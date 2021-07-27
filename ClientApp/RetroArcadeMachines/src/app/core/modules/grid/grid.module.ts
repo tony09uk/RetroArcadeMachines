@@ -19,6 +19,7 @@ import { MultiselectFilterComponent } from './filters/multiselect-filter/multise
 import { NumberRangeFilterComponent } from './filters/number-range-filter/number-range-filter.component';
 import { DateRangeFilterComponent } from './filters/date-range-filter/date-range-filter.component';
 import { SliderModule } from '../slider/slider.module';
+import { CellContentSelectorComponent } from './cell-content-selector/cell-content-selector.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SliderModule } from '../slider/slider.module';
     StringFilterComponent,
     MultiselectFilterComponent,
     NumberRangeFilterComponent,
-    DateRangeFilterComponent
+    DateRangeFilterComponent,
+    CellContentSelectorComponent
   ],
   imports: [
     CommonModule,
