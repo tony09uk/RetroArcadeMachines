@@ -6,16 +6,16 @@ import { take } from 'rxjs/internal/operators/take';
 import { Column } from '@shared/modules/table/models/column.model';
 import { TableSupportedDataTypes } from '@shared/modules/table/models/table-supported-data-types.model';
 import { Table } from '@shared/modules/table/models/table.model';
-import { LocationOverview } from './models/location-overview.model';
-import { LocationService } from './services/location.service';
+import { LocationOverview } from '../models/location-overview.model';
+import { LocationService } from '../services/location.service';
 
 @Component({
-  selector: 'app-locations',
-  templateUrl: './locations.component.html',
-  styleUrls: ['./locations.component.scss'],
+  selector: 'app-locations-overview',
+  templateUrl: './locations-overview.component.html',
+  styleUrls: ['./locations-overview.component.scss'],
   providers: [ LocationService ]
 })
-export class LocationsComponent implements OnInit {
+export class LocationsOverviewComponent implements OnInit {
 
   table: Table;
 
