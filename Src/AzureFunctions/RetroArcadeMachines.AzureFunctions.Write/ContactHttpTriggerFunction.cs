@@ -48,7 +48,7 @@ namespace RetroArcadeMachines.AzureFunctions.Write
 
             await _cloudQueue.Add(form.Value, context.FunctionAppDirectory);
 
-            return new OkObjectResult($"{nameof(ContactHttpTriggerFunction)} executed successfully!!");
+            return new OkObjectResult(true);
         }
     }
 }

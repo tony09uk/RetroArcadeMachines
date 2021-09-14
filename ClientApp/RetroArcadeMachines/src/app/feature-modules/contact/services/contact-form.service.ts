@@ -47,7 +47,7 @@ export class ContactFormService {
     // tasks:
     // add loading symbol to form
     // restrict sendgrid api key to email only
-    submit(contactFormRequest: ContactFormRequest): Observable<any> {
+    submit(contactFormRequest: ContactFormRequest): Observable<boolean> {
         return this._httpService.post('contact', contactFormRequest);
     }
 
