@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RetroArcadeMachines.Data.Contracts;
 using RetroArcadeMachines.Data.Write;
+using RetroArcadeMachines.Shared.Models;
 using System;
 using System.Threading.Tasks;
 

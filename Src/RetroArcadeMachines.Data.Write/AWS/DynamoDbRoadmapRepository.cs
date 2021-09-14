@@ -1,5 +1,5 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using RetroArcadeMachines.Data.Contracts;
+using RetroArcadeMachines.Shared.Models;
 
 namespace RetroArcadeMachines.Data.Write.AWS
 {

@@ -5,9 +5,9 @@ using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RetroArcadeMachines.Data.Contracts;
 using RetroArcadeMachines.Data.Write.AWS;
 using RetroArcadeMachines.Data.Write.Interfaces;
+using RetroArcadeMachines.Shared.Models;
 using System;
 
 namespace RetroArcadeMachines.Data.Write

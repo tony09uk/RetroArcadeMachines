@@ -6,13 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.18" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.66" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.1" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RetroArcadeMachines.Data.Contracts\RetroArcadeMachines.Data.Contracts.csproj" />
+    <ProjectReference Include="..\RetroArcadeMachines.Shared.Models\RetroArcadeMachines.Shared.Models.csproj" />
   </ItemGroup>
 
 </Project>

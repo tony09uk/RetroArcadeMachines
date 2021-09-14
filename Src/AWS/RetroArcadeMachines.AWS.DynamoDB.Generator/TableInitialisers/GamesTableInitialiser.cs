@@ -1,7 +1,7 @@
 ﻿using Amazon.DynamoDBv2;
-using RetroArcadeMachines.Data.Contracts;
 using RetroArcadeMachines.Data.Write.AWS;
 using RetroArcadeMachines.Data.Write.Interfaces;
+using RetroArcadeMachines.Shared.Models;
 using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator

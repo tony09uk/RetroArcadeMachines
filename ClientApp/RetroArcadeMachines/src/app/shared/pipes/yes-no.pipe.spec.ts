@@ -7,10 +7,10 @@ describe('YesNoPipe', () => {
   });
 
   const transformScenarios = [
-    { description: 'should return Yes when value is true', input: 'true', expected: 'Yes'},
-    { description: 'should return No when value is false', input: 'false', expected: 'No'},
-    { description: 'should return No when value is false', input: 'null', expected: 'No'},
-    { description: 'should return No when value is false', input: 'undefined', expected: 'No'},
+    { description: 'should return Yes when value is true', input: true, expected: 'Yes'},
+    { description: 'should return No when value is false', input: false, expected: 'No'},
+    { description: 'should return No when value is false', input: null, expected: 'No'},
+    { description: 'should return No when value is false', input: undefined, expected: 'No'},
   ];
   transformScenarios.forEach(value => {
     it(value.description, () => {

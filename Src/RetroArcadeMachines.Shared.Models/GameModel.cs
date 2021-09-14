@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RetroArcadeMachines.Data.Contracts
+namespace RetroArcadeMachines.Shared.Models
 {
     [DynamoDBTable("Games")] // todo: how to stop duplicating the table name in here in repository
     public class GameModel

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using RetroArcadeMachines.Data.Contracts;
 using RetroArcadeMachines.Services.Read.Models;
+using RetroArcadeMachines.Shared.Models;
 
 namespace RetroArcadeMachines.Services.Read
 {

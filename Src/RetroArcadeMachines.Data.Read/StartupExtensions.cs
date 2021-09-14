@@ -5,7 +5,7 @@ using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RetroArcadeMachines.Data.Contracts;
+using RetroArcadeMachines.Shared.Models;
 using RetroArcadeMachines.Data.Read.AWS;
 using RetroArcadeMachines.Data.Read.Interfaces;
 using System;

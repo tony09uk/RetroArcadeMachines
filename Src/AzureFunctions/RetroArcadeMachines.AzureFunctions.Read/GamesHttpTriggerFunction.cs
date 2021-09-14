@@ -12,19 +12,19 @@ using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.AzureFunctions.Read
 {
-    public class Roadmaps
+    public class GamesHttpTriggerFunction
     {
-        private readonly IRoadmapService _roadmapService;
+        private readonly IGamesService _gamesService;
 
-        public Roadmaps(IRoadmapService roadmapService)
+        public GamesHttpTriggerFunction(IGamesService gamesService)
         {
-            _roadmapService = roadmapService;
+            _gamesService = gamesService;
         }
 
-        [FunctionName("Roadmaps")]
+        [FunctionName("Games")]
         [OpenApiOperation(operationId: "Run", tags: new[] { "name" })]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = false, Type = typeof(string), Description = "The **Name** parameter")]
+        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
@@ -32,7 +32,8 @@ namespace RetroArcadeMachines.AzureFunctions.Read
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var result = await _roadmapService.Get();
+            var result = await _gamesService.Get();
+
             return new OkObjectResult(result);
         }
     }

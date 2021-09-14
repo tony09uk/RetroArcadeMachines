@@ -1,7 +1,7 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
 using System;
 
-namespace RetroArcadeMachines.Data.Contracts
+namespace RetroArcadeMachines.Shared.Models
 {
     [DynamoDBTable("Developers")] // todo: how to stop duplicating the table name in here in repository
     public class DeveloperModel

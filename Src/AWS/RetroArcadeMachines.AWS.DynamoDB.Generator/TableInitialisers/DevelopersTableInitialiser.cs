@@ -1,5 +1,5 @@
 ﻿using Amazon.DynamoDBv2;
-using RetroArcadeMachines.Data.Contracts;
+using RetroArcadeMachines.Shared.Models;
 using RetroArcadeMachines.Data.Write.AWS;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using System.Threading.Tasks;

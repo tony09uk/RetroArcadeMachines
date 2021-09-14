@@ -2,7 +2,7 @@
   "profiles": {
     "RetroArcadeMachines.AzureFunctions.Read": {
       "commandName": "Project",
-      "commandLineArgs": "host start --useHttps --cors *"
+      "commandLineArgs": "host start --port 7071 --useHttps --cors *"
     }
   }
 }

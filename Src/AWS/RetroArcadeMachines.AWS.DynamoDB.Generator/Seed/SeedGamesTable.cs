@@ -1,4 +1,4 @@
-﻿using RetroArcadeMachines.Data.Contracts;
+﻿using RetroArcadeMachines.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

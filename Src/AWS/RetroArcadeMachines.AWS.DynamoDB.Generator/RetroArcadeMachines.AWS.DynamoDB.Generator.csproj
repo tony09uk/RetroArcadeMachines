@@ -13,7 +13,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.18" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.66" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.16" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.16" />
