@@ -1,0 +1,9 @@
+<div *ngIf="show"
+     [class.mask-overlay]="!isContainedByParent"
+     [class.container]="isContainedByParent">
+     <mat-progress-spinner class="center"
+                           [class.overlay]="isContainedByParent"
+                           [color]="color"
+                           [mode]="mode"
+                           [value]="value"></mat-progress-spinner>
+</div>

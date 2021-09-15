@@ -1,5 +1,6 @@
 <app-banner-section>
     <mat-card>
+        <app-spinner [show]="isSaving"></app-spinner>
         <form *ngIf="form"
               [formGroup]="form"
               (ngSubmit)="onSubmit()">
@@ -59,11 +60,11 @@
             <mat-form-field appearance="fill">
                 <mat-label>Message</mat-label>
                 <textarea matInput
-                        cdkTextareaAutosize
-                        cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="15"
-                        placeholder=""
-                        formControlName="message"></textarea>
+                          cdkTextareaAutosize
+                          cdkAutosizeMinRows="1"
+                          cdkAutosizeMaxRows="15"
+                          placeholder=""
+                          formControlName="message"></textarea>
                 <mat-error>{{getErrorMessage('message')}}</mat-error>
                 <mat-hint>{{messageMaxLength - message.value.length}}/{{messageMaxLength}}</mat-hint>
                 <button mat-icon-button
