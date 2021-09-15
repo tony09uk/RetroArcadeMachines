@@ -10,8 +10,10 @@
                        formControlName="firstName">
                 <mat-error>{{getErrorMessage('firstName')}}</mat-error>
                 <button mat-icon-button
+                        *ngIf="firstName.value"
+                        (click)="clearField('firstName')"
                         matSuffix>
-                    <mat-icon>visibility</mat-icon>
+                    <mat-icon>clear</mat-icon>
                 </button>
             </mat-form-field>
             <mat-form-field appearance="fill">
@@ -21,10 +23,13 @@
                        formControlName="lastName">
                 <mat-error>{{getErrorMessage('lastName')}}</mat-error>
                 <button mat-icon-button
+                        *ngIf="lastName.value"
+                        (click)="clearField('lastName')"
                         matSuffix>
-                    <mat-icon>visibility</mat-icon>
+                    <mat-icon>clear</mat-icon>
                 </button>
             </mat-form-field>
+
             <mat-form-field appearance="fill">
                 <mat-label>Email</mat-label>
                 <input matInput
@@ -32,8 +37,10 @@
                        formControlName="email">
                 <mat-error>{{getErrorMessage('email')}}</mat-error>
                 <button mat-icon-button
+                        *ngIf="email.value"
+                        (click)="clearField('email')"
                         matSuffix>
-                    <mat-icon>visibility</mat-icon>
+                    <mat-icon>clear</mat-icon>
                 </button>
             </mat-form-field>
             <mat-form-field appearance="fill">
@@ -43,21 +50,36 @@
                        formControlName="subject">
                 <mat-error>{{getErrorMessage('subject')}}</mat-error>
                 <button mat-icon-button
+                        *ngIf="subject.value"
+                        (click)="clearField('subject')"
                         matSuffix>
-                    <mat-icon>visibility</mat-icon>
+                    <mat-icon>clear</mat-icon>
                 </button>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Message</mat-label>
-                <input matInput
-                       placeholder=""
-                       formControlName="message">
-                <mat-error *ngIf="email.invalid">{{getErrorMessage('message')}}</mat-error>
+                <textarea matInput
+                        cdkTextareaAutosize
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="15"
+                        placeholder=""
+                        formControlName="message"></textarea>
+                <mat-error>{{getErrorMessage('message')}}</mat-error>
+                <mat-hint>{{messageMaxLength - message.value.length}}/{{messageMaxLength}}</mat-hint>
                 <button mat-icon-button
+                        *ngIf="message.value"
+                        (click)="clearField('message')"
                         matSuffix>
-                    <mat-icon>visibility</mat-icon>
+                    <mat-icon>clear</mat-icon>
                 </button>
             </mat-form-field>
+            <button mat-raised-button
+                    color="primary"
+                    type="submit"
+                    matSuffix>
+                Send
+                <mat-icon>send</mat-icon>
+            </button>
         </form>
     </mat-card>
 </app-banner-section>

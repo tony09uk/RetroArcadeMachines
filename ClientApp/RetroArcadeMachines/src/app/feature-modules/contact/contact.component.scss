@@ -1,0 +1,34 @@
+$phone-width: 750px;
+
+.hidden {
+    visibility: none;
+}
+
+form {
+    mat-form-field {
+        width: 100%;
+        &:nth-child(1) {
+            margin-right: 2%;
+            
+            @media (max-width: #{$phone-width}) {
+                margin-right: 0%;
+            }
+        }
+
+        &:nth-child(1),
+        &:nth-child(2) {
+            width: 49%;
+
+            @media (max-width: #{$phone-width}) {
+                width: 100%;
+            }
+        }
+    }
+
+    button {
+        width: 100px;
+        margin-left: auto;
+        margin-right: 0px;
+        display: block;
+    }
+}

@@ -30,7 +30,7 @@ namespace RetroArcadeMachines.Shared.Models.Validation
             RuleFor(x => x.Subject)
                 .NotEmpty().WithMessage(ValidationMessageHelper.ForNotEmpty(nameof(ContactFormRequestModel.Subject)))
                 .MinimumLength(2).WithMessage("'{PropertyName}' must have a minimum of 2 charaters")
-                .MaximumLength(20).WithMessage("'{PropertyName}' must have a maximum of 20 charaters")
+                .MaximumLength(100).WithMessage("'{PropertyName}' must have a maximum of 100 charaters")
                 .Matches(_alphaNumericWithSpecialCharPattern).WithMessage("'{PropertyName}' must only contain alphanumeric charaters and a limited set of special charaters");
 
             RuleFor(x => x.Message)

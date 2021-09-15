@@ -14,6 +14,7 @@ import { ContactFormService } from './services/contact-form.service';
 export class ContactComponent implements OnInit {
   form: FormGroup;
   isSaving: boolean = false;
+  messageMaxLength: number = ContactFormFieldsService.messageMaxLength;
   firstName: AbstractControl;
   lastName: AbstractControl;
   email: AbstractControl;
@@ -41,8 +42,16 @@ export class ContactComponent implements OnInit {
       );
   }
 
+  clearField(name: string): void {
+    const control = this.form.get(name);
+    if (!control) {
+      return;
+    }
+    control.setValue('');
+  }
+
   getErrorMessage(fieldName: string): string {
-    return 'test';
+    return this._contactFormService.getErrorMessage(this.form, fieldName);
   }
 
 }

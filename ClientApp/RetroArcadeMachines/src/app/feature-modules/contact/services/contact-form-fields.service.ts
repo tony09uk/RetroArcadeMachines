@@ -86,13 +86,13 @@ export class ContactFormFieldsService {
                 errorMessageList: {
                     required: this._messageService.required(this.uiFieldNameSubject),
                     minlength: this._messageService.minLength(this.uiFieldNameSubject, 2),
-                    maxlength: this._messageService.maxLength(this.uiFieldNameSubject, 20),
+                    maxlength: this._messageService.maxLength(this.uiFieldNameSubject, 100),
                     pattern: this._messageService.pattern(this.uiFieldNameSubject),
                 },
                 validators: [
                     Validators.required,
                     Validators.minLength(2),
-                    Validators.maxLength(20),
+                    Validators.maxLength(100),
                     Validators.pattern(this._alphaNumericWithSpecialCharPattern)
                 ]
             },
@@ -101,10 +101,10 @@ export class ContactFormFieldsService {
                 friendlyName: this.uiFieldNameMessage,
                 defaultValues: '',
                 errorMessageList: {
-                    required: this._messageService.required(this.uiFieldNameSubject),
-                    minlength: this._messageService.minLength(this.uiFieldNameSubject, 10),
-                    maxlength: this._messageService.maxLength(this.uiFieldNameSubject, ContactFormFieldsService.messageMaxLength),
-                    pattern: this._messageService.pattern(this.uiFieldNameSubject),
+                    required: this._messageService.required(this.uiFieldNameMessage),
+                    minlength: this._messageService.minLength(this.uiFieldNameMessage, 10),
+                    maxlength: this._messageService.maxLength(this.uiFieldNameMessage, ContactFormFieldsService.messageMaxLength),
+                    pattern: this._messageService.pattern(this.uiFieldNameMessage),
                 },
                 validators: [
                     Validators.required,
