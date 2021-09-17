@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import {MatTableModule} from '@angular/material/table';
 
-import { ComingSoonModule } from '@shared/modules/coming-soon/coming-soon.module';
-import { PipesModule } from '@shared/pipes/pipes.module';
-import { ElementsModule } from '@shared/modules/elements/elements.module';
+import { ComingSoonModule } from '@core/modules/coming-soon/coming-soon.module';
+import { PipesModule } from 'src/app/core/pipes/pipes.module';
+import { ElementsModule } from '@core/modules/elements/elements.module';
 import { GridModule } from '@core/modules/grid/grid.module';
 
 import { RoadmapRoutingModule as RoadmapRoutingModule } from './roadmap-routing.module';

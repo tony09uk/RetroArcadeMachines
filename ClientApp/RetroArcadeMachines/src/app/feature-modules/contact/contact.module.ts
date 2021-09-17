@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
-import { LoadingModule } from '@shared/modules/loading/loading.module';
-import { ElementsModule } from '@shared/modules/elements/elements.module';
+import { LoadingModule } from '@core/modules/loading/loading.module';
+import { ElementsModule } from '@core/modules/elements/elements.module';
 
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactComponent } from './contact.component';

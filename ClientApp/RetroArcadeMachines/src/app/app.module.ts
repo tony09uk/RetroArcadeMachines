@@ -7,8 +7,8 @@ import { RuntimeConfigLoaderModule } from 'runtime-config-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderModule } from './shared/modules/header/header.module';
-import { FooterModule } from './shared/modules/footer/footer.module';
+import { HeaderModule } from './core/modules/header/header.module';
+import { FooterModule } from './core/modules/footer/footer.module';
 
 @NgModule({
   declarations: [

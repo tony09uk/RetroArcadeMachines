@@ -5,7 +5,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HeroComponent } from './hero/hero.component';
 import { AboutComponent } from './about/about.component';
 import { MoreInfoComponent } from './more-info/more-info.component';
-import { ElementsModule } from '@shared/modules/elements/elements.module';
+import { ElementsModule } from '@core/modules/elements/elements.module';
 
 @NgModule({
   declarations: [

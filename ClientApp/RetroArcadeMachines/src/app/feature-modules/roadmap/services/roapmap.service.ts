@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/internal/Observable';
 
-import { YesNoPipe } from '@shared/pipes/yes-no.pipe';
+import { YesNoPipe } from '@core/pipes/yes-no.pipe';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 import { HttpService } from '@core/services/http.service';
 import { GridDataFactoryService } from '@core/modules/grid/services/grid-data-factory.service';

@@ -9,10 +9,8 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 })
 export class SpinnerComponent implements OnInit {
 
-  @Input()
-  isContainedByParent: boolean = false;
-  @Input()
-  show: boolean = false;
+  @Input() isContainedByParent: boolean = false;
+  @Input() show: boolean = false;
 
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';

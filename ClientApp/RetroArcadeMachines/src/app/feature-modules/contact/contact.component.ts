@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
+
 import { ContactFormRequest } from './models/contact-form.model';
 import { ContactFormFieldsService } from './services/contact-form-fields.service';
 import { ContactFormService } from './services/contact-form.service';
@@ -32,6 +33,11 @@ export class ContactComponent implements OnInit {
     this.message = this.form.get(ContactFormFieldsService.message);
   }
 
+  // todo: remove all material components into shared library
+  // todo: create success message for user
+  // todo: show toastr on failure
+  // todo: restrict sendgrid token
+  // todo: deploy and test
   onSubmit(): void {
     this.isSaving = true;
     this._contactFormService
