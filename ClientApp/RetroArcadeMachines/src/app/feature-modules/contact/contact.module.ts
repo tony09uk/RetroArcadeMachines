@@ -13,7 +13,7 @@ import { ElementsModule } from '@core/modules/elements/elements.module';
 
 import { ContactRoutingModule } from './contact-routing.module';
 import { ContactComponent } from './contact.component';
-
+import { FormModule } from '@core/modules/form/form.module';
 
 @NgModule({
   declarations: [ContactComponent],
@@ -24,6 +24,7 @@ import { ContactComponent } from './contact.component';
     FormsModule,
     ElementsModule,
     LoadingModule,
+    FormModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

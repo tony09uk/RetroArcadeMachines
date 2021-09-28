@@ -30,6 +30,13 @@ export class ContactFormService {
         });
     }
 
+    getErrorMessages(fieldName: string): { [key: string]: string } {
+        const fieldType = this._contactFormFieldsService.fieldType(fieldName);
+        const fieldDefinition = this.getProperty<ContactForm, keyof ContactForm>(this._contactFormFieldsService.get(), fieldType) as FormField;
+
+        return fieldDefinition.errorMessageList;
+    }
+
     getErrorMessage(form: FormGroup, fieldName: string): string {
         const formField = form.get(fieldName);
         if (!formField.errors){

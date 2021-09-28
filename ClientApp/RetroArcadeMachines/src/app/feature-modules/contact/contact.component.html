@@ -1,86 +1,43 @@
 <app-banner-section>
-    <mat-card>
-        <app-spinner [show]="isSaving"></app-spinner>
-        <form *ngIf="form"
-              [formGroup]="form"
-              (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="fill">
-                <mat-label>Firstname</mat-label>
-                <input matInput
-                       placeholder="John"
-                       formControlName="firstName">
-                <mat-error>{{getErrorMessage('firstName')}}</mat-error>
-                <button mat-icon-button
-                        *ngIf="firstName.value"
-                        (click)="clearField('firstName')"
-                        matSuffix>
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Lastname</mat-label>
-                <input matInput
-                       placeholder="Doe"
-                       formControlName="lastName">
-                <mat-error>{{getErrorMessage('lastName')}}</mat-error>
-                <button mat-icon-button
-                        *ngIf="lastName.value"
-                        (click)="clearField('lastName')"
-                        matSuffix>
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <mat-label>Email</mat-label>
-                <input matInput
-                       placeholder="pat@example.com"
-                       formControlName="email">
-                <mat-error>{{getErrorMessage('email')}}</mat-error>
-                <button mat-icon-button
-                        *ngIf="email.value"
-                        (click)="clearField('email')"
-                        matSuffix>
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Subject</mat-label>
-                <input matInput
-                       placeholder="Idea"
-                       formControlName="subject">
-                <mat-error>{{getErrorMessage('subject')}}</mat-error>
-                <button mat-icon-button
-                        *ngIf="subject.value"
-                        (click)="clearField('subject')"
-                        matSuffix>
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Message</mat-label>
-                <textarea matInput
-                          cdkTextareaAutosize
-                          cdkAutosizeMinRows="1"
-                          cdkAutosizeMaxRows="15"
-                          placeholder=""
-                          formControlName="message"></textarea>
-                <mat-error>{{getErrorMessage('message')}}</mat-error>
-                <mat-hint>{{messageMaxLength - message.value.length}}/{{messageMaxLength}}</mat-hint>
-                <button mat-icon-button
-                        *ngIf="message.value"
-                        (click)="clearField('message')"
-                        matSuffix>
-                    <mat-icon>clear</mat-icon>
-                </button>
-            </mat-form-field>
-            <button mat-raised-button
-                    color="primary"
-                    type="submit"
-                    matSuffix>
-                Send
-                <mat-icon>send</mat-icon>
-            </button>
-        </form>
-    </mat-card>
+  <mat-card>
+    <form [formGroup]="form">
+      <app-input formControlName="firstName"
+                 label="First name"
+                 placeholder="John"
+                 [errorMessages]="firstNameErrorMessages"></app-input>
+      <app-input formControlName="lastName"
+                 label="Last name"
+                 placeholder="Doe"
+                 [errorMessages]="lastNameErrorMessages"></app-input>
+      <app-input formControlName="email"
+                 label="Email address"
+                 placeholder="john.doe@example.com"
+                 [errorMessages]="emailErrorMessages"></app-input>
+      <app-input formControlName="subject"
+                 label="Subject"
+                 placeholder="Site improvement"
+                 [errorMessages]="subjectErrorMessages"></app-input>
+      <app-textarea formControlName="message"
+                    label="Message"
+                    placeholder="Your message here..."
+                    [errorMessages]="messageErrorMessages"></app-textarea>
+      <!-- <mat-form-field appearance="fill">
+        <mat-label>Message</mat-label>
+        <textarea matInput
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="15"
+                  placeholder=""
+                  formControlName="message"></textarea>
+        <mat-error>{{getErrorMessage('message')}}</mat-error>
+        <mat-hint>{{messageMaxLength - message.value.length}}/{{messageMaxLength}}</mat-hint>
+        <button mat-icon-button
+                *ngIf="message.value"
+                (click)="clearField('message')"
+                matSuffix>
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-form-field> -->
+    </form>
+  </mat-card>
 </app-banner-section>

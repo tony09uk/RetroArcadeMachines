@@ -1,39 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { forwardRef } from '@angular/core';
+import { Component } from '@angular/core';
+import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BaseinputDirective } from '../baseinput.directive';
 
 @Component({
   selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  templateUrl: 'input.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: InputComponent
+      useExisting: forwardRef(() => InputComponent)
     }
   ]
 })
-export class InputComponent implements ControlValueAccessor, OnInit {
+export class InputComponent extends BaseinputDirective {
 
-  @Input() appearance: MatFormFieldAppearance = 'fill';
-  @Input() formControl: AbstractControl;
-  @Input() labelText: string;
-  @Input() placeholderText: string;
-
-  ngOnInit(): void {
-  }
-
-  writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
-  }
-  registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
-  }
-  registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
-  }
+  constructor(controlContainer: ControlContainer) {
+    super(controlContainer);
+   }
 }
