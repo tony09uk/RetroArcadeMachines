@@ -15,7 +15,6 @@ import { BaseinputDirective } from '../baseinput.directive';
   ]
 })
 export class InputComponent extends BaseinputDirective {
-
   constructor(controlContainer: ControlContainer) {
     super(controlContainer);
    }

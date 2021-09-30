@@ -1,31 +1,33 @@
-$phone-width: 750px;
+$non-desktop: 750px;
 
 .hidden {
     visibility: none;
 }
 
 form {
-    mat-form-field {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .field {
         width: 100%;
-        &:nth-child(1) {
-            margin-right: 2%;
-            
-            @media (max-width: #{$phone-width}) {
-                margin-right: 0%;
-            }
+
+        &:nth-child(2) {
+            margin-left: auto;
         }
 
         &:nth-child(1),
         &:nth-child(2) {
-            width: 49%;
+            justify-content: space-around;
+            width: calc(49%);
 
-            @media (max-width: #{$phone-width}) {
+            @media (max-width: #{$non-desktop}) {
                 width: 100%;
             }
         }
     }
 
-    button {
+    .submitButton {
         width: 100px;
         margin-left: auto;
         margin-right: 0px;

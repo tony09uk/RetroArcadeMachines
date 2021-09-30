@@ -1,43 +1,34 @@
 <app-banner-section>
-  <mat-card>
+  <app-card>
     <form [formGroup]="form">
-      <app-input formControlName="firstName"
+      <app-input class="field"
+                 formControlName="firstName"
                  label="First name"
                  placeholder="John"
                  [errorMessages]="firstNameErrorMessages"></app-input>
-      <app-input formControlName="lastName"
+      <app-input class="field"
+                 formControlName="lastName"
                  label="Last name"
                  placeholder="Doe"
                  [errorMessages]="lastNameErrorMessages"></app-input>
-      <app-input formControlName="email"
+      <app-input class="field"
+                 formControlName="email"
                  label="Email address"
                  placeholder="john.doe@example.com"
                  [errorMessages]="emailErrorMessages"></app-input>
-      <app-input formControlName="subject"
+      <app-input class="field"
+                 formControlName="subject"
                  label="Subject"
                  placeholder="Site improvement"
                  [errorMessages]="subjectErrorMessages"></app-input>
-      <app-textarea formControlName="message"
+      <app-textarea class="field"
+                    formControlName="message"
                     label="Message"
                     placeholder="Your message here..."
                     [errorMessages]="messageErrorMessages"></app-textarea>
-      <!-- <mat-form-field appearance="fill">
-        <mat-label>Message</mat-label>
-        <textarea matInput
-                  cdkTextareaAutosize
-                  cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="15"
-                  placeholder=""
-                  formControlName="message"></textarea>
-        <mat-error>{{getErrorMessage('message')}}</mat-error>
-        <mat-hint>{{messageMaxLength - message.value.length}}/{{messageMaxLength}}</mat-hint>
-        <button mat-icon-button
-                *ngIf="message.value"
-                (click)="clearField('message')"
-                matSuffix>
-          <mat-icon>clear</mat-icon>
-        </button>
-      </mat-form-field> -->
+      <app-button class="submitButton"
+                  text="Submit"
+                  icon="send"></app-button>
     </form>
-  </mat-card>
+  </app-card>
 </app-banner-section>

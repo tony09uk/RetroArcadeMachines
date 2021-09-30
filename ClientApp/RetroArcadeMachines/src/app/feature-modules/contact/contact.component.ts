@@ -46,9 +46,6 @@ export class ContactComponent implements OnInit {
     this.messageErrorMessages = this._contactFormService.getErrorMessages(ContactFormFieldsService.message);
   }
 
-  // todo: remove all material components into shared library
-    // create textarea reusable control
-    // create button reusable control
   // todo: style form
   // todo: create success message for user
   // todo: show toastr on failure
