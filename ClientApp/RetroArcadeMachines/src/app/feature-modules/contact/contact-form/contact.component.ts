@@ -59,7 +59,6 @@ export class ContactComponent implements OnInit {
     this.messageErrorMessages = this._contactFormService.getErrorMessages(ContactFormFieldsService.message);
   }
 
-  // todo: deploy and test
   onSubmit(): void {
     this.isSaving = true;
     this._contactFormService
