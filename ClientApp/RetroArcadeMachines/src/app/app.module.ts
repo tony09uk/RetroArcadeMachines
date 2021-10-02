@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from './core/modules/header/header.module';
 import { FooterModule } from './core/modules/footer/footer.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FooterModule } from './core/modules/footer/footer.module';
       { configUrl: './assets/config.json' }
     ),
     FooterModule,
-    HeaderModule
+    HeaderModule,
+    MatSnackBarModule // todo: conditionally load any mat...modules
   ],
   providers: [],
   bootstrap: [AppComponent]

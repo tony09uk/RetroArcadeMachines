@@ -1,9 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { finalize, take } from 'rxjs/operators';
-import { ContactFormRequest } from '../models/contact-form.model';
 
+import { finalize, take } from 'rxjs/operators';
+
+import { AlertService } from '@core/services/alert.service';
+
+import { ContactFormRequest } from '../models/contact-form.model';
 import { ContactFormFieldsService } from '../services/contact-form-fields.service';
 import { ContactFormService } from '../services/contact-form.service';
 
@@ -37,7 +40,9 @@ export class ContactComponent implements OnInit {
   subjectErrorMessages: { [key: string]: string };
   messageErrorMessages: { [key: string]: string };
 
-  constructor(private _contactFormService: ContactFormService, private _host: ElementRef) { }
+  constructor(
+    private _contactFormService: ContactFormService,
+    private _alertService: AlertService) { }
 
   ngOnInit(): void {
     this.form = this._contactFormService.getForm();
@@ -54,8 +59,6 @@ export class ContactComponent implements OnInit {
     this.messageErrorMessages = this._contactFormService.getErrorMessages(ContactFormFieldsService.message);
   }
 
-  // todo: show toastr on failure -> create userMessageService
-  // todo: restrict sendgrid token ???
   // todo: deploy and test
   onSubmit(): void {
     this.isSaving = true;
@@ -67,7 +70,7 @@ export class ContactComponent implements OnInit {
       )
       .subscribe(
         (response: boolean) => { this.isFormSubmissionSuccessful = response; },
-        (error: HttpErrorResponse) => { console.log('Show toastr'); }
+        (error: HttpErrorResponse) => { this._alertService.error('An unexpected error occurred'); }
       );
   }
 
