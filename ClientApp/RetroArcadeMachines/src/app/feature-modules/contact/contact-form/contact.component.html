@@ -1,6 +1,12 @@
 <app-banner-section>
   <app-card>
-    <form [formGroup]="form">
+    <app-spinner [show]="isSaving"
+                 [isContainedByParent]="true"></app-spinner>
+    <app-submitted-message *ngIf="isFormSubmissionSuccessful"></app-submitted-message>
+    <form [formGroup]="form"
+          [ngStyle]="{'visibility': showForm ? 'visible' : 'hidden'}"
+          *ngIf="showForm"
+          (ngSubmit)="onSubmit()">
       <app-input class="field"
                  formControlName="firstName"
                  label="First name"

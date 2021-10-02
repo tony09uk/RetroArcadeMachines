@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { finalize, take } from 'rxjs/operators';
+import { ContactFormRequest } from '../models/contact-form.model';
 
-import { ContactFormRequest } from './models/contact-form.model';
-import { ContactFormFieldsService } from './services/contact-form-fields.service';
-import { ContactFormService } from './services/contact-form.service';
+import { ContactFormFieldsService } from '../services/contact-form-fields.service';
+import { ContactFormService } from '../services/contact-form.service';
 
 @Component({
   selector: 'app-contact',
@@ -15,7 +16,14 @@ import { ContactFormService } from './services/contact-form.service';
 export class ContactComponent implements OnInit {
   form: FormGroup;
   isSaving: boolean = false;
+  isFormSubmissionSuccessful: boolean = false;
   messageMaxLength: number = ContactFormFieldsService.messageMaxLength;
+  get showForm(): boolean {
+    if (this.isFormSubmissionSuccessful) {
+      return false;
+    }
+    return !this.isFormSubmissionSuccessful && !this.isSaving;
+  }
 
   firstName: AbstractControl;
   lastName: AbstractControl;
@@ -29,7 +37,7 @@ export class ContactComponent implements OnInit {
   subjectErrorMessages: { [key: string]: string };
   messageErrorMessages: { [key: string]: string };
 
-  constructor(private _contactFormService: ContactFormService) { }
+  constructor(private _contactFormService: ContactFormService, private _host: ElementRef) { }
 
   ngOnInit(): void {
     this.form = this._contactFormService.getForm();
@@ -46,23 +54,24 @@ export class ContactComponent implements OnInit {
     this.messageErrorMessages = this._contactFormService.getErrorMessages(ContactFormFieldsService.message);
   }
 
-  // todo: style form
-  // todo: create success message for user
-  // todo: show toastr on failure
-  // todo: restrict sendgrid token
+  // todo: show toastr on failure -> create userMessageService
+  // todo: restrict sendgrid token ???
   // todo: deploy and test
-  // onSubmit(): void {
-  //   this.isSaving = true;
-  //   this._contactFormService
-  //     .submit(this.form.value as ContactFormRequest)
-  //     .subscribe(
-  //       (response: boolean) => { console.log('Trigger sent message'); },
-  //       (error: HttpErrorResponse) => { console.log('Show toastr'); }
-  //     );
-  // }
+  onSubmit(): void {
+    this.isSaving = true;
+    this._contactFormService
+      .submit(this.form.value as ContactFormRequest)
+      .pipe(
+        take(1),
+        finalize(() => this.isSaving = false)
+      )
+      .subscribe(
+        (response: boolean) => { this.isFormSubmissionSuccessful = response; },
+        (error: HttpErrorResponse) => { console.log('Show toastr'); }
+      );
+  }
 
   getErrorMessage(fieldName: string): string {
     return this._contactFormService.getErrorMessage(this.form, fieldName);
   }
-
 }

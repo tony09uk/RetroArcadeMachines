@@ -1,4 +1,5 @@
 <div *ngIf="show"
+     [style.height.px]="parentHeight"
      [class.mask-overlay]="!isContainedByParent"
      [class.container]="isContainedByParent">
      <mat-progress-spinner class="center"
