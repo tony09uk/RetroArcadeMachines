@@ -14,27 +14,27 @@ using RetroArcadeMachines.Services.Read;
 
 namespace RetroArcadeMachines.AzureFunctions.Read
 {
-    public static class LocationsHttpTriggerFunction
+    public class LocationOverviewHttpTriggerFunction
     {
-        [FunctionName("Locations")]
+        private readonly ILocationOverviewService _locationsService;
+
+        public LocationOverviewHttpTriggerFunction(ILocationOverviewService locationsService)
+        {
+            _locationsService = locationsService;
+        }
+
+        [FunctionName("LocationsOverview")]
         [OpenApiOperation(operationId: "Run", tags: new[] { "name" })]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
         [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public static async Task<IActionResult> Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            string name = req.Query["name"];
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            var locationsSerive = new LocationsService();
-            var result = await locationsSerive.Get();
+            var result = await _locationsService.Get();
 
             return new OkObjectResult(result);
         }

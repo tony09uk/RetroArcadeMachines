@@ -1,9 +1,11 @@
 export interface Address {
     id: string;
-    line1: string;
-    line2: string;
+    lineOne: string;
+    lineTwo: string;
+    lineThree: string;
+    town: string;
     postcode1: string;
     postcode2: string;
-    xLoc: string;
-    yLoc: string;
 }
+
+

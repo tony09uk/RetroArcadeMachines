@@ -10,16 +10,22 @@ import { HttpService } from '@core/services/http.service';
 
 import { LocationOverview } from '../models/location-overview.model';
 import { LocationOverviewTable } from '../models/location-overview-table.model';
+import { LocationDetails } from '../models/location-details.model';
+import { of } from 'rxjs';
+import { Address } from '../models/address.model';
+import { DaysOfTheWeek } from '../models/days-of-the-week.enum';
+import { GameOverview } from 'src/app/shared/models/game-overview.model';
+import { PhoneNumber } from '../models/phone-number.model';
 
 @Injectable()
-export class LocationService extends GridDataFactoryService {
+export class LocationOverviewService extends GridDataFactoryService {
 
     constructor(httpService: HttpService) {
         super(httpService);
-     }
+    }
 
     get(): Observable<GridConfig<LocationOverview>> {
-        return this.create<LocationOverview, LocationOverviewTable>('locations', this.createColumnHeaders());
+        return this.create<LocationOverview, LocationOverviewTable>('locationsOverview', this.createColumnHeaders());
     }
 
     private createColumnHeaders(): LocationOverviewTable {

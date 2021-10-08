@@ -3,20 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/internal/operators/take';
 
 import { LocationOverview } from '../models/location-overview.model';
-import { LocationService } from '../services/location.service';
+import { LocationOverviewService } from '../services/location-overview.service';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-locations-overview',
   templateUrl: './locations-overview.component.html',
   styleUrls: ['./locations-overview.component.scss'],
-  providers: [ LocationService ]
+  providers: [ LocationOverviewService ]
 })
 export class LocationsOverviewComponent implements OnInit {
 
   table: GridConfig<LocationOverview>;
 
-  constructor(private _locationService: LocationService) { }
+  constructor(
+    private _router: Router,
+    private _locationService: LocationOverviewService) { }
 
   ngOnInit(): void {
     this._locationService
@@ -28,5 +31,9 @@ export class LocationsOverviewComponent implements OnInit {
         (value: GridConfig<LocationOverview>) => { this.table = value; },
         (error: any) => { console.log(error); }
       );
+  }
+
+  onRowClick(row: LocationOverview): void {
+    this._router.navigate(['locations/details', row.id ]);
   }
 }

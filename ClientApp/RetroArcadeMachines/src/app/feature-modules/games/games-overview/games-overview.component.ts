@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 
 import { GamesService } from '../services/games.service';
-import { GameOverview } from '../models/game-overview.model';
+import { GameOverview } from '../../../shared/models/game-overview.model';
 
 @Component({
   selector: 'app-games-overview',

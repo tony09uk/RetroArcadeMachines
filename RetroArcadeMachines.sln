@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Data.Wr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Write", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write\RetroArcadeMachines.AzureFunctions.Write.csproj", "{E350875C-1FE5-4CAE-84D4-6AC8EA646B90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Services.Write", "Src\RetroArcadeMachines.Services.Write\RetroArcadeMachines.Services.Write.csproj", "{1E61816D-666B-49EF-BF6B-BAFBC8CAF931}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Services.Write", "Src\RetroArcadeMachines.Services.Write\RetroArcadeMachines.Services.Write.csproj", "{1E61816D-666B-49EF-BF6B-BAFBC8CAF931}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Shared.Models", "Src\RetroArcadeMachines.Shared.Models\RetroArcadeMachines.Shared.Models.csproj", "{CC2A46F9-9A12-4732-9707-1823CE3E7158}"
 EndProject

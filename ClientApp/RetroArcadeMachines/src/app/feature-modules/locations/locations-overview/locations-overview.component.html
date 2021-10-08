@@ -1,4 +1,5 @@
 <app-banner-section>
     <app-grid *ngIf="table"
-               [gridConfig]="table"></app-grid>
+               [gridConfig]="table"
+               (rowClickedEvent)="onRowClick($event)"></app-grid>
 </app-banner-section>

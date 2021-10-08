@@ -6,12 +6,6 @@ using RetroArcadeMachines.Services.Read;
 [assembly: FunctionsStartup(typeof(RetroArcadeMachines.AzureFunctions.Read.Startup))]
 namespace RetroArcadeMachines.AzureFunctions.Read
 {
-    public class MyOptions
-    {
-        public string MyCustomSetting { get; set; }
-    }
-
-    //https://docs.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection
     public class Startup : FunctionsStartup
     {
         public override void Configure(IFunctionsHostBuilder builder)
@@ -20,6 +14,8 @@ namespace RetroArcadeMachines.AzureFunctions.Read
 
             builder.Services.AddScoped<IRoadmapService, RoadmapService>();
             builder.Services.AddScoped<IGamesService, GamesService>();
+            builder.Services.AddScoped<ILocationOverviewService, LocationOverviewService>();
+            builder.Services.AddScoped<ILocationDetailsService, LocationDetailsService>();
 
             var configuration = builder.GetContext().Configuration;
             builder.Services.AddRetroArcadeMachinesDataRead(configuration);

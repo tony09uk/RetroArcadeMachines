@@ -1,12 +1,11 @@
 ﻿using RetroArcadeMachines.Services.Read.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace RetroArcadeMachines.Services.Read
 {
-    public class LocationsService
+    public class LocationOverviewService : ILocationOverviewService
     {
         public async Task<IEnumerable<LocationOverviewDto>> Get()
         {
@@ -23,6 +22,13 @@ namespace RetroArcadeMachines.Services.Read
                     IsFoodServed = true
                 }
             };
+        }
+
+        public async Task<LocationOverviewDto> Get(int locationOverviewId)
+        {
+            // todo: get this value from the DB
+            IEnumerable<LocationOverviewDto> item = await Get();
+            return item.FirstOrDefault(x => x.Id == locationOverviewId);
         }
     }
 }
