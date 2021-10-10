@@ -1,11 +1,14 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
+using RetroArcadeMachines.AWS.DynamoDB.Generator.CustomExceptions;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
+
     abstract class BaseTableInitialiser
     {
         private readonly IAmazonDynamoDB _dynamoDBClient;
@@ -23,14 +26,14 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             return _tableName;
         }
 
-        protected async Task Create(string identifier, string sortKey, string attributeName)
+        protected async Task Create(string identifier, string sortKey, string attributeName, Type model)
         {
             try
             {
                 Console.WriteLine($"Creating table: {_tableName}");
                 var request = new CreateTableRequest
                 {
-                    AttributeDefinitions = CreateAttributeDefiniationList(identifier, attributeName),
+                    AttributeDefinitions = CreateAttributeDefiniationList(identifier, attributeName, model),
                     KeySchema = CreateKeySchemaList(identifier, sortKey),
                     ProvisionedThroughput = SetProvisionedThroughput(),
                     TableName = _tableName
@@ -47,21 +50,42 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 
         public abstract Task<bool> Seed();
 
-        private List<AttributeDefinition> CreateAttributeDefiniationList(string identifier, string attributeName)
+        private List<AttributeDefinition> CreateAttributeDefiniationList(string identifier, string attributeName, Type model)
         {
+            PropertyInfo identifierInfo = model.GetProperty(attributeName);
+            PropertyInfo attributeNameInfo = model.GetProperty(attributeName);
+            
             return new List<AttributeDefinition>
             {
                 new AttributeDefinition
                 {
                     AttributeName = identifier,
-                    AttributeType = ScalarAttributeType.S
+                    AttributeType = GetScalarAttributeType(identifierInfo)
                 },
                 new AttributeDefinition
                 {
                     AttributeName = attributeName,
-                    AttributeType = ScalarAttributeType.N // todo: change this to read the taype passed in and map accordingly
+                    AttributeType = GetScalarAttributeType(attributeNameInfo)
                 }
             };
+        }
+
+        private ScalarAttributeType GetScalarAttributeType(PropertyInfo info)
+        {
+            if(info.PropertyType == typeof(string))
+            {
+                return ScalarAttributeType.S;
+            }
+            if (info.PropertyType == typeof(int))
+            {
+                return ScalarAttributeType.N;
+            }
+            if (info.PropertyType == typeof(bool))
+            {
+                return ScalarAttributeType.B;
+            }
+
+            throw new CreateAttributeDefiniationException($"{info.Name} must be a type of string, int or bool. You have provided the type {info.PropertyType}");
         }
 
         /// <summary>

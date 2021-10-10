@@ -26,6 +26,8 @@ namespace RetroArcadeMachines.Data.Write
             services.AddSingleton<IWriteRepository<GameModel>, DynamoDbGamesRepository>();
             services.AddSingleton<IWriteRepository<DeveloperModel>, DynamoDbDevelopersRepository>();
             services.AddSingleton<IWriteRepository<GenreModel>, DynamoDbGenreRepository>();
+            services.AddSingleton<IWriteRepository<LocationDetailsModel>, DynamoDbLocationDetailsRepository>();
+            services.AddSingleton<IWriteRepository<LocationOverviewModel>, DynamoDbLocationOverviewRepository>();
 
             return services;
         }

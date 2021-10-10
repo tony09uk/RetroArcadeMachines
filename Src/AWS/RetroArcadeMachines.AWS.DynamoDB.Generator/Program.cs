@@ -37,6 +37,8 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                     .AddSingleton<ISeedTable<GameModel>, SeedGamesTable>()
                     .AddSingleton<ISeedTable<GenreModel>, SeedGenresTable>()
                     .AddSingleton<ISeedTable<RoadmapItemModel>, SeedRoadmapsTable>()
+                    .AddSingleton<ISeedTable<LocationDetailsModel>, SeedLocationDetailsTable>()
+                    .AddSingleton<ISeedTable<LocationOverviewModel>, SeedLocationOverviewTable>()
                     .AddSingleton<IInitialiser, Initialiser>()
                     .BuildServiceProvider();
         }

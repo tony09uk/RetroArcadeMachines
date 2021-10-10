@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RetroArcadeMachines.Shared.Models;
+using System.Collections.Generic;
 
 namespace RetroArcadeMachines.Services.Read.Models
 {
@@ -9,9 +10,9 @@ namespace RetroArcadeMachines.Services.Read.Models
         public string Website { get; set; }
         public string Lat { get; set; }
         public string Lng { get; set; }
-        public Address Address { get; set; }
-        public IEnumerable<PhoneNumber> PhoneNumberList { get; set; }
-        public IEnumerable<BusinessHours> BusinessHoursList { get; set; }
+        public AddressModel Address { get; set; }
+        public IEnumerable<PhoneNumberModel> PhoneNumberList { get; set; }
+        public IEnumerable<BusinessHoursModel> BusinessHoursList { get; set; }
         public IEnumerable<GameOverviewDto> GameOverviewList { get; set; }
         public IEnumerable<string> ImageUrlList { get; set; }
     }

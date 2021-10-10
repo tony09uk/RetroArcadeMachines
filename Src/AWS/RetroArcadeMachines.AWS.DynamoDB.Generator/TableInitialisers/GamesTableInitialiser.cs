@@ -22,7 +22,11 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 
         public async Task Create()
         {
-            await base.Create(nameof(GameModel.Id), nameof(GameModel.ReleaseYear), nameof(GameModel.ReleaseYear));
+            await base.Create(
+                    nameof(GameModel.Id),
+                    nameof(GameModel.ReleaseYear),
+                    nameof(GameModel.ReleaseYear),
+                    typeof(GameModel));
         }
 
         public override Task<bool> Seed()

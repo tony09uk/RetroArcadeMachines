@@ -34,6 +34,14 @@ namespace RetroArcadeMachines.AzureFunctions.Read
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
+            //todo: seed DB with some locationoverview && locationDetails data
+            //todo: run the table initalizer script
+            //todo: call locationsOverview from swagger
+            //todo: fix errors
+            //todo: call locatiosnDetails from swagger
+            //todo: fix errors
+            //todo: resolve other todo's as found
+            //todo: call both endpoints from UI
             var result = await _locationsService.Get();
 
             return new OkObjectResult(result);

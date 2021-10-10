@@ -22,7 +22,11 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 
         public async Task Create()
         {
-            await base.Create(nameof(GenreModel.Id), nameof(GenreModel.Random), nameof(GenreModel.Random));//todo: change this to use name and remove random from the mdoel
+            await base.Create(
+                    nameof(GenreModel.Id),
+                    nameof(GenreModel.Random),
+                    nameof(GenreModel.Random),
+                    typeof(GenreModel));
         }
 
         public override Task<bool> Seed()

@@ -22,12 +22,16 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 
         public async Task Create()
         {
-            await base.Create(nameof(RoadmapItemModel.Id), nameof(RoadmapItemModel.PercentageCompleted), nameof(RoadmapItemModel.PercentageCompleted));
+            await base.Create(
+                    nameof(RoadmapItemModel.Id),
+                    nameof(RoadmapItemModel.PercentageCompleted),
+                    nameof(RoadmapItemModel.PercentageCompleted),
+                    typeof(RoadmapItemModel));
         }
 
-        public override async Task<bool> Seed()
+        public override Task<bool> Seed()
         {
-            return await _roadmapRepository.AddMany(_seedTable.Data());
+            return _roadmapRepository.AddMany(_seedTable.Data());
         }
     }
 }

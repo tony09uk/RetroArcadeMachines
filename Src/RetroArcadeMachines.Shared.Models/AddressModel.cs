@@ -1,6 +1,9 @@
-﻿namespace RetroArcadeMachines.Services.Read.Models
+﻿namespace RetroArcadeMachines.Shared.Models
 {
-    public class Address
+    // todo:
+    // need to create a convention that will help identify the model is not expected to change
+    // or grow differenlty to the dto classes
+    public class AddressModel
     {
         public string LineOne { get; set; }
         public string LineTwo { get; set; }

@@ -7,6 +7,8 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RetroArcadeMachines.Services.Read;
+using RetroArcadeMachines.Services.Read.Models;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -32,7 +34,7 @@ namespace RetroArcadeMachines.AzureFunctions.Read
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var result = await _gamesService.Get();
+            IEnumerable<GameOverviewDto> result = await _gamesService.Get();
 
             return new OkObjectResult(result);
         }

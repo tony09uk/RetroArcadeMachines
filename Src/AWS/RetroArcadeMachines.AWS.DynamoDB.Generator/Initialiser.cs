@@ -26,7 +26,8 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                 var dataEntryList = new List<Task>();
                 foreach (var tableInitialiser in _tableInitialisers)
                 {
-                    if (IsTableCreationRequired(tableList.TableNames, tableInitialiser.TableName()))
+                    string tableName = tableInitialiser.TableName();
+                    if (IsTableCreationRequired(tableList.TableNames, tableName))
                     {
                         await tableInitialiser.Create();
                         Task addData = tableInitialiser.Seed();
@@ -34,7 +35,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                     }
                     else
                     {
-                        Console.WriteLine($"{tableInitialiser.TableName()} already exists");
+                        Console.WriteLine($"{tableName} already exists");
                     }
                 }
 

@@ -1,4 +1,4 @@
-﻿namespace RetroArcadeMachines.Services.Read.Models
+﻿namespace RetroArcadeMachines.Shared.Models
 {
     public enum DaysOfTheWeek
     {

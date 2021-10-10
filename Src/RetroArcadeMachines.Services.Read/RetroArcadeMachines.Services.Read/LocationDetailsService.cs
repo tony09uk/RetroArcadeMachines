@@ -1,4 +1,5 @@
 ﻿using RetroArcadeMachines.Services.Read.Models;
+using RetroArcadeMachines.Shared.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -32,28 +33,28 @@ namespace RetroArcadeMachines.Services.Read
                 Synopsis = "This is where information on the location would be added. It can be long or short and is added by the user",
                 EmailAddress = "info@.arcadeclub.co.uk",
                 Website = "https://www.arcadeclub.co.uk/leeds",
-                Address = new Address
+                Address = new AddressModel
                 {
                     LineOne = "Unit 3, Abbey Retail Park",
                     LineTwo = "Savins Mill Way",
-                    LineThree = ", Kirkstall",
+                    LineThree = "Kirkstall",
                     Town = "Leeds",
                     Postcode1 = "LS5",
                     Postcode2 = "3RP"
                 },
-                PhoneNumberList = new List<PhoneNumber>
+                PhoneNumberList = new List<PhoneNumberModel>
                 {
-                    new PhoneNumber { stdCode = "01482", number = "212380" }
+                    new PhoneNumberModel { StdCode = "01482", Number = "212380" }
                 },
-                BusinessHoursList = new List<BusinessHours>
+                BusinessHoursList = new List<BusinessHoursModel>
                 {
-                    new BusinessHours { DayOfTheWeek = DaysOfTheWeek.Monday, OpeningTime = null, ClosingTime = null },
-                    new BusinessHours { DayOfTheWeek = DaysOfTheWeek.Tuesday, OpeningTime = null, ClosingTime = null },
-                    new BusinessHours { DayOfTheWeek = DaysOfTheWeek.Wednesday, OpeningTime = null, ClosingTime = null },
-                    new BusinessHours { DayOfTheWeek = DaysOfTheWeek.Thursday, OpeningTime = "16:00", ClosingTime = "23:00" },
-                    new BusinessHours { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "18:00", ClosingTime = "00:00" },
-                    new BusinessHours { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "23:00" },
-                    new BusinessHours { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "20:00" }
+                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Monday, OpeningTime = null, ClosingTime = null },
+                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Tuesday, OpeningTime = null, ClosingTime = null },
+                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Wednesday, OpeningTime = null, ClosingTime = null },
+                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Thursday, OpeningTime = "16:00", ClosingTime = "23:00" },
+                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "18:00", ClosingTime = "00:00" },
+                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "23:00" },
+                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "20:00" }
                 },
                 GameOverviewList = new List<GameOverviewDto>
                 {
