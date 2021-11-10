@@ -26,6 +26,11 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             return _tableName;
         }
 
+        protected async Task Create(string identifier, Type model)
+        {
+            await Create(identifier, null, null, model);
+        }
+
         protected async Task Create(string identifier, string sortKey, string attributeName, Type model)
         {
             try
@@ -52,27 +57,35 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 
         private List<AttributeDefinition> CreateAttributeDefiniationList(string identifier, string attributeName, Type model)
         {
-            PropertyInfo identifierInfo = model.GetProperty(attributeName);
-            PropertyInfo attributeNameInfo = model.GetProperty(attributeName);
+            PropertyInfo identifierInfo = model.GetProperty(identifier);
             
-            return new List<AttributeDefinition>
+            var attrListDef = new List<AttributeDefinition>
             {
                 new AttributeDefinition
                 {
-                    AttributeName = identifier,
+                    AttributeName = identifierInfo.PropertyType == typeof(Guid) ? identifier.ToString() : identifier,
                     AttributeType = GetScalarAttributeType(identifierInfo)
-                },
-                new AttributeDefinition
+                }
+            };
+
+            if(attributeName != null)
+            {
+                PropertyInfo attributeNameInfo = model.GetProperty(attributeName);
+
+                var sortKey = new AttributeDefinition
                 {
                     AttributeName = attributeName,
                     AttributeType = GetScalarAttributeType(attributeNameInfo)
-                }
-            };
+                };
+                attrListDef.Add(sortKey);
+            }
+
+            return attrListDef;
         }
 
         private ScalarAttributeType GetScalarAttributeType(PropertyInfo info)
         {
-            if(info.PropertyType == typeof(string))
+            if(info.PropertyType == typeof(string) || info.PropertyType == typeof(Guid))
             {
                 return ScalarAttributeType.S;
             }
@@ -85,7 +98,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                 return ScalarAttributeType.B;
             }
 
-            throw new CreateAttributeDefiniationException($"{info.Name} must be a type of string, int or bool. You have provided the type {info.PropertyType}");
+            throw new CreateAttributeDefiniationException($"{info.Name} must be a type of string, Guid, int or bool. You have provided the type {info.PropertyType}");
         }
 
         /// <summary>
@@ -96,19 +109,26 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         /// <returns>List<KeySchemaElement></returns>
         private List<KeySchemaElement> CreateKeySchemaList(string partitionKey, string sortKey)
         {
-            return new List<KeySchemaElement>
+            var elements = new List<KeySchemaElement>
             {
                 new KeySchemaElement
                 {
                     AttributeName = partitionKey,
                     KeyType = KeyType.HASH
-                },
-                new KeySchemaElement
+                }
+            };
+
+            if(sortKey != null)
+            {
+                var sortElement = new KeySchemaElement
                 {
                     AttributeName = sortKey,
                     KeyType = KeyType.RANGE //sort key
-                }
-            };
+                };
+                elements.Add(sortElement);
+            }
+
+            return elements;
         }
 
         private ProvisionedThroughput SetProvisionedThroughput()

@@ -3,7 +3,7 @@ using RetroArcadeMachines.Shared.Models;
 
 namespace RetroArcadeMachines.Data.Read.AWS
 {
-    public class DynamoDbLocationDetailsRepository : DynamoDbBaseRepository<DeveloperModel>
+    public class DynamoDbLocationDetailsRepository : DynamoDbBaseRepository<LocationDetailsModel>
     {
         public const string TableName = "LocationsDetails";
 

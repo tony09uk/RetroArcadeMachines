@@ -47,8 +47,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             catch (Exception ex)
             {
                 Console.WriteLine($"Creating table: {ex}");
-
-                throw ex;
+                throw;
             }
         }
 

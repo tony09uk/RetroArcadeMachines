@@ -32,8 +32,15 @@ namespace RetroArcadeMachines.Services.Read
             }
             catch (Exception ex) //todo: watch for the expected exceptions only
             {
-                throw ex;
+                throw;
             }
+        }
+
+        public async Task<IEnumerable<GameOverviewDto>> Get(IDictionary<string, string> searchElements)
+        {
+            IEnumerable<GameModel> games = await _gamesRepository.Get(searchElements);
+            var gameOverviewItems = _mapper.Map<IEnumerable<GameOverviewDto>>(games);
+            return gameOverviewItems.OrderBy(x => x.Title);
         }
     }
 }

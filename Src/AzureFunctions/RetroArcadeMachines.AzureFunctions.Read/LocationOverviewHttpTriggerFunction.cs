@@ -16,17 +16,16 @@ namespace RetroArcadeMachines.AzureFunctions.Read
 {
     public class LocationOverviewHttpTriggerFunction
     {
-        private readonly ILocationOverviewService _locationsService;
+        private readonly ILocationOverviewService _locationsOverviewService;
 
-        public LocationOverviewHttpTriggerFunction(ILocationOverviewService locationsService)
+        public LocationOverviewHttpTriggerFunction(ILocationOverviewService locationsOverviewService)
         {
-            _locationsService = locationsService;
+            _locationsOverviewService = locationsOverviewService;
         }
 
         [FunctionName("LocationsOverview")]
         [OpenApiOperation(operationId: "Run", tags: new[] { "name" })]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-        [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
@@ -34,15 +33,13 @@ namespace RetroArcadeMachines.AzureFunctions.Read
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            //todo: seed DB with some locationoverview && locationDetails data
-            //todo: run the table initalizer script
             //todo: call locationsOverview from swagger
             //todo: fix errors
             //todo: call locatiosnDetails from swagger
             //todo: fix errors
             //todo: resolve other todo's as found
             //todo: call both endpoints from UI
-            var result = await _locationsService.Get();
+            var result = await _locationsOverviewService.Get();
 
             return new OkObjectResult(result);
         }

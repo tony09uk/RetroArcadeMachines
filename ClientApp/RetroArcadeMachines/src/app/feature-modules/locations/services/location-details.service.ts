@@ -23,11 +23,7 @@ export class LocationDetailsService extends GridDataFactoryService {
     }
 
     get(id: string): Observable<LocationDetails> {
-        let params = new HttpParams().set('id', id);
-
-        //get obs LocationDetails
-        //add GridConfig<GameOverview>
-        //rtn LocationDetails
+        const params = new HttpParams().set('id', id);
 
         return this._httpService
             .get<LocationDetails>('LocationDetails', params)
@@ -35,49 +31,6 @@ export class LocationDetailsService extends GridDataFactoryService {
                 take(1),
                 mergeMap((response: LocationDetails) => this.getGamesCollectionTable(response)),
             );
-
-        const details = {
-            id: '1', // todo: change to number
-            name: 'Game Club', //
-            isRetroGamesOnly: true,
-            entryPrice: 5.99, //
-            rating: 4, //
-            town: 'Leeds', //
-            isChildFriendly: true,
-            isFoodServed: true,
-            address: { //
-                lineOne: 'Unit 3, Abbey Retail Park',
-                lineTwo: 'Savins Mill Way',
-                lineThree: 'Kirkstall',
-                town: 'Leeds',
-                postcode1: 'LS5',
-                postcode2: '3RP'
-            } as Address,
-            lat: '53.8155546',
-            lng: '-1.6034085',
-            phoneNumberList: [ //
-                { stdCode: '01482', number: '212380' } as PhoneNumber
-            ],
-            businessHoursList: [ //
-                { dayOfTheWeek: DaysOfTheWeek.Monday, openingTime: null, closingTime: null },
-                { dayOfTheWeek: DaysOfTheWeek.Tuesday, openingTime: null, closingTime: null },
-                { dayOfTheWeek: DaysOfTheWeek.Wednesday, openingTime: null, closingTime: null },
-                { dayOfTheWeek: DaysOfTheWeek.Thursday, openingTime: '16:00', closingTime: '23:00' },
-                { dayOfTheWeek: DaysOfTheWeek.Friday, openingTime: '18:00', closingTime: '00:00' },
-                { dayOfTheWeek: DaysOfTheWeek.Saturday, openingTime: '11:00', closingTime: '23:00' },
-                { dayOfTheWeek: DaysOfTheWeek.Sunday, openingTime: '11:00', closingTime: '20:00' }
-            ],
-            gameOverviewList: [
-                { id: 1, title: 'Time Crisis' } as GameOverview,
-                { id: 2, title: 'Afterburner' } as GameOverview,
-                { id: 3, title: 'Crazy Taxi' } as GameOverview,
-                { id: 4, title: 'Outrun' } as GameOverview,
-            ],
-            imageUrlList: ['https://via.placeholder.com/1142x440'], //
-            synopsis: 'This is where information on the location would be added. It can be long or short and is added by the user',
-            emailAddress: 'info@.arcadeclub.co.uk', //
-            website: 'https://www.arcadeclub.co.uk/leeds' //
-        } as LocationDetails;
     }
 
     private getGamesCollectionTable(locationDetails: LocationDetails): Observable<LocationDetails> {

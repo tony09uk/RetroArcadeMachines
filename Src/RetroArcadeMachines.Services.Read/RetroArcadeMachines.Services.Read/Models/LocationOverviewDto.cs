@@ -1,8 +1,10 @@
-﻿namespace RetroArcadeMachines.Services.Read.Models
+﻿using System;
+
+namespace RetroArcadeMachines.Services.Read.Models
 {
     public class LocationOverviewDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public bool IsRetroGamesOnly { get; set; }
         public string Town { get; set; }

@@ -1,5 +1,9 @@
-﻿using RetroArcadeMachines.Services.Read.Models;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
+using RetroArcadeMachines.Data.Read.Interfaces;
+using RetroArcadeMachines.Services.Read.Models;
 using RetroArcadeMachines.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,66 +12,56 @@ namespace RetroArcadeMachines.Services.Read
     public class LocationDetailsService : ILocationDetailsService
     {
         private readonly ILocationOverviewService _locationOverviewService;
+        private readonly IReadRepository<LocationDetailsModel> _locationDetailsRepository;
+        private readonly IGamesService _gamesService;
+        private readonly IMapper _mapper;
 
-        public LocationDetailsService(ILocationOverviewService locationOverviewService)
+        public LocationDetailsService(
+            ILocationOverviewService locationOverviewService,
+            IReadRepository<LocationDetailsModel> locationDetailsRepository,
+            IMapper mapper,
+            IGamesService gamesService)
         {
-            _locationOverviewService = locationOverviewService;
+            _locationOverviewService = Guard.Against.Null(locationOverviewService, nameof(locationOverviewService), nameof(ILocationOverviewService));
+            _locationDetailsRepository = Guard.Against.Null(locationDetailsRepository, nameof(locationDetailsRepository), nameof(IReadRepository<LocationDetailsModel>));
+            _mapper = Guard.Against.Null(mapper, nameof(mapper), nameof(IMapper));
+            _gamesService = Guard.Against.Null(gamesService, nameof(gamesService), nameof(IReadRepository<GameModel>));
         }
 
-        public async Task<LocationDetailsDto> Get(int locationOverviewId)
+        public async Task<LocationDetailsDto> Get(Guid locationOverviewId)
         {
-            //todo: should only pass location overview.Id and will call different repos to build this data
-            // locationOverview
-            // locationDetails
-            // locationDetails will return list of game id's then call games overview
-            var locationOverview = await _locationOverviewService.Get(locationOverviewId);
-            return new LocationDetailsDto
+            try
             {
-                Id = locationOverview.Id,
-                Name = locationOverview.Name,
-                EntryPrice = locationOverview.EntryPrice,
-                Rating = locationOverview.Rating,
-                Town = locationOverview.Town,
-                IsChildFriendly = locationOverview.IsChildFriendly,
-                IsFoodServed = locationOverview.IsFoodServed,
-                Synopsis = "This is where information on the location would be added. It can be long or short and is added by the user",
-                EmailAddress = "info@.arcadeclub.co.uk",
-                Website = "https://www.arcadeclub.co.uk/leeds",
-                Address = new AddressModel
-                {
-                    LineOne = "Unit 3, Abbey Retail Park",
-                    LineTwo = "Savins Mill Way",
-                    LineThree = "Kirkstall",
-                    Town = "Leeds",
-                    Postcode1 = "LS5",
-                    Postcode2 = "3RP"
-                },
-                PhoneNumberList = new List<PhoneNumberModel>
-                {
-                    new PhoneNumberModel { StdCode = "01482", Number = "212380" }
-                },
-                BusinessHoursList = new List<BusinessHoursModel>
-                {
-                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Monday, OpeningTime = null, ClosingTime = null },
-                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Tuesday, OpeningTime = null, ClosingTime = null },
-                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Wednesday, OpeningTime = null, ClosingTime = null },
-                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Thursday, OpeningTime = "16:00", ClosingTime = "23:00" },
-                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "18:00", ClosingTime = "00:00" },
-                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "23:00" },
-                    new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "20:00" }
-                },
-                GameOverviewList = new List<GameOverviewDto>
-                {
-                    new GameOverviewDto { Title = "Time Crisis"}
-                },
-                ImageUrlList = new List<string>
-                {
-                    "https://via.placeholder.com/1142x440",
-                },
-                IsRetroGamesOnly = true,
-                Lat = "53.8155546",
-                Lng = "-1.6034085"
-            };
+                Task<LocationOverviewDto> locationOverviewTask = _locationOverviewService.Get(locationOverviewId);
+                Task<LocationDetailsModel> locationDetailsTask = _locationDetailsRepository.Get(locationOverviewId);
+
+                await Task.WhenAll(locationOverviewTask, locationDetailsTask);
+
+                IEnumerable<GameOverviewDto> gamesList = 
+                    await _gamesService.Get(locationDetailsTask.Result.GameOverviewList).ConfigureAwait(false);
+
+                var locationDetails = _mapper.Map<LocationDetailsDto>(locationDetailsTask.Result);
+                locationDetails.GameOverviewList = gamesList;
+                Map(locationOverviewTask.Result, locationDetails);
+
+                return locationDetails;
+            } 
+            catch(Exception ex) // todo: watch for specific exception types
+            {
+                throw;
+            }
+
+        }
+
+        private void Map(LocationOverviewDto locationsOverview, LocationDetailsDto locationsDetails)
+        {
+            locationsDetails.Name = locationsOverview.Name;
+            locationsDetails.IsRetroGamesOnly = locationsOverview.IsRetroGamesOnly;
+            locationsDetails.Town = locationsOverview.Town;
+            locationsDetails.EntryPrice = locationsOverview.EntryPrice;
+            locationsDetails.Rating = locationsOverview.Rating;
+            locationsDetails.IsChildFriendly = locationsOverview.IsChildFriendly;
+            locationsDetails.IsFoodServed = locationsOverview.IsFoodServed;
         }
     }
 }

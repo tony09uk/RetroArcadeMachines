@@ -39,9 +39,9 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                         new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "23:00" },
                         new BusinessHoursModel { DayOfTheWeek = DaysOfTheWeek.Friday, OpeningTime = "11:00", ClosingTime = "20:00" }
                     },
-                    GameOverviewList = new List<Guid>
+                    GameOverviewList = new Dictionary<string, string>
                     {
-                        new Guid("63c8e8a3-d9e9-4660-8a36-86e241929cb3")
+                        { new Guid("63c8e8a3-d9e9-4660-8a36-86e241929cb3").ToString(), "1989" }
                     },
                     ImageUrlList = new List<string>
                     {

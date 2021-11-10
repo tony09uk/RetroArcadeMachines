@@ -24,8 +24,6 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         {
             await base.Create(
                     nameof(LocationOverviewModel.Id),
-                    nameof(LocationOverviewModel.Town),
-                    nameof(LocationOverviewModel.Town),
                     typeof(LocationOverviewModel));
         }
 

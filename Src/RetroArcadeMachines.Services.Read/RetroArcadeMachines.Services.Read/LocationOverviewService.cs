@@ -5,6 +5,8 @@ using System.Linq;
 using RetroArcadeMachines.Data.Read.Interfaces;
 using AutoMapper;
 using RetroArcadeMachines.Shared.Models;
+using System;
+using Ardalis.GuardClauses;
 
 namespace RetroArcadeMachines.Services.Read
 {
@@ -17,36 +19,28 @@ namespace RetroArcadeMachines.Services.Read
             IMapper mapper,
             IReadRepository<LocationOverviewModel> locationOverviewRepository)
         {
-            //todo: gurd against null!
-            _mapper = mapper;
-            _locationOverviewRepository = locationOverviewRepository;
+            _mapper = Guard.Against.Null(mapper, nameof(mapper), nameof(IMapper));
+            _locationOverviewRepository = Guard.Against.Null(locationOverviewRepository, nameof(locationOverviewRepository), nameof(IReadRepository<LocationOverviewModel>));
         }
 
         public async Task<IEnumerable<LocationOverviewDto>> Get()
         {
-            // todo: handle exception
-            IEnumerable<LocationOverviewModel> locationOverviewModelList = await _locationOverviewRepository.Get();
-            return _mapper.Map<IEnumerable<LocationOverviewDto>>(locationOverviewModelList);
-            //return new List<LocationOverviewDto>
-            //{
-            //    new LocationOverviewDto
-            //    {
-            //        Id = 1,
-            //        Name = "Game Club",
-            //        EntryPrice = 5.99M,
-            //        Rating = 4,
-            //        Town = "Leeds",
-            //        IsChildFriendly = true,
-            //        IsFoodServed = true
-            //    }
-            //};
+            try
+            {
+                IEnumerable<LocationOverviewModel> locationOverviewModelList = await _locationOverviewRepository.Get();
+                return _mapper.Map<IEnumerable<LocationOverviewDto>>(locationOverviewModelList);
+            }
+            catch(Exception ex) // todo: define the specific exceptions are expected
+            {
+                // todo: add logging
+                throw;
+            }
         }
 
-        public async Task<LocationOverviewDto> Get(int locationOverviewId)
+        public async Task<LocationOverviewDto> Get(Guid locationOverviewId)
         {
-            // todo: get this value from the DB
-            IEnumerable<LocationOverviewDto> item = await Get();
-            return item.FirstOrDefault(x => x.Id == locationOverviewId);
+            LocationOverviewModel locationOverview = await _locationOverviewRepository.Get(locationOverviewId);
+            return _mapper.Map<LocationOverviewDto>(locationOverview);
         }
     }
 }

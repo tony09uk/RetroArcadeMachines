@@ -16,7 +16,7 @@ namespace RetroArcadeMachines.Shared.Models
         public AddressModel Address { get; set; }
         public List<PhoneNumberModel> PhoneNumberList { get; set; }
         public List<BusinessHoursModel> BusinessHoursList { get; set; }
-        public List<Guid> GameOverviewList { get; set; }
+        public Dictionary<string, string> GameOverviewList { get; set; }
         public List<string> ImageUrlList { get; set; }
     }
 }

@@ -11,7 +11,8 @@ namespace RetroArcadeMachines.Services.Read
             CreateMap<RoadmapItemModel, RoadmapItemDto>();
             CreateMap<GameModel, GameOverviewDto>();
             CreateMap<LocationOverviewModel, LocationOverviewDto>();
-            CreateMap<LocationDetailsModel, LocationDetailsDto>();
+            CreateMap<LocationDetailsModel, LocationDetailsDto>()
+                .ForMember(x => x.GameOverviewList, opt => opt.Ignore());
         }
     }
 }

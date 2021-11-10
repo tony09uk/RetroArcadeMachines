@@ -1,108 +1,114 @@
-<app-banner-section>
-    <section class="blog_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 blog_sidebar_left">
-                    <div class="blog_single mb_50">
-                        <!-- <carousel [images]="images" [height]="440" cellWidth="100%" [dots]="true" >
+<div *ngIf="locationsDetails">
+    <app-banner-section>
+        <section class="blog_area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 blog_sidebar_left">
+                        <div class="blog_single mb_50">
+                            <!-- <carousel [images]="images" [height]="440" cellWidth="100%" [dots]="true" >
                         </carousel> -->
-                        <img class="img-fluid"
-                             src="{{locationsDetails.imageUrlList[0]}}"
-                             alt="">
-                        <div class="blog_content">
-                            <div class="post_date">
-                                <h2>{{locationsDetails.rating}}/5</h2>
-                            </div>
-                            <div class="entry_post_info">
-                                {{locationsDetails.name}}
-                            </div>
-                            <div class="post_share">
-                                <div class="post-nam"> Entry price: {{locationsDetails.entryPrice}}</div>
-                                <div class="flex">
-                                    <a href="#" (click)="scrollTo('addressContainer')"><i class="ti-home"></i>Address</a>
-                                    <a href="#" (click)="scrollTo('phoneNumberContainer')"><i class="ti-mobile"></i>Phone</a>
-                                    <a href="#" (click)="scrollTo('openHoursContainer')"><i class="ti-time"></i>Opening hours</a>
-                                    <a [href]="locationsDetails.website" target="_blank"><i class="ti-world"></i>Website</a>
-                                    <a href="#" (click)="scrollTo('gameCollectionContainer')"><i class="ti-game"></i>Game collection</a>
+                            <!--todo: provide a default image when no image in list do this check in the service-->
+                            <img *ngIf="locationsDetails.imageUrlList[0]" class="img-fluid"
+                                src="{{locationsDetails.imageUrlList[0]}}" alt="">
+                            <div class="blog_content">
+                                <div class="post_date">
+                                    <h2>{{locationsDetails.rating}}/5</h2>
+                                </div>
+                                <div class="entry_post_info">
+                                    {{locationsDetails.name}}
+                                </div>
+                                <div class="post_share">
+                                    <div class="post-nam"> Entry price: {{locationsDetails.entryPrice}}</div>
+                                    <div class="flex">
+                                        <a href="#" (click)="scrollTo('addressContainer')"><i
+                                                class="ti-home"></i>Address</a>
+                                        <a href="#" (click)="scrollTo('phoneNumberContainer')"><i
+                                                class="ti-mobile"></i>Phone</a>
+                                        <a href="#" (click)="scrollTo('openHoursContainer')"><i
+                                                class="ti-time"></i>Opening hours</a>
+                                        <a [href]="locationsDetails.website" target="_blank"><i
+                                                class="ti-world"></i>Website</a>
+                                        <a href="#" (click)="scrollTo('gameCollectionContainer')"><i
+                                                class="ti-game"></i>Game collection</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+    </app-banner-section>
+    <section class="blog_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 f_400 mb-30">
+                    <p>{{locationsDetails.synopsis}}</p>
+                </div>
+                <div id="gameCollectionContainer" class="col-8 blog_sidebar_left">
+                    <app-grid *ngIf="locationsDetails.gameCollectionTable"
+                        [gridConfig]="locationsDetails.gameCollectionTable" (rowClickedEvent)="onRowClick($event)">
+                    </app-grid>
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog-sidebar">
+                        <div id="openHoursContainer" class="widget sidebar_widget widget_categorie">
+                            <div class="widget_title">
+                                <h3 class="f_p f_size_20 t_color3">Opening Hours</h3>
+                                <div class="border_bottom"></div>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li *ngFor="let item of locationsDetails.businessHoursList">
+                                    <a>
+                                        <span>{{DaysOfTheWeek[item.dayOfTheWeek]}}</span>
+                                        <em>{{formatOpeningHours(item.openingTime, item.closingTime)}}</em>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="blog-sidebar">
+                        <div id="phoneNumberContainer" class="widget sidebar_widget widget_categorie mt_60">
+                            <div class="widget_title">
+                                <h3 class="f_p f_size_20 t_color3">Phone number</h3>
+                                <div class="border_bottom"></div>
+                            </div>
+                            <ul class="list-unstyled" *ngFor="let item of locationsDetails.phoneNumberList">
+                                <li>
+                                    <a href="tel:{{item.stdCode}} {{item.number}}"><span>{{item.stdCode}}
+                                            {{item.number}}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="blog-sidebar">
+                        <div id="addressContainer" class="widget sidebar_widget widget_categorie mt_60">
+                            <div class="widget_title">
+                                <h3 class="f_p f_size_20 t_color3">Address</h3>
+                                <div class="border_bottom"></div>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a><span>{{locationsDetails.address.lineOne}}</span></a>
+                                </li>
+                                <li>
+                                    <a><span>{{locationsDetails.address.lineTwo}}</span></a>
+                                </li>
+                                <li>
+                                    <a><span>{{locationsDetails.address.lineThree}}</span></a>
+                                </li>
+                                <li>
+                                    <a><span>{{locationsDetails.address.town}}</span></a>
+                                </li>
+                                <li>
+                                    <a><span>{{locationsDetails.address.postcode1}}
+                                            {{locationsDetails.address.postcode2}}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-</app-banner-section>
-<section class="blog_area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 f_400 mb-30">
-                <p>{{locationsDetails.synopsis}}</p>
-            </div>
-            <div id="gameCollectionContainer" class="col-8 blog_sidebar_left">
-                <app-grid *ngIf="locationsDetails.gameCollectionTable"
-                          [gridConfig]="locationsDetails.gameCollectionTable"
-                          (rowClickedEvent)="onRowClick($event)"></app-grid>
-            </div>
-            <div class="col-lg-4">
-                <div class="blog-sidebar">
-                    <div id="openHoursContainer" class="widget sidebar_widget widget_categorie">
-                        <div class="widget_title">
-                            <h3 class="f_p f_size_20 t_color3">Opening Hours</h3>
-                            <div class="border_bottom"></div>
-                        </div>
-                        <ul class="list-unstyled">
-                            <li *ngFor="let item of locationsDetails.businessHoursList">
-                                <a>
-                                    <span>{{DaysOfTheWeek[item.dayOfTheWeek]}}</span>
-                                    <em>{{formatOpeningHours(item.openingTime, item.closingTime)}}</em>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="blog-sidebar">
-                    <div id="phoneNumberContainer" class="widget sidebar_widget widget_categorie mt_60">
-                        <div class="widget_title">
-                            <h3 class="f_p f_size_20 t_color3">Phone number</h3>
-                            <div class="border_bottom"></div>
-                        </div>
-                        <ul class="list-unstyled"
-                            *ngFor="let item of locationsDetails.phoneNumberList">
-                            <li>
-                                <a href="tel:{{item.stdCode}} {{item.number}}"><span>{{item.stdCode}}
-                                        {{item.number}}</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="blog-sidebar">
-                    <div id="addressContainer" class="widget sidebar_widget widget_categorie mt_60">
-                        <div class="widget_title">
-                            <h3 class="f_p f_size_20 t_color3">Address</h3>
-                            <div class="border_bottom"></div>
-                        </div>
-                        <ul class="list-unstyled">
-                            <li>
-                                <a><span>{{locationsDetails.address.lineOne}}</span></a>
-                            </li>
-                            <li>
-                                <a><span>{{locationsDetails.address.lineTwo}}</span></a>
-                            </li>
-                            <li>
-                                <a><span>{{locationsDetails.address.lineThree}}</span></a>
-                            </li>
-                            <li>
-                                <a><span>{{locationsDetails.address.town}}</span></a>
-                            </li>
-                            <li>
-                                <a><span>{{locationsDetails.address.postcode1}}
-                                        {{locationsDetails.address.postcode2}}</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+</div>

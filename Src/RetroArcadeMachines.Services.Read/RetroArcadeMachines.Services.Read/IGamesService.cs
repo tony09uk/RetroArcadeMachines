@@ -7,5 +7,6 @@ namespace RetroArcadeMachines.Services.Read
     public interface IGamesService
     {
         Task<IEnumerable<GameOverviewDto>> Get();
+        Task<IEnumerable<GameOverviewDto>> Get(IDictionary<string, string> searchElements);
     }
 }
