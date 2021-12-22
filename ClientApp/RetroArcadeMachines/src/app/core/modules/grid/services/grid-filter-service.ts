@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { map, uniq, property, dropWhile, min, max } from 'lodash';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/internal/Subject';
+import { Observable, Subject } from 'rxjs';
 import { FilterTypes } from '../enums/filter-types.enum';
 
 import { Column } from '../models/column.model';
