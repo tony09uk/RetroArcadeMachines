@@ -23,7 +23,6 @@
     "@angular/platform-browser": "~12.2.15",
     "@angular/platform-browser-dynamic": "~12.2.15",
     "@angular/router": "~12.2.15",
-    "angular-responsive-carousel": "^2.1.2",
     "angularx-social-login": "^3.5.7",
     "lodash": "^4.17.21",
     "ngx-google-places-autocomplete": "^2.0.5",
