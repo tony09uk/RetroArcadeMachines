@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'locations', loadChildren: () => import('./feature-modules/locations/locations.module').then(h => h.LocationsModule) },
   { path: 'tasks', loadChildren: () => import('./feature-modules/site-tasks/site-tasks.module').then(h => h.SiteTasksModule) },
   { path: 'contact', loadChildren: () => import('./feature-modules/contact/contact.module').then(h => h.ContactModule) },
+  { path: 'auth', loadChildren: () => import('./feature-modules/authentication/authentication.module').then(h => h.AuthenticationModule) },
   { path: '**', loadChildren: () => import('./feature-modules/not-found/not-found.module').then(h => h.NotFoundModule) },
 ];
 

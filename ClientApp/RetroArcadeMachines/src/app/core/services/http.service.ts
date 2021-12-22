@@ -54,6 +54,10 @@ export class HttpService {
     }
 
     private createUrl(baseUrl: string, url: string): string {
+        if (url.includes('https://') || url.includes('http://')) {
+            return url;
+        }
+
         return baseUrl + url;
     }
 }

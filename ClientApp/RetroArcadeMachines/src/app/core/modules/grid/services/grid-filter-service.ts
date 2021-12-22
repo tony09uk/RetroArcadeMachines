@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import * as _ from 'lodash'; // todo: only import required items, use below
 import { map, uniq, property, dropWhile, min, max } from 'lodash';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
@@ -65,15 +64,15 @@ export class GridFilterService {
     }
 
     private getData(data: any, propertyName: string, filterType: FilterTypes): string[] {
-        let uniqueValue: string[] = _.uniq<string>(_.map(data, _.property(propertyName)));
-        uniqueValue = _.dropWhile(uniqueValue, (o) => o === null);
+        let uniqueValue: string[] = uniq<string>(map(data, property(propertyName)));
+        uniqueValue = dropWhile(uniqueValue, (o) => o === null);
 
         if (filterType === FilterTypes.NumberRange) {
             const numberRange: number[] = [];
 
             const range = uniqueValue.map(v => Number(v));
-            numberRange.push(_.min(range));
-            numberRange.push(_.max(range));
+            numberRange.push(min(range));
+            numberRange.push(max(range));
 
             uniqueValue = numberRange.map(String);
         }

@@ -10,18 +10,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { TextareaComponent } from './textarea/textarea.component';
 import { BaseinputDirective } from './baseinput.directive';
 import { InputComponent } from './input/input.component';
+import { GooglePlacesInputComponent } from './input/google-places-input/google-places-input.component';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 
 @NgModule({
   declarations: [
     InputComponent,
     TextareaComponent,
-    BaseinputDirective
+    BaseinputDirective,
+    GooglePlacesInputComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    GooglePlaceModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -29,7 +33,8 @@ import { InputComponent } from './input/input.component';
   ],
   exports: [
     InputComponent,
-    TextareaComponent
+    TextareaComponent,
+    GooglePlacesInputComponent,
   ]
 })
 export class FormModule { }

@@ -1,19 +1,19 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs';
+import { map, mergeMap, take, tap } from 'rxjs/operators';
+
 import { CellContentTypes } from '@core/modules/grid/enums/cell-content-types.enum';
 import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 import { HeaderItem } from '@core/modules/grid/models/header-item';
 import { GridDataFactoryService } from '@core/modules/grid/services/grid-data-factory.service';
 import { HttpService } from '@core/services/http.service';
-import { Observable } from 'rxjs';
-import { map, mergeMap, take, tap } from 'rxjs/operators';
 import { GameOverview } from 'src/app/shared/models/game-overview.model';
-import { Address } from '../models/address.model';
-import { DaysOfTheWeek } from '../models/days-of-the-week.enum';
+
 import { GamesCollectionTable } from '../models/games-collection-table.model';
 import { LocationDetails } from '../models/location-details.model';
-import { PhoneNumber } from '../models/phone-number.model';
 
 @Injectable()
 export class LocationDetailsService extends GridDataFactoryService {

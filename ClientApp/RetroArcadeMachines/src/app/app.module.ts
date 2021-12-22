@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { RuntimeConfigLoaderModule } from 'runtime-config-loader';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { FacebookLoginProvider } from 'angularx-social-login';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from './core/modules/header/header.module';
 import { FooterModule } from './core/modules/footer/footer.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { ConfigService } from '@core/services/config.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SocialLoginModule,
     HttpClientModule,
     BrowserAnimationsModule,
     RuntimeConfigLoaderModule.forRoot(
@@ -27,7 +34,22 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HeaderModule,
     MatSnackBarModule // todo: conditionally load any mat...modules
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(environment.facebookAppId)
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

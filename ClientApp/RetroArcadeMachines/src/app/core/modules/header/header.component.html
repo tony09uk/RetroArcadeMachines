@@ -30,7 +30,15 @@
           <li class="nav-item"><a class="nav-link" href="/locations">Locations</a></li>
           <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
         </ul>
-        <!-- <a class="btn_get btn_hover" href="#get-app">Sign In</a> -->
+        <ng-template [ngIf]="!isLoggedIn" [ngIfElse]="loggedIn">
+          <a class="btn_get btn_hover" href="/auth">Sign In</a>
+        </ng-template>
+        <ng-template #loggedIn>
+          <!--todo: show user profile image and welcome message-->
+          <ul class="nav navbar-nav menu w_menu">
+            <li class="nav-item"><a class="nav-link" href="/auth/logout">Logout</a></li>
+          </ul>
+        </ng-template>
       </div>
     </div>
   </nav>

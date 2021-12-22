@@ -7,12 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { BannerSectionComponent } from './banner-section/banner-section.component';
 import { CardComponent } from './card/card.component';
 import { IconComponent } from './icon/icon.component';
+import { StepperComponent } from './stepper/stepper.component';
 
 @NgModule({
   declarations: [
     BannerSectionComponent,
     CardComponent,
-    IconComponent
+    IconComponent,
+    StepperComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { IconComponent } from './icon/icon.component';
   exports: [
     BannerSectionComponent,
     CardComponent,
-    IconComponent
+    IconComponent,
+    StepperComponent
   ]
 })
 export class ElementsModule { }

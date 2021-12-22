@@ -35,6 +35,7 @@ export class BaseinputDirective implements ControlValueAccessor {
     return this.formControl || this.controlContainer.control.get(this.formControlName) as FormControl;
   }
 
+  // todo: check the parent is a form, if throw escriptive error
   constructor(private controlContainer: ControlContainer) { }
 
   clearInput(): void {

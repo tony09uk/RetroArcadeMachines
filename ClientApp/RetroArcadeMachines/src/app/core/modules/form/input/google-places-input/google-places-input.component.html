@@ -1,0 +1,16 @@
+<mat-form-field appearance="fill">
+    <mat-label>Address</mat-label>
+    <input matInput 
+        ngx-google-places-autocomplete
+        #placesRef="ngx-places"
+        [options]="options"
+        (onAddressChange)="handleAddressChange($event)"
+        value="">
+    <!-- <button matSuffix
+            mat-icon-button 
+            aria-label="Use my location"
+            (click)="getUsersLocation(true)">
+        <mat-icon>location_searching</mat-icon>
+    </button> -->
+</mat-form-field>
+<div #divElement></div>

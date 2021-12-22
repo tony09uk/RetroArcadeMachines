@@ -10,36 +10,41 @@ export class AlertService { // todo: abstract matsnackbar
 
     private _defaultVertPos: MatSnackBarVerticalPosition = 'top';
     private _defaultHoriPos: MatSnackBarHorizontalPosition = 'center';
+    private _defaultDuration: number = 4000;
 
     success(
         message: string,
         vertPos: MatSnackBarVerticalPosition = this._defaultVertPos,
-        horiPos: MatSnackBarHorizontalPosition = this._defaultHoriPos): void {
-        this.showMessage(message, 'bg-success', vertPos, horiPos);
+        horiPos: MatSnackBarHorizontalPosition = this._defaultHoriPos,
+        duration: number = this._defaultDuration): void {
+        this.showMessage(message, 'bg-success', vertPos, horiPos, duration);
     }
 
     error(
         message: string,
         vertPos: MatSnackBarVerticalPosition = this._defaultVertPos,
-        horiPos: MatSnackBarHorizontalPosition = this._defaultHoriPos): void {
-        this.showMessage(message, 'bg-error', vertPos, horiPos);
+        horiPos: MatSnackBarHorizontalPosition = this._defaultHoriPos,
+        duration: number = this._defaultDuration): void {
+        this.showMessage(message, 'bg-error', vertPos, horiPos, duration);
     }
 
     info(
         message: string,
         vertPos: MatSnackBarVerticalPosition = this._defaultVertPos,
-        horiPos: MatSnackBarHorizontalPosition = this._defaultHoriPos): void {
-        this.showMessage(message, 'bg-primary', vertPos, horiPos);
+        horiPos: MatSnackBarHorizontalPosition = this._defaultHoriPos,
+        duration: number = this._defaultDuration): void {
+        this.showMessage(message, 'bg-primary', vertPos, horiPos, duration);
     }
 
     private showMessage(
         message: string,
         cssClass: string,
         vertPos: MatSnackBarVerticalPosition,
-        horiPos: MatSnackBarHorizontalPosition): void {
+        horiPos: MatSnackBarHorizontalPosition,
+        duration: number): void {
         this._matSnackbar
             .open(message, 'Dismiss', {
-                duration: 4000,
+                duration: duration,
                 horizontalPosition: horiPos,
                 verticalPosition: vertPos,
                 panelClass: [cssClass]
