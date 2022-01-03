@@ -1,4 +1,4 @@
-import { forwardRef } from '@angular/core';
+import { forwardRef, Input } from '@angular/core';
 import { Component } from '@angular/core';
 import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseinputDirective } from '../baseinput.directive';
@@ -15,6 +15,7 @@ import { BaseinputDirective } from '../baseinput.directive';
   ]
 })
 export class InputComponent extends BaseinputDirective {
+  @Input() type: string = 'text';
   constructor(controlContainer: ControlContainer) {
     super(controlContainer);
   }

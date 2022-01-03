@@ -1,0 +1,7 @@
+<app-autocomplete [options]="gameOptions"
+    [placeholder]="'Type to filter the games list'"
+    [label]="'Games'"
+    (selectedOption)="selectedOption($event)"></app-autocomplete>
+<app-list [items]="selectedGames"
+    [header]="'Location Games'"
+    (itemRemoved)="listItemRemoved($event)"></app-list>

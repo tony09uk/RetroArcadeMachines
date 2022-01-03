@@ -1,0 +1,30 @@
+<form class="example-form">
+    <mat-form-field class="example-full-width"
+                    appearance="fill">
+        <mat-label>{{label}}</mat-label>
+        <input type="text"
+               placeholder="{{placeholder}}"
+               aria-label="Selected game"
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto">
+        <button mat-icon-button
+                *ngIf="myControl.value"
+                (click)="clearInput()"
+                matSuffix>
+            <mat-icon>clear</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete"
+                          (optionSelected)="selected($event.option)">
+            <mat-option *ngFor="let option of options"
+                        [value]="option.value">
+                <img *ngIf="option.imageUrl"
+                    class="example-option-img"
+                    aria-hidden
+                    [src]="option.imageUrl"
+                    height="25">
+                <span>{{option.value}}</span>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

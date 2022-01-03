@@ -1,0 +1,14 @@
+<app-card>
+    <app-google-places-input (addressSelected)="handleAddressChange($event)"
+                             (usersLocationRetrieved)="usersLocation($event)"></app-google-places-input>
+</app-card>
+
+<google-map height="500px"
+            width="100%"
+            [zoom]="zoom"
+            [center]="center"
+            [options]="options"
+            #googleMap>
+    <map-marker [position]="marker.getPosition()">
+    </map-marker>
+</google-map>

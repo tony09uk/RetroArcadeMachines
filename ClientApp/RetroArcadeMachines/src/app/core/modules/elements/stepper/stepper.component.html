@@ -1,1 +1,35 @@
-<p>stepper works!</p>
+<ng-container [ngSwitch]="stepperOrientation | async">
+    <div *ngSwitchCase="'horizontal'">Make your screen smaller to see a vertical stepper</div>
+    <div *ngSwitchCase="'vertical'">Make your screen larger to see a horizontal stepper</div>
+</ng-container>
+
+<template #alertContainer></template>
+
+<mat-stepper class="example-stepper"
+             (selectionChange)="onStepChange($event)"
+             [orientation]="(stepperOrientation | async)!">
+    <ng-container *ngFor="let step of steps">
+        <mat-step label="{{step.label}}"
+                  [optional]="step.optional">
+            <ng-template [ngIf]="step.buttonLocation === 'above' || step.buttonLocation === 'aboveAndBelow'">
+                <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+            </ng-template>
+            <app-step-content [componentType]="step.component"
+                              (stepEvent)="handleEvent($event)"></app-step-content>
+            <ng-template [ngIf]="step.buttonLocation === 'below' || step.buttonLocation === 'aboveAndBelow'">
+                <ng-container *ngTemplateOutlet="buttonTemplate"></ng-container>
+            </ng-template>
+
+            <ng-template #buttonTemplate>
+                <div class="d-flex justify-content-end">
+                    <button *ngIf="step.allowBackStep"
+                            mat-stroked-button
+                            matStepperPrevious>Back</button>
+                    <button *ngIf="step.allowForwardStep"
+                            mat-stroked-button
+                            matStepperNext>Next</button>
+                </div>
+            </ng-template>
+        </mat-step>
+    </ng-container>
+</mat-stepper>

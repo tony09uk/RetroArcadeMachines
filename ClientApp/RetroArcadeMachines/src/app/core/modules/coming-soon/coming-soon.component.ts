@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { interval } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-coming-soon',
@@ -18,7 +18,7 @@ export class ComingSoonComponent implements OnInit {
   seconds: number;
 
   ngOnInit(): void {
-    const arbitaryDate = '2021-08-05';
+    const arbitaryDate = '2022-08-05';
     interval(1000).pipe(
       map((val: number) => {
         return Date.parse(arbitaryDate) - Date.parse(new Date().toString());

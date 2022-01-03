@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { take } from 'rxjs/internal/operators/take';
+import { take } from 'rxjs/operators';
 
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 

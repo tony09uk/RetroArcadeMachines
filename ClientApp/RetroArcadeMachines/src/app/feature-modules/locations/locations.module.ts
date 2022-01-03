@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-// import { AgmCoreModule } from '@agm/core';
 import { GoogleMapsModule } from '@angular/google-maps';
 
 import { GridModule } from '@core/modules/grid/grid.module';
@@ -14,22 +13,33 @@ import { LocationDetailsComponent } from './location-details/location-details.co
 import { AddComponent } from './add/add.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { FormModule } from '@core/modules/form/form.module';
+import { FindLocationComponent } from './add/find-location/find-location.component';
+import { AssignGamesComponent } from './add/assign-games/assign-games.component';
+import { MoreInformationComponent } from './add/more-information/more-information.component';
+import { ConfirmComponent } from './add/confirm/confirm.component';
+import { ButtonsModule } from '@core/modules/buttons/buttons.module';
 
 @NgModule({
   declarations: [
     LocationsOverviewComponent,
     LocationDetailsComponent,
-    AddComponent
+    AddComponent,
+    FindLocationComponent,
+    AssignGamesComponent,
+    MoreInformationComponent,
+    ConfirmComponent
   ],
   imports: [
     CommonModule,
-    GooglePlaceModule,
     LocationsRoutingModule,
+    ReactiveFormsModule, // todo: can I remove this?
+    FormsModule, // todo: can I remove this?
     ElementsModule,
+    GooglePlaceModule,
     GridModule,
     GoogleMapsModule,
     FormModule,
-    ElementsModule
+    ButtonsModule
   ]
 })
 export class LocationsModule { }
