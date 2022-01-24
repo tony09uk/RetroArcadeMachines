@@ -1,6 +1,8 @@
 <button mat-raised-button
         matSuffix
-        [color]="color">
+        [disabled]="isDisabled"
+        [color]="color"
+        (click)="buttonClicked()">
     {{text}}
-    <mat-icon>{{icon}}</mat-icon>
+    <mat-icon *ngIf="icon">{{icon}}</mat-icon>
 </button>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { StepBaseComponent } from '@core/modules/elements/stepper/step-base/step-base.component';
+import { MoreInformationEvent } from '../../models/more-information-event.model';
 import { MoreInformation } from '../../models/more-information.model';
 
 @Component({
@@ -9,7 +10,7 @@ import { MoreInformation } from '../../models/more-information.model';
   styleUrls: ['./more-information.component.scss']
 })
 
-export class MoreInformationComponent extends StepBaseComponent<MoreInformation> implements OnInit {
+export class MoreInformationComponent extends StepBaseComponent<MoreInformationEvent> implements OnInit {
   form: FormGroup;
 
   constructor(private _formBuilder: FormBuilder) {
@@ -18,13 +19,16 @@ export class MoreInformationComponent extends StepBaseComponent<MoreInformation>
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      entryFee: ['']
+      entryFee: new FormControl(''),
+      isRetroGamesOnly: new FormControl(false),
+      isChildFriendly: new FormControl(false),
+      isFoodServed: new FormControl(false),
     });
 
     this.form
       .valueChanges
       .subscribe(
-        val => this.events.emit(this.form.value)
+        val => this.events.emit(new MoreInformationEvent(this.form.value))
       );
   }
 

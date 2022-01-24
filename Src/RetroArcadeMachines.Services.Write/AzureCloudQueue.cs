@@ -4,7 +4,7 @@ using Microsoft.Azure.Storage.Queue;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using RetroArcadeMachines.Shared.Models;
+using RetroArcadeMachines.Shared.Models.Requests;
 using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.Services.Write

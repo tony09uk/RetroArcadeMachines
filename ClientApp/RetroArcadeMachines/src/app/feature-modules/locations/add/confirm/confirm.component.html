@@ -1,9 +1,14 @@
-<p>Please check your selections then press confirm</p>
+<p [class.mat-error]="disableSubmit">{{message}}</p>
 <app-list [header]="addressTitle"
-    [showDividerAfterList]="true"></app-list>
+    [showDividerAfterList]="true"
+    [items]="addressList"></app-list>
 <app-list [header]="gamesTitle"
-    [showDividerAfterList]="true"></app-list>
+    [showDividerAfterList]="true"
+    [items]="gamesList"></app-list>
 <app-list [header]="moreInfo"
-    [showDividerAfterList]="false"></app-list>
+    [showDividerAfterList]="false"
+    [items]="moreInfoList"></app-list>
 
-<app-button text="Confim"></app-button>
+<app-button text="Confim"
+    [isDisabled]="disableSubmit"
+    (clicked)="saveLocation()"></app-button>

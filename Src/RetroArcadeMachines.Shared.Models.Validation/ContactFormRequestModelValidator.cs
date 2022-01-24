@@ -1,13 +1,10 @@
 ﻿using FluentValidation;
+using RetroArcadeMachines.Shared.Models.Requests;
 
 namespace RetroArcadeMachines.Shared.Models.Validation
 {
-    public partial class ContactFormRequestModelValidator : AbstractValidator<ContactFormRequestModel>
+    public partial class ContactFormRequestModelValidator : BaseModelValidator<ContactFormRequestModel>
     {
-        private readonly string _alphaNumericPattern = "^[a-zA-Z0-9]+$";
-        // ### FIX THIS!!!
-        private readonly string _alphaNumericWithSpecialCharPattern = ""; // '^[a-zA-Z0-9&"/\'\-_#$£ !%)(]+$';
-        private readonly string _emailPattern = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$";
         public ContactFormRequestModelValidator()
         {
             RuleFor(x => x.FirstName)

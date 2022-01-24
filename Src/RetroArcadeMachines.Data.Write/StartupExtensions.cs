@@ -14,11 +14,11 @@ namespace RetroArcadeMachines.Data.Write
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection AddRetroArcadeMachinesDataRead(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddRetroArcadeMachinesDataWrite(this IServiceCollection services, IConfiguration configuration)
         {
             var awsOptions = GetAWSOptions(configuration);
-
             services.AddDefaultAWSOptions(awsOptions);
+
             services.AddAWSService<IAmazonDynamoDB>();
             services.AddTransient<IDynamoDBContext, DynamoDBContext>();
 

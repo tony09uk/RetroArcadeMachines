@@ -1,19 +1,35 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { AlertService } from '@core/services/alert.service';
+import { Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  OnInit,
+  Output,
+  ViewChild } from '@angular/core';
+import { ControlContainer, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+
+import { AlertService } from '@core/services/alert.service';
+
+import { BaseinputDirective } from '../../baseinput.directive';
 
 @Component({
   selector: 'app-google-places-input',
   templateUrl: './google-places-input.component.html',
-  styleUrls: ['./google-places-input.component.scss']
+  styleUrls: ['./google-places-input.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => GooglePlacesInputComponent)
+    }
+  ]
 })
-export class GooglePlacesInputComponent implements OnInit {
+export class GooglePlacesInputComponent extends BaseinputDirective implements OnInit {
 
   @ViewChild('divElement') divElement: ElementRef<HTMLDivElement>;
   @ViewChild('placesRef') placesRef: GooglePlaceDirective;
@@ -26,7 +42,11 @@ export class GooglePlacesInputComponent implements OnInit {
     componentRestrictions: { country: 'UK' } as ComponentRestrictions
   } as Options;
 
-  constructor(private _alertService: AlertService) { }
+  constructor(
+    private _alertService: AlertService,
+    controlContainer: ControlContainer) {
+    super(controlContainer);
+  }
 
   ngOnInit(): void {
     this.getUsersLocation(false);
@@ -81,5 +101,4 @@ export class GooglePlacesInputComponent implements OnInit {
     console.log(status);
     console.log(pagination);
   }
-
 }

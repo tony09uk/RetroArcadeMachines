@@ -1,3 +1,7 @@
+export class BaseStepEvent {
+    componentName: string;
+}
+
 export class Step {
     buttonLocation?: 'above' | 'below' | 'aboveAndBelow';
     component?: any; // todo: make this a baseComponent
@@ -5,4 +9,5 @@ export class Step {
     allowBackStep?: boolean;
     label?: string;
     optional?: boolean;
+    event: BaseStepEvent;
 }

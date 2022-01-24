@@ -1,5 +1,5 @@
 export interface GameOverview {
-    id: number;
+    id: string;
     title: string;
     releaseYear: number;
     maxPlayers: number;

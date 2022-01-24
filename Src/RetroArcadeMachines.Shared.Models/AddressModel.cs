@@ -9,8 +9,8 @@
         public string LineTwo { get; set; }
         public string LineThree { get; set; }
         public string Town { get; set; }
-        public string County { get; set; }
-        public string Postcode1 { get; set; }
-        public string Postcode2 { get; set; }
+        public string Country { get; set; }
+        public string Postalcode1 { get; set; } // todo: update the database with this change
+        public string Postalcode2 { get; set; }
     }
 }

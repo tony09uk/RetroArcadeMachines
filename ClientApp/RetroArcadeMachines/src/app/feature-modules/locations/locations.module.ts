@@ -18,6 +18,7 @@ import { AssignGamesComponent } from './add/assign-games/assign-games.component'
 import { MoreInformationComponent } from './add/more-information/more-information.component';
 import { ConfirmComponent } from './add/confirm/confirm.component';
 import { ButtonsModule } from '@core/modules/buttons/buttons.module';
+import { MapRequestService } from './services/map-request.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,9 @@ import { ButtonsModule } from '@core/modules/buttons/buttons.module';
     GoogleMapsModule,
     FormModule,
     ButtonsModule
+  ],
+  providers: [
+    MapRequestService
   ]
 })
 export class LocationsModule { }

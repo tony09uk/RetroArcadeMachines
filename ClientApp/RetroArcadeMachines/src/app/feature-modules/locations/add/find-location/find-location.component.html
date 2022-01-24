@@ -1,6 +1,13 @@
 <app-card>
-    <app-google-places-input (addressSelected)="handleAddressChange($event)"
-                             (usersLocationRetrieved)="usersLocation($event)"></app-google-places-input>
+    <form [formGroup]="form">
+        <!-- <app-input
+               formControlName="address"
+               label="Entry Fee"
+               placeholder="Enter entry fee"></app-input> -->
+        <app-google-places-input formControlName="address"
+                                 (addressSelected)="handleAddressChange($event)"
+                                 (usersLocationRetrieved)="usersLocation($event)"></app-google-places-input>
+    </form>
 </app-card>
 
 <google-map height="500px"

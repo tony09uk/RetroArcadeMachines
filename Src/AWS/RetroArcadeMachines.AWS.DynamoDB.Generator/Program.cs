@@ -31,7 +31,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                         .Build();
 
             return new ServiceCollection()
-                    .AddRetroArcadeMachinesDataRead(configuration)
+                    .AddRetroArcadeMachinesDataWrite(configuration)
                     .RegisterAllTypes<ITableInitialiser>(new[] { typeof(Program).Assembly }, ServiceLifetime.Singleton)
                     .AddSingleton<ISeedTable<DeveloperModel>, SeedDevelopersTable>()
                     .AddSingleton<ISeedTable<GameModel>, SeedGamesTable>()

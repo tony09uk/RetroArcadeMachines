@@ -1,4 +1,4 @@
-﻿namespace RetroArcadeMachines.Shared.Models
+﻿namespace RetroArcadeMachines.Shared.Models.Requests
 {
     public class ContactFormRequestModel
     {

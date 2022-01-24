@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RetroArcadeMachines.Services.Read;
+using RetroArcadeMachines.Services.Read.Models;
 
 namespace RetroArcadeMachines.AzureFunctions.Read
 {
@@ -39,7 +40,7 @@ namespace RetroArcadeMachines.AzureFunctions.Read
                 return new BadRequestObjectResult("the parameter **id** must be a valid Guid");
             }
 
-            var responseMessage = await _locationDetailsService.Get(locationOverviewId);
+            LocationDetailsDto responseMessage = await _locationDetailsService.Get(locationOverviewId);
 
             return new OkObjectResult(responseMessage);
         }

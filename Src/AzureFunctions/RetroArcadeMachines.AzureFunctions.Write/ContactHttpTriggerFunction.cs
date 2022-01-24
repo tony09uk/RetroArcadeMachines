@@ -6,7 +6,6 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using RetroArcadeMachines.Shared.Models;
 using RetroArcadeMachines.Services.Write;
 using System;
 using System.Net;
@@ -14,6 +13,7 @@ using System.Threading.Tasks;
 using RetroArcadeMachines.Shared.Models.Validation.Models;
 using RetroArcadeMachines.Shared.Models.Validation.Extensions;
 using RetroArcadeMachines.Shared.Models.Validation;
+using RetroArcadeMachines.Shared.Models.Requests;
 
 namespace RetroArcadeMachines.AzureFunctions.Write
 {

@@ -61,7 +61,8 @@
                                 <li *ngFor="let item of locationsDetails.businessHoursList">
                                     <a>
                                         <span>{{DaysOfTheWeek[item.dayOfTheWeek]}}</span>
-                                        <em>{{formatOpeningHours(item.openingTime, item.closingTime)}}</em>
+                                        <em>Need to uncomment times (below)</em>
+                                        <!-- <em>{{formatOpeningHours(item.openingTime, item.closingTime)}}</em> -->
                                     </a>
                                 </li>
                             </ul>
@@ -73,10 +74,9 @@
                                 <h3 class="f_p f_size_20 t_color3">Phone number</h3>
                                 <div class="border_bottom"></div>
                             </div>
-                            <ul class="list-unstyled" *ngFor="let item of locationsDetails.phoneNumberList">
+                            <ul class="list-unstyled" *ngFor="let phoneNumber of locationsDetails.phoneNumberList">
                                 <li>
-                                    <a href="tel:{{item.stdCode}} {{item.number}}"><span>{{item.stdCode}}
-                                            {{item.number}}</span></a>
+                                    <a href="tel:{{phoneNumber}}"><span>{{phoneNumber}</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -101,8 +101,8 @@
                                     <a><span>{{locationsDetails.address.town}}</span></a>
                                 </li>
                                 <li>
-                                    <a><span>{{locationsDetails.address.postcode1}}
-                                            {{locationsDetails.address.postcode2}}</span></a>
+                                    <a><span>{{locationsDetails.address.postalcode1}}
+                                            {{locationsDetails.address.postalcode2}}</span></a>
                                 </li>
                             </ul>
                         </div>

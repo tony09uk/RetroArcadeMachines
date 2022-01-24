@@ -15,14 +15,13 @@ import { GooglePlacesInputComponent } from './input/google-places-input/google-p
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
-
 @NgModule({
   declarations: [
     InputComponent,
     TextareaComponent,
     BaseinputDirective,
     GooglePlacesInputComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
   ],
   imports: [
     CommonModule,
@@ -33,13 +32,13 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
   ],
   exports: [
     InputComponent,
     TextareaComponent,
     GooglePlacesInputComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
   ]
 })
 export class FormModule { }

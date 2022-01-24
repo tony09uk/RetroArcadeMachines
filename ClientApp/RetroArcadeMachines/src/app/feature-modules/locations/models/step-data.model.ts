@@ -1,9 +1,9 @@
 import { Address } from './address.model';
-import { AssignedGame } from './game.model';
+import { AssignedGameRequest } from './assigned-game-request.model';
 import { MoreInformation } from './more-information.model';
 
 export interface StepData {
     address: Address;
-    assignedGamesList: AssignedGame[];
+    assignedGamesList: AssignedGameRequest[];
     additionalInformation: MoreInformation;
 }

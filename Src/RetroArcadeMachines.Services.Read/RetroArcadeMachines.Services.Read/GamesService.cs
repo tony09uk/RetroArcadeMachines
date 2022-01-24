@@ -32,7 +32,7 @@ namespace RetroArcadeMachines.Services.Read
             }
             catch (Exception ex) //todo: watch for the expected exceptions only
             {
-                throw;
+                return new List<GameOverviewDto>();
             }
         }
 

@@ -8,8 +8,9 @@ import { StepBaseComponent } from '@core/modules/elements/stepper/step-base/step
 import { GameOverview } from 'src/app/shared/models/game-overview.model';
 
 import { AssignGamesService } from '../../services/assign-games.service';
-import { AssignedGame } from '../../models/game.model';
+import { AssignedGameRequest } from '../../models/assigned-game-request.model';
 import { ListItem } from '@core/modules/elements/list/models/list-item.model';
+import { AssignedGamesEvent } from '../../models/assigned-games-event.model';
 
 @Component({
   selector: 'app-assign-games',
@@ -17,7 +18,7 @@ import { ListItem } from '@core/modules/elements/list/models/list-item.model';
   styleUrls: ['./assign-games.component.scss'],
   providers: [ AssignGamesService ]
 })
-export class AssignGamesComponent extends StepBaseComponent<AssignedGame[]> implements OnInit {
+export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> implements OnInit {
 
   gameOptions: AutocompleteOption[] = [];
   selectedGames: ListItem[] = [];
@@ -50,20 +51,23 @@ export class AssignGamesComponent extends StepBaseComponent<AssignedGame[]> impl
       icon: 'folder' // todo: change this to be the games thumbnail
     } as ListItem);
 
+    this.emitChange();
+  }
+
+  listItemRemoved(item: ListItem): void {
+    this.emitChange();
+  }
+
+  private updateAutocomplete(options: GameOverview[]): void {
+    this.gameOptions = options.map(x => ({ id: x.id, value: x.title }));
+  }
+
+  private emitChange(): void {
     const assignedGames = this.selectedGames
                             .map(x => ({
                               id: x.id,
                               title: x.value
-                            } as AssignedGame));
-
-    this.events.emit(assignedGames);
-  }
-
-  listItemRemoved(item: ListItem): void {
-
-  }
-
-  private updateAutocomplete(options: GameOverview[]): void {
-    this.gameOptions = options.map(x => ({ id: x.id.toString(), value: x.title }));
+                            } as AssignedGameRequest));
+    this.events.emit(new AssignedGamesEvent(assignedGames));
   }
 }

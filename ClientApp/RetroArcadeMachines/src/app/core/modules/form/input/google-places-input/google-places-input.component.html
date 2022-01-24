@@ -1,11 +1,17 @@
 <mat-form-field appearance="fill">
     <mat-label>Address</mat-label>
-    <input matInput 
-        ngx-google-places-autocomplete
-        #placesRef="ngx-places"
-        [options]="options"
-        (onAddressChange)="handleAddressChange($event)"
-        value="">
+    <input matInput
+           ngx-google-places-autocomplete
+           #placesRef="ngx-places"
+           [options]="options"
+           (onAddressChange)="handleAddressChange($event)"
+           [formControl]="control">
+    <button mat-icon-button
+            [style.visibility]="control.value ? 'visible' : 'hidden'"
+            (click)="clearInput()"
+            matSuffix>
+        <mat-icon>clear</mat-icon>
+    </button>
     <!-- <button matSuffix
             mat-icon-button 
             aria-label="Use my location"

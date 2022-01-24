@@ -1,15 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+
 import { Step } from '@core/modules/elements/stepper/models/step.model';
-import { Address } from 'ngx-google-places-autocomplete/objects/address';
-import { AssignedGame } from '../models/game.model';
-import { MoreInformation } from '../models/more-information.model';
-import { Address as Addr } from '../models/address.model';
+
 import { AddService } from '../services/add.service';
 import { AssignGamesComponent } from './assign-games/assign-games.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { FindLocationComponent } from './find-location/find-location.component';
 import { MoreInformationComponent } from './more-information/more-information.component';
 import { StepLabelConstants } from '../models/step-label-constants.model';
+import { AssignedGamesEvent } from '../models/assigned-games-event.model';
+import { MoreInformationEvent } from '../models/more-information-event.model';
+import { FindLocationEvent } from '../models/find-location-event.model';
+import { take } from 'rxjs/operators';
+import { ConfirmLocationEvent } from '../models/confirm-location-event.model';
+import { nameof } from 'ts-simple-nameof';
 
 @Component({
   selector: 'app-add',
@@ -17,7 +21,7 @@ import { StepLabelConstants } from '../models/step-label-constants.model';
   styleUrls: ['./add.component.scss'],
   providers: [AddService]
 })
-export class AddComponent implements OnInit {
+export class AddComponent {
 
   steps: Step[] = [
     {
@@ -26,7 +30,8 @@ export class AddComponent implements OnInit {
       allowForwardStep: true,
       allowBackStep: false,
       label: StepLabelConstants.findLocation,
-      optional: false
+      optional: false,
+      event: undefined
     },
     {
       buttonLocation: 'aboveAndBelow',
@@ -34,7 +39,8 @@ export class AddComponent implements OnInit {
       allowForwardStep: true,
       allowBackStep: true,
       label: StepLabelConstants.assignGames,
-      optional: false
+      optional: false,
+      event: undefined
     },
     {
       buttonLocation: 'aboveAndBelow',
@@ -42,7 +48,8 @@ export class AddComponent implements OnInit {
       allowForwardStep: true,
       allowBackStep: true,
       label: StepLabelConstants.moreInfo,
-      optional: true
+      optional: true,
+      event: undefined
     },
     {
       buttonLocation: 'aboveAndBelow',
@@ -50,41 +57,57 @@ export class AddComponent implements OnInit {
       allowForwardStep: false,
       allowBackStep: true,
       label: StepLabelConstants.confirm,
-      optional: false
+      optional: false,
+      event: undefined
     },
   ];
 
   constructor(private _addService: AddService) { }
 
-  ngOnInit(): void {
+  handleEvent(event: FindLocationEvent | AssignedGamesEvent | MoreInformationEvent | ConfirmLocationEvent): void {
+    this.updateStepEvent(event);
 
+    if (event instanceof ConfirmLocationEvent) {
+      this.saveLocation();
+      return;
+    }
+
+    this._addService.updateStepData(event);
   }
 
-  handleEvent(event: Address | AssignedGame[] | MoreInformation): void {
-    console.log(event);
-
-    if ('place_id' in event) {
-      this._addService.stepData.address = this.mapAddress(event);
+  private updateStepEvent(event: FindLocationEvent | AssignedGamesEvent | MoreInformationEvent | ConfirmLocationEvent): void {
+    if (event instanceof ConfirmLocationEvent) {
+      return;
     }
 
-    if (Array.isArray(event) && 'title' in event[0]) {
-      this._addService.stepData.assignedGamesList = event;
-    }
+    const step = this.steps.find(x => nameof(x.component) === event.componentName);
 
-    if ('entryFee' in event) {
-      this._addService.stepData.additionalInformation = event;
+    if (!step) {
+      throw Error('The event has no associated component');
     }
+    step.event = event;
   }
 
-  private mapAddress(address: Address): Addr {
-    return {
-      id: 'jsnjfdnkjls',
-      lineOne: 'line1',
-      lineTwo: 'line2',
-      lineThree: 'line3',
-      postcode1: 'NG10',
-      postcode2: '5HG',
-      town: 'Notts'
-    };
+  private saveLocation(): void {
+    const addressEvent = this.steps
+      .find(x => x.event.componentName === nameof(FindLocationComponent))
+      .event as FindLocationEvent;
+
+    const assignedGamesEvent = this.steps
+      .find(x => x.event.componentName === nameof(AssignGamesComponent))
+      .event as AssignedGamesEvent;
+
+    const moreInfoEvent = this.steps
+      .find(x => x.event.componentName === nameof(MoreInformationComponent))
+      .event as MoreInformationEvent;
+
+    this._addService
+      .saveLocation(addressEvent.address, assignedGamesEvent.assignedGames, moreInfoEvent.moreInformation)
+      .pipe(
+        take(1)
+      ).subscribe(
+        response => { },
+        error => { }
+      );
   }
 }

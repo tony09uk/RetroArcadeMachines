@@ -17,6 +17,7 @@
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="selected($event.option)">
             <mat-option *ngFor="let option of options"
+                        [id]="option.id"
                         [value]="option.value">
                 <img *ngIf="option.imageUrl"
                     class="example-option-img"

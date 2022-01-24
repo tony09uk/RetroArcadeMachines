@@ -22,8 +22,8 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                         LineTwo = "Savins Mill Way",
                         LineThree = "Kirkstall",
                         Town = "Leeds",
-                        Postcode1 = "LS5",
-                        Postcode2 = "3RP"
+                        Postalcode1 = "LS5",
+                        Postalcode2 = "3RP"
                     },
                     PhoneNumberList = new List<PhoneNumberModel>
                     {

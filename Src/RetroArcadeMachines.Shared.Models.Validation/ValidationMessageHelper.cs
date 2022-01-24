@@ -4,6 +4,11 @@
     {
         public static class ValidationMessageHelper
         {
+            public static string ForNotNull(string propertyName)
+            {
+                return $"'{propertyName}' must not be null";
+            }
+
             public static string ForNotEmpty(string propertyName)
             {
                 return $"'{propertyName}' must not be empty";

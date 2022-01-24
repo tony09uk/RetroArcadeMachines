@@ -3,9 +3,10 @@ export interface Address {
     lineOne: string;
     lineTwo: string;
     lineThree: string;
+    country: string;
     town: string;
-    postcode1: string;
-    postcode2: string;
+    postalcode1: string;
+    postalcode2: string;
 }
 
 

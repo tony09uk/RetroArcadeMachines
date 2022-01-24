@@ -3,7 +3,6 @@ import { GameOverview } from 'src/app/shared/models/game-overview.model';
 import { Address } from './address.model';
 import { BusinessHours } from './business-hours.model';
 import { LocationOverview } from './location-overview.model';
-import { PhoneNumber } from './phone-number.model';
 
 export interface LocationDetails extends LocationOverview {
     synopsis: string;
@@ -12,7 +11,7 @@ export interface LocationDetails extends LocationOverview {
     lat: string;
     lng: string;
     address: Address;
-    phoneNumberList: PhoneNumber[];
+    phoneNumberList: string[];
     businessHoursList: BusinessHours[];
     gameOverviewList: GameOverview[];
     imageUrlList: string[];

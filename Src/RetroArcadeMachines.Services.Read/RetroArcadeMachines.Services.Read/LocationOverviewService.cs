@@ -1,7 +1,6 @@
 ﻿using RetroArcadeMachines.Services.Read.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 using RetroArcadeMachines.Data.Read.Interfaces;
 using AutoMapper;
 using RetroArcadeMachines.Shared.Models;

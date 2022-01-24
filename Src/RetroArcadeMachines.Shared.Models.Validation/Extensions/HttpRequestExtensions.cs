@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using RetroArcadeMachines.Shared.Models.Validation.Models;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.Shared.Models.Validation.Extensions
@@ -51,30 +50,8 @@ namespace RetroArcadeMachines.Shared.Models.Validation.Extensions
         /// <returns></returns>
         public static async Task<T> GetJsonBody<T>(this HttpRequest request)
         {
-            var requestBody = await request.ReadAsStringAsync();
-
-            return JsonConvert.DeserializeObject<T>(requestBody);
-        }
-
-        private static async Task<string> ReadAsStringAsync(this HttpRequest request)
-        {
-            int defaultBufferSize = 1024;
-            request.EnableBuffering();
-
-            string result = null;
-            using (var reader = new StreamReader(
-                request.Body,
-                encoding: Encoding.UTF8,
-                detectEncodingFromByteOrderMarks: true,
-                bufferSize: defaultBufferSize,
-                leaveOpen: true))
-            {
-                result = await reader.ReadToEndAsync();
-            }
-
-            request.Body.Seek(0, SeekOrigin.Begin);
-
-            return result;
+            var content = await new StreamReader(request.Body).ReadToEndAsync();
+            return JsonConvert.DeserializeObject<T>(content);
         }
     }
 }
