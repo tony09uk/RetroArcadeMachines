@@ -14,6 +14,8 @@ namespace RetroArcadeMachines.Services.Read
             services.AddScoped<IGamesService, GamesService>();
             services.AddScoped<ILocationOverviewService, LocationOverviewService>();
             services.AddScoped<ILocationDetailsService, LocationDetailsService>();
+            services.AddScoped<ITableTrackerService, TableTrackerService>();
+            services.AddLogging();
 
             services.AddRetroArcadeMachinesDataRead(configuration);
 

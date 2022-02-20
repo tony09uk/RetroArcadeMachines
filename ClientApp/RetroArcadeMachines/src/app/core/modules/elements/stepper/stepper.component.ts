@@ -6,7 +6,7 @@ import { StepperOrientation } from '@angular/material/stepper';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { StepNavigationEvent } from './models/step-navigation-event.model';
+import { StepNavigationEvent } from './models/step-navigation.event';
 import { Step } from './models/step.model';
 
 @Component({

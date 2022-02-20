@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -20,7 +21,7 @@ namespace RetroArcadeMachines.AzureFunctions.Read
 
         public LocationDetailsHttpTriggerFunction(ILocationDetailsService locationDetailsService)
         {
-            _locationDetailsService = locationDetailsService;
+            _locationDetailsService = Guard.Against.Null(locationDetailsService, nameof(locationDetailsService), nameof(ILocationDetailsService));
         }
 
         [FunctionName("LocationDetails")]
@@ -41,6 +42,11 @@ namespace RetroArcadeMachines.AzureFunctions.Read
             }
 
             LocationDetailsDto responseMessage = await _locationDetailsService.Get(locationOverviewId);
+
+            if(responseMessage == null)
+            {
+                return new NoContentResult();
+            }
 
             return new OkObjectResult(responseMessage);
         }

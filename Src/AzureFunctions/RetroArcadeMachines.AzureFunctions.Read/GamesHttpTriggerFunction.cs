@@ -1,3 +1,4 @@
+using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -6,8 +7,11 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RetroArcadeMachines.AzureFunctions.Read.Extensions;
+using RetroArcadeMachines.AzureFunctions.Read.HttpResponseResults;
 using RetroArcadeMachines.Services.Read;
 using RetroArcadeMachines.Services.Read.Models;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,10 +21,14 @@ namespace RetroArcadeMachines.AzureFunctions.Read
     public class GamesHttpTriggerFunction
     {
         private readonly IGamesService _gamesService;
+        private readonly ITableTrackerService _tableTrackerService;
 
-        public GamesHttpTriggerFunction(IGamesService gamesService)
+        public GamesHttpTriggerFunction(
+            IGamesService gamesService,
+            ITableTrackerService tableTrackerService)
         {
-            _gamesService = gamesService;
+            _gamesService = Guard.Against.Null(gamesService, nameof(gamesService), nameof(IGamesService));
+            _tableTrackerService = Guard.Against.Null(tableTrackerService, nameof(tableTrackerService), nameof(ITableTrackerService));
         }
 
         [FunctionName("Games")]
@@ -32,11 +40,19 @@ namespace RetroArcadeMachines.AzureFunctions.Read
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("LocationsOverview: process started");
 
-            IEnumerable<GameOverviewDto> result = await _gamesService.Get();
+            DateTime? lastModifiedDate = req.Headers.GetIfModifiedSince();
+            log.LogInformation("LocationsOverview: lastModifiedDate provided: {lastModifiedDate}", lastModifiedDate);
 
-            return new OkObjectResult(result);
+            bool shouldGetNewData = await _tableTrackerService.HasTableBeenModifiedSince(lastModifiedDate, typeof(GameOverviewDto));
+
+            if (shouldGetNewData)
+            {
+                IEnumerable<GameOverviewDto> result = await _gamesService.Get();
+                return new OkLastModifiedResult(result, req.HttpContext.Response, lastModifiedDate);
+            }
+            return new NoContentLastModifiedResult(req.HttpContext.Response, lastModifiedDate);
         }
     }
 }

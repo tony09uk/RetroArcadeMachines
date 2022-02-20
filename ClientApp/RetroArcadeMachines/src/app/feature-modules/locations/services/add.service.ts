@@ -7,12 +7,11 @@ import { AssignedGameRequest } from '../models/assigned-game-request.model';
 import { MoreInformation } from '../models/more-information.model';
 
 import { StepData } from '../models/step-data.model';
-import { Address as Addr } from '../models/address.model';
 import { AssignedGamesEvent } from '../models/assigned-games-event.model';
 import { MoreInformationEvent } from '../models/more-information-event.model';
 import { FindLocationEvent } from '../models/find-location-event.model';
 import { MapRequestService } from './map-request.service';
-import { KeyValue } from '@angular/common';
+import { HttpAuthService } from '@core/services/http.auth.service';
 
 @Injectable()
 export class AddService {
@@ -20,12 +19,12 @@ export class AddService {
     private _stepData$: ReplaySubject<StepData> = new ReplaySubject<StepData>(1);
 
     constructor(
-        private _httpService: HttpService,
+        private _httpAuthService: HttpAuthService,
         private _mapRequestService: MapRequestService) { }
 
     saveLocation(address: Address, assignedGames: AssignedGameRequest[], moreInfo: MoreInformation): Observable<boolean> {
         const request = this._mapRequestService.mapRequest(address, assignedGames, moreInfo);
-        return this._httpService.post('addlocation', request);
+        return this._httpAuthService.post('addlocation', request);
     }
 
     watchStepData(): Observable<StepData> {

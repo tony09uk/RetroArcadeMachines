@@ -89,7 +89,7 @@ export class ConfirmComponent extends StepBaseComponent<ConfirmLocationEvent> im
     }
     assignedGamesList
       .forEach((game: AssignedGameRequest) => {
-        this.gamesList.push({ value: game.title } as ListItem);
+        this.gamesList.push({value: game.title } as ListItem);
       });
   }
 

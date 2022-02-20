@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RetroArcadeMachines.Shared.Models.Requests;
+using System;
 using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.Services.Write
@@ -49,12 +50,15 @@ namespace RetroArcadeMachines.Services.Write
 
         private CloudStorageAccount GetCloudStorageAccount(string directoryPath)
         {
-            var config = new ConfigurationBuilder().SetBasePath(directoryPath)
-                                                   .AddJsonFile("local.settings.json", true, true)
-                                                   .AddEnvironmentVariables()
-                                                   .Build();
+            //var config = new ConfigurationBuilder().SetBasePath(directoryPath)
+            //                                       .AddJsonFile("local.settings.json", true, true)
+            //                                       .AddEnvironmentVariables()
+            //                                       .Build();
 
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(config["CloudStorageAccount"]);
+            var cloudStorageAccount = Environment.GetEnvironmentVariable("CloudStorageAccount");
+
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(config["CloudStorageAccount"]);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(cloudStorageAccount);
             return storageAccount;
         }
     }

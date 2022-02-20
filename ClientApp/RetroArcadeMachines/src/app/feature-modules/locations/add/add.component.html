@@ -1,4 +1,7 @@
+<app-spinner [show]="isSaving"></app-spinner>
 <app-banner-section>
     <app-stepper [steps]="steps"
+        *ngIf="!showThankyouMessage"
         (events)="handleEvent($event)"></app-stepper>
+    <app-thankyou *ngIf="showThankyouMessage"></app-thankyou>
 </app-banner-section>

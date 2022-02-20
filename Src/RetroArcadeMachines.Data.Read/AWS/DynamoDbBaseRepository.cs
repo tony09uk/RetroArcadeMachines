@@ -4,11 +4,10 @@ using RetroArcadeMachines.Data.Read.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace RetroArcadeMachines.Data.Read.AWS
 {
-    public class DynamoDbBaseRepository<T> : IReadRepository<T>
+    class DynamoDbBaseRepository<T> : IProviderReadRepository<T>
     {
         private readonly IDynamoDBContext _context;
 
@@ -22,15 +21,17 @@ namespace RetroArcadeMachines.Data.Read.AWS
             return await _context.ScanAsync<T>(new List<ScanCondition>()).GetRemainingAsync();
 
             //todo: dynamodb could throw one of the below exceptions
-                //catch (AmazonDynamoDBException e) { Console.WriteLine(e.Message); }
-                //catch (AmazonServiceException e) { Console.WriteLine(e.Message); }
-                //catch (Exception e) { Console.WriteLine(e.Message); }
+            //catch (AmazonDynamoDBException e) { Console.WriteLine(e.Message); }
+            //catch (AmazonServiceException e) { Console.WriteLine(e.Message); }
+            //catch (Exception e) { Console.WriteLine(e.Message); }
             // create custom exceptions for the data layer to manage these
             // the custom exception will stop the services needing to know about the data provider(in this case AWS)
         }
 
         public Task<T> Get(Guid id)
         {
+            var x = _context.LoadAsync<T>(id);
+            Task.WaitAll(x);
             return _context.LoadAsync<T>(id);
         }
 
@@ -39,7 +40,7 @@ namespace RetroArcadeMachines.Data.Read.AWS
             return _context.LoadAsync<T>(id);
         }
 
-        public async Task<List<T>> Get(IDictionary<string, string> uniqueIds)
+        public async Task<List<T>> Get(IEnumerable<Guid> uniqueIds)
         {
             var config = new DynamoDBOperationConfig();
             config.QueryFilter = new List<ScanCondition>
@@ -47,13 +48,11 @@ namespace RetroArcadeMachines.Data.Read.AWS
                 new ScanCondition("id", ScanOperator.Equal, uniqueIds)
             };
 
-            var batchRead =  _context.CreateBatchGet<T>(config);
-            
-            foreach(var id in uniqueIds)
+            var batchRead = _context.CreateBatchGet<T>(config);
+
+            foreach (var id in uniqueIds)
             {
-                var hashKey = Guid.Parse(id.Key); // todo: move this into the games repo
-                var sortKey = int.Parse(id.Value); // todo: move this into the games repo
-                batchRead.AddKey(hashKey, sortKey);
+                batchRead.AddKey(id);
             }
 
             await batchRead.ExecuteAsync();

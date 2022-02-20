@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RetroArcadeMachines.Data.Read\RetroArcadeMachines.Data.Read.csproj" />
     <ProjectReference Include="..\RetroArcadeMachines.Data.Write\RetroArcadeMachines.Data.Write.csproj" />
     <ProjectReference Include="..\RetroArcadeMachines.Shared.Models\RetroArcadeMachines.Shared.Models.csproj" />
   </ItemGroup>

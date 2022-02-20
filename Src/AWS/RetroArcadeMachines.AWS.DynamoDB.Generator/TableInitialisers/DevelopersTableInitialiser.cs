@@ -1,8 +1,8 @@
 ﻿using Amazon.DynamoDBv2;
 using RetroArcadeMachines.Shared.Models;
-using RetroArcadeMachines.Data.Write.AWS;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using System.Threading.Tasks;
+using RetroArcadeMachines.Data.Write;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
@@ -14,7 +14,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         public DevelopersTableInitialiser(
             IAmazonDynamoDB dynamoDBClient,
             IWriteRepository<DeveloperModel> developersRepository,
-            ISeedTable<DeveloperModel> seedTable) : base(dynamoDBClient, DynamoDbDevelopersRepository.TableName)
+            ISeedTable<DeveloperModel> seedTable) : base(dynamoDBClient, DevelopersWriteRepository.TableName)
         {
             _developersRepository = developersRepository;
             _seedTable = seedTable;
@@ -24,8 +24,6 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         {
             await base.Create(
                     nameof(DeveloperModel.Id),
-                    nameof(DeveloperModel.FoundedYear),
-                    nameof(DeveloperModel.FoundedYear),
                     typeof(DeveloperModel));
         }
 

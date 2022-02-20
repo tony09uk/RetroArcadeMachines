@@ -11,9 +11,12 @@ import { StepLabelConstants } from '../models/step-label-constants.model';
 import { AssignedGamesEvent } from '../models/assigned-games-event.model';
 import { MoreInformationEvent } from '../models/more-information-event.model';
 import { FindLocationEvent } from '../models/find-location-event.model';
-import { take } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 import { ConfirmLocationEvent } from '../models/confirm-location-event.model';
 import { nameof } from 'ts-simple-nameof';
+import { AlertService } from '@core/services/alert.service';
+import { StepErrorEvent } from '@core/modules/elements/stepper/models/step-error.event';
+import { StepErrors } from '../models/step-errors.enum';
 
 @Component({
   selector: 'app-add',
@@ -23,6 +26,8 @@ import { nameof } from 'ts-simple-nameof';
 })
 export class AddComponent {
 
+  showThankyouMessage: boolean = false;
+  isSaving: boolean = false;
   steps: Step[] = [
     {
       buttonLocation: 'aboveAndBelow',
@@ -62,9 +67,16 @@ export class AddComponent {
     },
   ];
 
-  constructor(private _addService: AddService) { }
+  constructor(
+    private _addService: AddService,
+    private _alertService: AlertService) { }
 
-  handleEvent(event: FindLocationEvent | AssignedGamesEvent | MoreInformationEvent | ConfirmLocationEvent): void {
+  handleEvent(event: FindLocationEvent | AssignedGamesEvent | MoreInformationEvent | ConfirmLocationEvent | StepErrorEvent<StepErrors>): void {
+    if (event instanceof StepErrorEvent) {
+      this.handleStepError(event);
+      return;
+    }
+
     this.updateStepEvent(event);
 
     if (event instanceof ConfirmLocationEvent) {
@@ -101,13 +113,24 @@ export class AddComponent {
       .find(x => x.event.componentName === nameof(MoreInformationComponent))
       .event as MoreInformationEvent;
 
+    this.isSaving = true;
     this._addService
       .saveLocation(addressEvent.address, assignedGamesEvent.assignedGames, moreInfoEvent.moreInformation)
       .pipe(
-        take(1)
+        take(1),
+        finalize(() => this.isSaving = false)
       ).subscribe(
-        response => { },
-        error => { }
+        response => { this.showThankyouMessage = true; },
+        error => { this._alertService.error('there was an unexpected error! Please try again.'); }
       );
+  }
+
+  private handleStepError(step: StepErrorEvent<StepErrors>): void {
+    // todo: currently only one type of error
+    this._alertService.error(
+      'There was an error which will stop you from adding a location, please refresh the page',
+      'top',
+      'center',
+      600000);
   }
 }

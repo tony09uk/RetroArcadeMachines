@@ -19,6 +19,8 @@ import { MoreInformationComponent } from './add/more-information/more-informatio
 import { ConfirmComponent } from './add/confirm/confirm.component';
 import { ButtonsModule } from '@core/modules/buttons/buttons.module';
 import { MapRequestService } from './services/map-request.service';
+import { LoadingModule } from '@core/modules/loading/loading.module';
+import { ThankyouComponent } from './add/thankyou/thankyou.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { MapRequestService } from './services/map-request.service';
     FindLocationComponent,
     AssignGamesComponent,
     MoreInformationComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    ThankyouComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ import { MapRequestService } from './services/map-request.service';
     GridModule,
     GoogleMapsModule,
     FormModule,
-    ButtonsModule
+    ButtonsModule,
+    LoadingModule
   ],
   providers: [
     MapRequestService

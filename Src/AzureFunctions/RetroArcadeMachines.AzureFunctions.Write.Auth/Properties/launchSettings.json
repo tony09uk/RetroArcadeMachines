@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RetroArcadeMachines.AzureFunctions.Write.Auth": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --port 7073 --useHttps --cors *"
+    }
+  }
+}

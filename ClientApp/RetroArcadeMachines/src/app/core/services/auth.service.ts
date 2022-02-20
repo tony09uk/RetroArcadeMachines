@@ -30,7 +30,7 @@ export class AuthService {
     }
 
     signOut(): void {
-        this.socialAuthService.signOut();
+        this.socialAuthService.signOut(true);
         localStorage.removeItem(this.USER_STORAGE_KEY);
         this.user = null;
         this.isLoggedIn = false;

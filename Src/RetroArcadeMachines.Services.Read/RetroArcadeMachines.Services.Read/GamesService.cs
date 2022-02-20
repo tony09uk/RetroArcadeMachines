@@ -36,7 +36,7 @@ namespace RetroArcadeMachines.Services.Read
             }
         }
 
-        public async Task<IEnumerable<GameOverviewDto>> Get(IDictionary<string, string> searchElements)
+        public async Task<IEnumerable<GameOverviewDto>> Get(IEnumerable<Guid> searchElements)
         {
             IEnumerable<GameModel> games = await _gamesRepository.Get(searchElements);
             var gameOverviewItems = _mapper.Map<IEnumerable<GameOverviewDto>>(games);

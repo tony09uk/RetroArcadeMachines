@@ -11,7 +11,7 @@ namespace RetroArcadeMachines.Services.Read.Models
         public string Lat { get; set; }
         public string Lng { get; set; }
         public AddressModel Address { get; set; }
-        public IEnumerable<PhoneNumberModel> PhoneNumberList { get; set; }
+        public IEnumerable<string> PhoneNumberList { get; set; }
         public IEnumerable<BusinessHoursModel> BusinessHoursList { get; set; }
         public IEnumerable<GameOverviewDto> GameOverviewList { get; set; }
         public IEnumerable<string> ImageUrlList { get; set; }

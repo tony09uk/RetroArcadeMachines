@@ -71,6 +71,10 @@ export class MapRequestService {
     }
 
     private mapBusinessHoursList(openingHours: OpeningHours): BusinessHours[] {
+        if (!openingHours) {
+            return [];
+        }
+
         const businessHours: BusinessHours[] = [];
         openingHours.periods
             .forEach((item: OpeningPeriod) => {

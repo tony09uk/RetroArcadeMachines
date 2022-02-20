@@ -25,9 +25,9 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
                         Postalcode1 = "LS5",
                         Postalcode2 = "3RP"
                     },
-                    PhoneNumberList = new List<PhoneNumberModel>
+                    PhoneNumberList = new List<string>
                     {
-                        new PhoneNumberModel { StdCode = "01482", Number = "212380" }
+                        "01482 212380"
                     },
                     BusinessHoursList = new List<BusinessHoursModel>
                     {

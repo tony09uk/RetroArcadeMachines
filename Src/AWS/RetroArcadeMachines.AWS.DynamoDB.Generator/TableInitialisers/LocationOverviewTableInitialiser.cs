@@ -1,8 +1,8 @@
 ﻿using Amazon.DynamoDBv2;
 using RetroArcadeMachines.Shared.Models;
-using RetroArcadeMachines.Data.Write.AWS;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using System.Threading.Tasks;
+using RetroArcadeMachines.Data.Write;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
@@ -14,7 +14,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         public LocationOverviewTableInitialiser(
             IAmazonDynamoDB dynamoDBClient,
             IWriteRepository<LocationOverviewModel> locationOverviewRepository,
-            ISeedTable<LocationOverviewModel> seedTable) : base(dynamoDBClient, DynamoDbLocationOverviewRepository.TableName)
+            ISeedTable<LocationOverviewModel> seedTable) : base(dynamoDBClient, LocationOverviewWriteRepository.TableName)
         {
             _locationOverviewRepository = locationOverviewRepository;
             _seedTable = seedTable;

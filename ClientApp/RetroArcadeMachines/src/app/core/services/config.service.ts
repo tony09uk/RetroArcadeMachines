@@ -16,6 +16,10 @@ export class ConfigService {
         return this.getConfig('write_api_url');
     }
 
+    get write_api_url_auth(): string {
+        return this.getConfig('write_api_url_auth');
+    }
+
     get google_places_api_key(): string {
         return this.getConfig('google_places_api_key');
     }

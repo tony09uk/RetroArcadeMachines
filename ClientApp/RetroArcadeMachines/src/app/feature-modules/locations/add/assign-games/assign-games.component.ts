@@ -11,6 +11,9 @@ import { AssignGamesService } from '../../services/assign-games.service';
 import { AssignedGameRequest } from '../../models/assigned-game-request.model';
 import { ListItem } from '@core/modules/elements/list/models/list-item.model';
 import { AssignedGamesEvent } from '../../models/assigned-games-event.model';
+import { StepErrorEvent } from '@core/modules/elements/stepper/models/step-error.event';
+import { nameof } from 'ts-simple-nameof';
+import { StepErrors } from '../../models/step-errors.enum';
 
 @Component({
   selector: 'app-assign-games',
@@ -23,6 +26,8 @@ export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> 
   gameOptions: AutocompleteOption[] = [];
   selectedGames: ListItem[] = [];
 
+  private _gamesOverviewList: GameOverview[] = [];
+
   constructor(private _assignGamesService: AssignGamesService) {
     super();
   }
@@ -34,7 +39,7 @@ export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> 
         take(1)
       ).subscribe(
         (response: GameOverview[]) => { this.updateAutocomplete(response); },
-        (error: HttpErrorResponse) => { }
+        (error: HttpErrorResponse) => { this.handleError(error); }
       );
   }
 
@@ -51,23 +56,32 @@ export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> 
       icon: 'folder' // todo: change this to be the games thumbnail
     } as ListItem);
 
-    this.emitChange();
+    this.emitSelectedItemChanged();
   }
 
   listItemRemoved(item: ListItem): void {
-    this.emitChange();
+    this.emitSelectedItemChanged();
   }
 
   private updateAutocomplete(options: GameOverview[]): void {
+    this._gamesOverviewList = options;
     this.gameOptions = options.map(x => ({ id: x.id, value: x.title }));
   }
 
-  private emitChange(): void {
-    const assignedGames = this.selectedGames
-                            .map(x => ({
-                              id: x.id,
-                              title: x.value
-                            } as AssignedGameRequest));
+  private emitSelectedItemChanged(): void {
+    const assignedGames: AssignedGameRequest[] = [];
+    this.selectedGames.forEach((game: ListItem) => {
+      const gameOverview = this._gamesOverviewList.find(x => x.id === game.id);
+
+      if (gameOverview) {
+        assignedGames.push({id: gameOverview.id, releaseYear: gameOverview.releaseYear, title: gameOverview.title});
+      }
+    });
+
     this.events.emit(new AssignedGamesEvent(assignedGames));
+  }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.emitError<StepErrors>(nameof(AssignGamesComponent), StepErrors.GetGamesListFailed);
   }
 }

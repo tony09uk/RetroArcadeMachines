@@ -3,6 +3,7 @@ using RetroArcadeMachines.Shared.Models;
 using RetroArcadeMachines.Data.Write.AWS;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using System.Threading.Tasks;
+using RetroArcadeMachines.Data.Write;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
@@ -14,7 +15,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         public RoadmapsTableInitialiser(
             IAmazonDynamoDB dynamoDBClient,
             IWriteRepository<RoadmapItemModel> roadmapRepository,
-            ISeedTable<RoadmapItemModel> seedTable) : base(dynamoDBClient, DynamoDbRoadmapRepository.TableName)
+            ISeedTable<RoadmapItemModel> seedTable) : base(dynamoDBClient, RoadmapWriteRepository.TableName)
         {
             _roadmapRepository = roadmapRepository;
             _seedTable = seedTable;
@@ -24,8 +25,6 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         {
             await base.Create(
                     nameof(RoadmapItemModel.Id),
-                    nameof(RoadmapItemModel.PercentageCompleted),
-                    nameof(RoadmapItemModel.PercentageCompleted),
                     typeof(RoadmapItemModel));
         }
 

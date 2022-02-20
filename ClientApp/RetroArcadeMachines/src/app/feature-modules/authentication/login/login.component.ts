@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
-import { FacebookLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
-import { Observable, Subject } from 'rxjs';
+
+import { SocialUser } from 'angularx-social-login';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 import { AuthState } from 'src/app/shared/models/auth-state.model';
 
 @Component({
@@ -33,9 +35,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       .authState$
       .pipe(
         takeUntil(this._isDestroyed)
-      ).subscribe((state: AuthState) => {
-        this.handleAuthState(state);
-      });
+      ).subscribe(
+        (state: AuthState) => { this.handleAuthState(state); },
+        (error: any) => { console.log(error); }
+      );
   }
 
   ngOnDestroy(): void {
@@ -66,7 +69,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private navigateToLoggedInTargetPage(): void {
     // todo: how to make returnUrl type safe
-    const returnUrl = this._activatedRouter.snapshot.queryParams.returnUrl;
+    let returnUrl = this._activatedRouter.snapshot.queryParams.returnUrl;
+
+    if (returnUrl === undefined) {
+      returnUrl = '';
+    }
+
     this._router.navigate([returnUrl]);
   }
 }

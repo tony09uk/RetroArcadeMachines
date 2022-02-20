@@ -5,6 +5,6 @@ namespace RetroArcadeMachines.Services.Write
 {
     public interface ILocationDetailsService
     {
-        Task<bool> Add(LocationDetailsDto locationDetails);
+        Task<WriteRequestResult> Add(LocationDetailsDto locationDetails);
     }
 }

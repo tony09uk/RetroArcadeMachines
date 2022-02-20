@@ -1,4 +1,5 @@
 ﻿using FluentValidation.TestHelper;
+using RetroArcadeMachines.Shared.Models.Requests;
 using Xunit;
 
 namespace RetroArcadeMachines.Shared.Models.Validation.Tests

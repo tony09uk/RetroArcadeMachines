@@ -1,0 +1,36 @@
+.full-width {
+    width: 100%;
+}
+
+h2 {
+    font-size: 50px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    font-weight: 400;
+}
+
+h2,
+h3 {
+    color: #051441;
+}
+
+.thanks_content {
+    a {
+        font-size: 14px;
+        font-weight: 500;
+        color: #051441;
+        background-color: transparent;
+        // position: relative;
+        text-transform: uppercase;
+        padding: 0px 6px;
+        display: block;
+        transition: all 0.2s linear;
+        border: 2px solid #162142;
+        width: 200px;
+        margin: 0 auto 45px auto;
+
+        &:focus {
+            border-color: white;
+        }
+    }    
+}

@@ -5,8 +5,6 @@
                 <div class="row">
                     <div class="col-12 blog_sidebar_left">
                         <div class="blog_single mb_50">
-                            <!-- <carousel [images]="images" [height]="440" cellWidth="100%" [dots]="true" >
-                        </carousel> -->
                             <!--todo: provide a default image when no image in list do this check in the service-->
                             <img *ngIf="locationsDetails.imageUrlList[0]" class="img-fluid"
                                 src="{{locationsDetails.imageUrlList[0]}}" alt="">
@@ -61,8 +59,7 @@
                                 <li *ngFor="let item of locationsDetails.businessHoursList">
                                     <a>
                                         <span>{{DaysOfTheWeek[item.dayOfTheWeek]}}</span>
-                                        <em>Need to uncomment times (below)</em>
-                                        <!-- <em>{{formatOpeningHours(item.openingTime, item.closingTime)}}</em> -->
+                                        <em>{{formatOpeningHours(item.openingTime, item.closingTime)}}</em>
                                     </a>
                                 </li>
                             </ul>
@@ -76,7 +73,7 @@
                             </div>
                             <ul class="list-unstyled" *ngFor="let phoneNumber of locationsDetails.phoneNumberList">
                                 <li>
-                                    <a href="tel:{{phoneNumber}}"><span>{{phoneNumber}</span></a>
+                                    <a href="tel:{{phoneNumber}}"><span>{{phoneNumber}}</span></a>
                                 </li>
                             </ul>
                         </div>

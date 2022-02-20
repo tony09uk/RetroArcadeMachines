@@ -5,6 +5,7 @@ using RetroArcadeMachines.Services.Read.Models;
 using RetroArcadeMachines.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RetroArcadeMachines.Services.Read
@@ -37,8 +38,15 @@ namespace RetroArcadeMachines.Services.Read
 
                 await Task.WhenAll(locationOverviewTask, locationDetailsTask);
 
+                if(locationDetailsTask == null)
+                {
+                    return null;
+                }
+
+                var ids = locationDetailsTask.Result.GameOverviewList.Keys.ToList();
+
                 IEnumerable<GameOverviewDto> gamesList = 
-                    await _gamesService.Get(locationDetailsTask.Result.GameOverviewList).ConfigureAwait(false);
+                    await _gamesService.Get(ids.ConvertAll(Guid.Parse)).ConfigureAwait(false);
 
                 var locationDetails = _mapper.Map<LocationDetailsDto>(locationDetailsTask.Result);
                 locationDetails.GameOverviewList = gamesList;

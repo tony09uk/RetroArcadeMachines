@@ -1,4 +1,3 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnDestroy, OnInit, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
 

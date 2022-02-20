@@ -10,12 +10,12 @@ import { ConfigService } from './config.service';
 })
 export class HttpService {
     private _headers: HttpHeaders;
-    private _readbaseUrl;
-    private _writebaseUrl;
+    protected _readbaseUrl;
+    protected _writebaseUrl;
 
     constructor(
-        private _http: HttpClient,
-        private _configService: ConfigService) {
+        protected _http: HttpClient,
+        protected _configService: ConfigService) {
         this._headers = new HttpHeaders().set('Content-Type', 'application/json');
         this._readbaseUrl = this._configService.read_api_url;
         this._writebaseUrl = this._configService.write_api_url;

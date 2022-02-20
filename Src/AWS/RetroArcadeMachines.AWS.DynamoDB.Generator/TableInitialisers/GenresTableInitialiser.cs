@@ -3,6 +3,7 @@ using RetroArcadeMachines.Shared.Models;
 using RetroArcadeMachines.Data.Write.AWS;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using System.Threading.Tasks;
+using RetroArcadeMachines.Data.Write;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
@@ -14,7 +15,7 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         public GenresTableInitialiser(
             IAmazonDynamoDB dynamoDBClient,
             IWriteRepository<GenreModel> generesRepository,
-            ISeedTable<GenreModel> seedTable) : base(dynamoDBClient, DynamoDbGenreRepository.TableName)
+            ISeedTable<GenreModel> seedTable) : base(dynamoDBClient, GenreWriteRepository.TableName)
         {
             _generesRepository = generesRepository;
             _seedTable = seedTable;
@@ -24,8 +25,6 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         {
             await base.Create(
                     nameof(GenreModel.Id),
-                    nameof(GenreModel.Random),
-                    nameof(GenreModel.Random),
                     typeof(GenreModel));
         }
 
