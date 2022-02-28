@@ -30,8 +30,6 @@ namespace RetroArcadeMachines.Data.Read.AWS
 
         public Task<T> Get(Guid id)
         {
-            var x = _context.LoadAsync<T>(id);
-            Task.WaitAll(x);
             return _context.LoadAsync<T>(id);
         }
 

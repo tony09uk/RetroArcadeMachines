@@ -16,55 +16,53 @@ namespace RetroArcadeMachines.Services.Read
 
         private readonly IReadRepository<TableTrackerModel> _tableTrackerRepository;
         private readonly ILogger _log;
+        private readonly ICachingHelperService _cachingHelperService;
 
         public TableTrackerService(
+            ICachingHelperService cachingHelperService,
             IReadRepository<TableTrackerModel> readRepository,
             ILogger<TableTrackerService> log)
         {
+            _cachingHelperService = Guard.Against.Null(cachingHelperService, nameof(cachingHelperService), nameof(ICachingHelperService));
             _tableTrackerRepository = Guard.Against.Null(readRepository, nameof(readRepository), nameof(IReadRepository<TableTrackerModel>));
             _log = Guard.Against.Null(log, nameof(log), nameof(ILogger));
         }
 
-        public async Task<bool> HasTableBeenModifiedSince(DateTime? date, Type modelType)
-        { 
-            if(!date.HasValue)
-            {
-                return true;
-            }
-
-            DateTime lastModified = date ?? default(DateTime);
-
+        public async Task<DateTime?> GetLastDateModified(Type modelType)
+        {
             try
             {
-                TableTrackerModel tableTrackerModel = await _tableTrackerRepository.Get(ConvertTypeToTableId(modelType));
-                var isDate = DateTime.TryParse(tableTrackerModel.DateTime, out var tableModifiedDate);
-                _log.LogInformation("HasTableBeenModifiedSince: recieved date: {date}. Table tracker value was {tableModifiedDate}", date.ToString(), tableModifiedDate.ToString());
-
-                if(isDate)
+                bool isCacheable = _cachingHelperService.TryGetCacheableTypeName(modelType, out string modelName);
+                if(!isCacheable)
                 {
-                    return tableModifiedDate > lastModified;
+                    return null;
                 }
-                return true;
-            } 
-            catch(Exception ex)
+
+                TableTrackerModel tableTrackerModel = await _tableTrackerRepository.Get(modelName);
+                DateTime date = DateTime.Parse(tableTrackerModel?.DateTime);
+
+                _log.LogInformation("HasTableBeenModifiedSince:  Table tracker value was {tableModifiedDate}", date.ToString());
+
+                if (date != default(DateTime))
+                {
+                    return date;
+                }
+                return null;
+            }
+            catch (Exception ex)
             {
                 _log.LogError(ex, "Error occurred while trying to get last modifed date of name: {modelType}.", ex.Message);
-                return true;
+                return null;
             }
         }
 
-        private string ConvertTypeToTableId(Type modelType)
+        public bool HasTableBeenModified(DateTime? passedDate, DateTime? storedDate)
         {
-            var modelName = modelType.ToString();
-            if(modelName.Contains("Dto"))
+            if(passedDate == null || storedDate == null)
             {
-                return modelName.Replace("Dto", "Model");
+                return true;
             }
-            else
-            {
-                _log.LogWarning("TableTracker service expects the convention of Model name ending in Dto to be passed, but recieved {modelName}", new string[] { modelName });
-            }
-            return "";
+            return passedDate < storedDate;
         }
     }
 }

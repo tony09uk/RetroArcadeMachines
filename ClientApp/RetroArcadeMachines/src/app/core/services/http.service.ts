@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable, Type } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams, HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+import { catchError, map, mergeMap, retry, tap } from 'rxjs/operators';
 import { ConfigService } from './config.service';
+import { CacheService } from './cache.service';
+import { LastModified } from '@shared/models/last-modified.model';
 
 @Injectable({
     providedIn: 'root'
@@ -15,28 +17,59 @@ export class HttpService {
 
     constructor(
         protected _http: HttpClient,
+        protected _cacheService: CacheService,
         protected _configService: ConfigService) {
         this._headers = new HttpHeaders().set('Content-Type', 'application/json');
         this._readbaseUrl = this._configService.read_api_url;
         this._writebaseUrl = this._configService.write_api_url;
     }
 
-    public get<T>(url: string, params: HttpParams = new HttpParams()): Observable<T> {
+    public get<T>(url: string, objName?: string, params: HttpParams = new HttpParams()): Observable<T> {
         url = this.createUrl(this._readbaseUrl, url);
-        return this._http.get<T>(url, { headers: this._headers, params })
-                   .pipe(
-                       retry(3), // todo: make configurable retry with backoff
-                       catchError(val => throwError(val))
-                    );
+        let lastModifiedDate = '';
+
+        return this._cacheService
+            .getModifiedDate(objName)
+            .pipe(
+                tap((lastModified: LastModified) => lastModifiedDate = lastModified?.date),
+                map((lastModified: LastModified) => this.addIfModifiedSinceHeader(lastModified?.date)),
+            ).pipe(
+                mergeMap((headers: HttpHeaders) =>
+                    this._http.get<T>(url, { headers: headers, observe: 'response', params })
+                        .pipe(
+                            // retry(3), // todo: make configurable retry with backoff
+                            catchError(error => this.handleError(error, lastModifiedDate)),
+                        ))
+            ).pipe(
+                // tslint:disable-next-line:max-line-length
+                mergeMap((res: HttpResponse<T>) => this._cacheService.bulkGetOrInsert<T>(res.body, res.headers.get('last-modified'), res.status, objName)),
+            );
+    }
+
+    handleError(val: string | HttpErrorResponse, lastModifiedDate?: string): Observable<HttpResponse<any> | never> {
+        // The page never sees the 304 code.
+        // The browser pretends it got a 200 response from the server,
+        // Therefore, the page can't really distinguish a 304 from a 200 response
+        // Anyway other than an error is 'OK' - There must be a better way
+        if ((typeof val === 'string' || val instanceof String) && val === 'OK') {
+            return of(new HttpResponse({
+                body: '',
+                headers: this.addIfModifiedSinceHeader(lastModifiedDate),
+                status: HttpStatusCode.NotModified,
+            }));
+        }
+
+        // todo: add better error handling
+        return throwError(val);
     }
 
     public delete<T>(url: string): Observable<T> {
         url = this.createUrl(this._writebaseUrl, url);
         return this._http.delete<T>(url, { headers: this._headers })
-                   .pipe(
-                       retry(3), // todo: make configurable retry with backoff
-                       catchError(val => throwError(val))
-                    );
+            .pipe(
+                retry(3), // todo: make configurable retry with backoff
+                catchError(val => throwError(val))
+            );
     }
 
     public post<T>(url: string, body: string | object = {}): Observable<T> {
@@ -47,10 +80,10 @@ export class HttpService {
         }
 
         return this._http.post<T>(url, body, { headers: this._headers })
-                   .pipe(
-                       retry(3), // todo: make configurable retry with backoff
-                       catchError(val => throwError(val))
-                    );
+            .pipe(
+                retry(3), // todo: make configurable retry with backoff
+                catchError(val => throwError(val))
+            );
     }
 
     private createUrl(baseUrl: string, url: string): string {
@@ -59,5 +92,15 @@ export class HttpService {
         }
 
         return baseUrl + url;
+    }
+
+    private addIfModifiedSinceHeader(dateModified: string): HttpHeaders {
+        if (!dateModified) {
+            return this._headers;
+        }
+
+        let getRequestHeader = this._headers;
+        getRequestHeader = getRequestHeader.set('if-modified-since', dateModified);
+        return getRequestHeader;
     }
 }

@@ -47,20 +47,41 @@ namespace RetroArcadeMachines.Services.Write
 
                 var locationExists = await GetLocationIdOrDefault(locationDetailsModel);
 
-                if(locationExists != default(Guid))
-                {
-                    return new WriteRequestResult { ItemId = locationExists, Status = WriteRequestStatus.Duplicate };
-                }
+                //if(locationExists != default(Guid))
+                //{
+                //    return new WriteRequestResult { ItemId = locationExists, Status = WriteRequestStatus.Duplicate };
+                //}
 
                 var locationId = Guid.NewGuid();
 
                 locationDetailsModel.Id = locationId;
                 locationOverviewModel.Id = locationId;
 
-                var locationDetailsTask = _locationDetailsRepository.Add(locationDetailsModel);
-                var locationOverviewTask = _locationOverviewRepository.Add(locationOverviewModel);
+                // todo: how to undo a write if another fails -> https://stackoverflow.com/questions/51703022/rollback-with-dynamodb
 
-                await Task.WhenAll(locationDetailsTask, locationOverviewTask);
+                //var locationDetailsTask = _locationDetailsRepository.Add(locationDetailsModel);
+                //var locationOverviewTask = _locationOverviewRepository.Add(locationOverviewModel);
+
+                //await Task.WhenAll(locationDetailsTask, locationOverviewTask);
+
+                try
+                {
+                    await _locationDetailsRepository.Add(locationDetailsModel);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                try
+                {
+                    await _locationOverviewRepository.Add(locationOverviewModel);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
 
                 return new WriteRequestResult { ItemId = null, Status = WriteRequestStatus.Success };
             }

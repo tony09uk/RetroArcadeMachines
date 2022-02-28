@@ -22,8 +22,10 @@ namespace RetroArcadeMachines.Data.Write
         {
             AddDbProvider(services, configuration);
 
-            services.AddSingleton<IReadRepository<LocationDetailsModel>, LocationDetailsRepository>();
-            services.AddSingleton<IReadRepository<GameModel>, GamesRepository>();
+            services.AddRetroArcadeMachinesDataRead(configuration);
+
+            //services.AddSingleton<IReadRepository<LocationDetailsModel>, LocationDetailsRepository>();
+            //services.AddSingleton<IReadRepository<GameModel>, GamesRepository>();
 
             services.AddSingleton<IWriteRepository<RoadmapItemModel>, RoadmapWriteRepository>();
             services.AddSingleton<IWriteRepository<GameModel>, GamesWriteRepository>();

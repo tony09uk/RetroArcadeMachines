@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace RetroArcadeMachines.Shared.Models
 {
     [DynamoDBTable("Games")] // todo: how to stop duplicating the table name in here in repository
-    public class GameModel
+    public class GameModel : ICacheableModel
     {
         [DynamoDBHashKey]
         public Guid Id { get; set; }

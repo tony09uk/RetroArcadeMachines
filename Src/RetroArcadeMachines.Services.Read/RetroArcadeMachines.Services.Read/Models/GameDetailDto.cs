@@ -2,7 +2,7 @@
 
 namespace RetroArcadeMachines.Services.Read.Models
 {
-    public class GameDetailDto : GameOverviewDto
+    public class GameDetailDto : GameDto
     {
         public IEnumerable<string> ImageListUrls { get; set; }
         public string VideoClipUrl { get; set; }

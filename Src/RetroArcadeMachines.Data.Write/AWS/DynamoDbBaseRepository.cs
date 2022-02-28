@@ -1,6 +1,7 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.Model;
+using Amazon.Runtime;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using RetroArcadeMachines.Shared.Models;
 using System;
@@ -20,17 +21,17 @@ namespace RetroArcadeMachines.Data.Write.AWS
 
         public Task Add(T item)
         {
-            Task task = _context.SaveAsync(item);
             UpdateTableTracker();
+            Task task = _context.SaveAsync(item);
             return task;
         }
 
         public async Task<bool> AddMany(List<T> items)
         {
+            _ = UpdateTableTracker();
             BatchWrite<T> batch = _context.CreateBatchWrite<T>();
             batch.AddPutItems(items);
             await batch.ExecuteAsync();
-            _ = UpdateTableTracker();
 
             return true;
         }
@@ -42,8 +43,8 @@ namespace RetroArcadeMachines.Data.Write.AWS
 
         public Task Delete(string id)
         {
-            var task = _context.DeleteAsync<T>(id);
             UpdateTableTracker();
+            var task = _context.DeleteAsync<T>(id);
             return task;
         }
 
@@ -55,19 +56,14 @@ namespace RetroArcadeMachines.Data.Write.AWS
         /// <returns></returns>
         private Task UpdateTableTracker()
         {
-            var client = new AmazonDynamoDBClient();
-            string tableName = "TableTracker";
-
-            var request = new PutItemRequest
-            {
-                TableName = tableName,
-                Item = new Dictionary<string, AttributeValue>()
-                {
-                      { nameof(TableTrackerModel.Name), new AttributeValue { S = nameof(T) }},
-                      { nameof(TableTrackerModel.DateTime), new AttributeValue { S = DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture) }},
-                }
-            };
-            return client.PutItemAsync(request);
+            var instance = Activator.CreateInstance(typeof(T));
+            var tracker = new TableTrackerModel { 
+                                DateTime = DateTime.UtcNow.ToString(
+                                                TableTrackerRepository.DATE_STORAGE_FORMAT,
+                                                TableTrackerRepository.DateStorageCulture),
+                                Name = instance.GetType().Name
+                            };
+            return _context.SaveAsync(tracker);
         }
     }
 }

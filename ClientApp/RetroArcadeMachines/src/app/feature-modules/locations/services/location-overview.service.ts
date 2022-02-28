@@ -8,8 +8,9 @@ import { GridDataFactoryService } from '@core/modules/grid/services/grid-data-fa
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 import { HttpService } from '@core/services/http.service';
 
-import { LocationOverview } from '../models/location-overview.model';
 import { LocationOverviewTable } from '../models/location-overview-table.model';
+import { LocationOverview } from '@shared/models/location-overview.model';
+import { nameof } from 'ts-simple-nameof';
 
 @Injectable()
 export class LocationOverviewService extends GridDataFactoryService {
@@ -19,7 +20,7 @@ export class LocationOverviewService extends GridDataFactoryService {
     }
 
     get(): Observable<GridConfig<LocationOverview>> {
-        return this.create<LocationOverview, LocationOverviewTable>('locationsOverview', this.createColumnHeaders());
+        return this.create<LocationOverview, LocationOverviewTable>('locationsOverview', this.createColumnHeaders(), nameof(LocationOverview));
     }
 
     private createColumnHeaders(): LocationOverviewTable {

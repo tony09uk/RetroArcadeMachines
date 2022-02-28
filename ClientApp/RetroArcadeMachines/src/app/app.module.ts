@@ -16,6 +16,8 @@ import { environment } from 'src/environments/environment';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { ConfigService } from '@core/services/config.service';
+import { NgxIndexedDBModule } from 'ngx-indexed-db';
+import { CacheConfig } from './shared/cache-config';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { ConfigService } from '@core/services/config.service';
     RuntimeConfigLoaderModule.forRoot(
       { configUrl: './assets/config.json' }
     ),
+    NgxIndexedDBModule.forRoot(CacheConfig.schema),
     FooterModule,
     HeaderModule,
     MatSnackBarModule // todo: conditionally load any mat...modules

@@ -1,5 +1,4 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
-using System;
 using System.Collections.Generic;
 
 namespace RetroArcadeMachines.Shared.Models

@@ -20,7 +20,8 @@
     "paths": {
       "@core/modules/*": ["src/app/core/modules/*"],
       "@core/services/*": ["src/app/core/services/*"],
-      "@core/pipes/*": ["src/app/core/pipes/*"]
+      "@core/pipes/*": ["src/app/core/pipes/*"],
+      "@shared/models/*": ["src/app/shared/models/*"]
     },
     "module": "es2020",
     "lib": [

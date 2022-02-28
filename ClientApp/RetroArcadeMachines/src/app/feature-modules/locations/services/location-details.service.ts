@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map, mergeMap, take, tap } from 'rxjs/operators';
+import { nameof } from 'ts-simple-nameof';
 
 import { CellContentTypes } from '@core/modules/grid/enums/cell-content-types.enum';
 import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
@@ -24,9 +25,9 @@ export class LocationDetailsService extends GridDataFactoryService {
 
     get(id: string): Observable<LocationDetails> {
         const params = new HttpParams().set('id', id);
-
+        const type = new LocationDetails();
         return this._httpService
-            .get<LocationDetails>('LocationDetails', params)
+            .get<LocationDetails>('LocationDetails', nameof(LocationDetails), params)
             .pipe(
                 take(1),
                 mergeMap((response: LocationDetails) => this.getGamesCollectionTable(response)),
@@ -34,7 +35,7 @@ export class LocationDetailsService extends GridDataFactoryService {
     }
 
     private getGamesCollectionTable(locationDetails: LocationDetails): Observable<LocationDetails> {
-        return this.create<GameOverview, GamesCollectionTable>(locationDetails.gameOverviewList, this.createColumnHeaders())
+        return this.create<GameOverview, GamesCollectionTable>(locationDetails.gameOverviewList, this.createColumnHeaders(), nameof(GameOverview))
                 .pipe(
                     take(1),
                     tap((gridConfig: GridConfig<GameOverview>) => locationDetails.gameCollectionTable = gridConfig),

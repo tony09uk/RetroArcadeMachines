@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
 
 namespace RetroArcadeMachines.Data.Read
 {
@@ -11,25 +12,25 @@ namespace RetroArcadeMachines.Data.Read
 
         protected BaseRepository(IProviderReadRepository<T> readRepository)
         {
-            _readRepository = readRepository;
+            _readRepository = Guard.Against.Null(readRepository, nameof(readRepository), nameof(IProviderReadRepository<T>));
         }
 
-        public Task<IEnumerable<T>> Get()
+        public virtual Task<IEnumerable<T>> Get()
         {
             return _readRepository.Get();
         }
 
-        public Task<T> Get(Guid id)
+        public virtual Task<T> Get(Guid id)
         {
             return _readRepository.Get(id);
         }
 
-        public Task<T> Get(string id)
+        public virtual Task<T> Get(string id)
         {
             return _readRepository.Get(id);
         }
 
-        public Task<List<T>> Get(IEnumerable<Guid> uniqueIds)
+        public virtual Task<List<T>> Get(IEnumerable<Guid> uniqueIds)
         {
             return _readRepository.Get(uniqueIds);
         }

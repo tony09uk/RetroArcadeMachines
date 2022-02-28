@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/internal/Observable';
+import { nameof } from 'ts-simple-nameof';
 
 import { HttpService } from '@core/services/http.service';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
@@ -20,7 +21,7 @@ export class GamesService extends GridDataFactoryService {
      }
 
     get(): Observable<GridConfig<GameOverview>> {
-        return this.create<GameOverview, GamesOverviewTable>('games', this.createColumnHeaders());
+        return this.create<GameOverview, GamesOverviewTable>('games', this.createColumnHeaders(), nameof(GameOverview));
     }
 
     private createColumnHeaders(): GamesOverviewTable {

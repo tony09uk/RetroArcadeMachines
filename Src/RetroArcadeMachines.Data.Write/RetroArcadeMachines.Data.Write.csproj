@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" Version="3.2.0" />
     <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.66" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.1" />
     <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.27" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.SendGrid" Version="3.0.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="4.0.4" />
+    <PackageReference Include="Scrutor" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>

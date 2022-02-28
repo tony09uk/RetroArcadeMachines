@@ -42,6 +42,14 @@ export class NumberRangeFilterComponent implements OnInit {
     this.minValue = min(range);
     this.maxValue = max(range);
 
+    if (!this.minValue) {
+      this.minValue = 0;
+    }
+
+    if (!this.maxValue) {
+      this.maxValue = 0;
+    }
+
     this.resetSelectedValues();
 
     this._gridFilterService

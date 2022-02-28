@@ -19,7 +19,8 @@ namespace RetroArcadeMachines.AzureFunctions.Read.Extensions
                 return null;
             }
 
-            var isValidDate = DateTime.TryParseExact(modifiedDate, format, culture, DateTimeStyles.None, out DateTime validDate);
+            var isValidDate = DateTime.TryParse(modifiedDate, out DateTime validDate);
+            //var isValidDate = DateTime.TryParseExact(modifiedDate, format, culture, DateTimeStyles.None, out DateTime validDate);
 
             if (!isValidDate)
             {

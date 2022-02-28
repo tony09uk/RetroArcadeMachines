@@ -8,6 +8,7 @@ namespace RetroArcadeMachines.Services.Read
     {
         string DateStorageFormat { get; }
         CultureInfo DateStorageCulture { get; }
-        Task<bool> HasTableBeenModifiedSince(DateTime? date, Type type);
+        Task<DateTime?> GetLastDateModified(Type type);
+        bool HasTableBeenModified(DateTime? passedDate, DateTime? storedDate);
     }
 }

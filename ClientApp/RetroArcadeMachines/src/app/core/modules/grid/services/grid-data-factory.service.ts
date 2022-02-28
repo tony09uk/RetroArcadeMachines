@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -14,14 +14,14 @@ export class GridDataFactoryService {
 
     constructor(protected _httpService: HttpService) { }
 
-    create<T, K>(value: string | T[], columnHeders: K): Observable<GridConfig<T>> {
+    create<T, K>(value: string | T[], columnHeders: K, objName: string): Observable<GridConfig<T>> {
         if (!value) {
             throw new Error('the provided value was null. this needs to be an endpoint or the data that will populate the table');
         }
 
         if (typeof (value) === 'string') {
             return this._httpService
-                .get<T[]>(value as string)
+                .get<T[]>(value as string, objName)
                 .pipe(
                     take(1),
                     map((data: T[]) => this.createGridConfig(data, columnHeders))

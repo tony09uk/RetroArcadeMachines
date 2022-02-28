@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RetroArcadeMachines.Shared.Models;
 
 namespace RetroArcadeMachines.Services.Read.Models
 {
-    public class GameOverviewDto
+    public class GameOverviewDto : GameDto, ICacheableModel
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public int ReleaseYear { get; set; }
-        public int MaxPlayers { get; set; }
-        public string ThumbnailUrl { get; set; }
 
-        public IEnumerable<string> DeveloperList { get; set; }
-        public IEnumerable<string> GenreList { get; set; }
     }
 }

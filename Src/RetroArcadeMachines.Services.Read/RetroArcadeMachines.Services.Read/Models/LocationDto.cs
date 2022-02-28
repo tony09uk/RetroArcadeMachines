@@ -1,10 +1,10 @@
-﻿using Amazon.DynamoDBv2.DataModel;
+﻿using System;
 
-namespace RetroArcadeMachines.Shared.Models
+namespace RetroArcadeMachines.Services.Read.Models
 {
-    [DynamoDBTable("LocationsOverview")]
-    public class LocationOverviewModel : LocationBaseModel, ICacheableModel
+    public class LocationDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public bool IsRetroGamesOnly { get; set; }
         public string Town { get; set; }

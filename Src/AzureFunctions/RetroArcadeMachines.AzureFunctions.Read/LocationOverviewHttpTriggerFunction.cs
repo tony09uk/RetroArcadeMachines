@@ -41,18 +41,18 @@ namespace RetroArcadeMachines.AzureFunctions.Read
         {
             log.LogInformation("LocationsOverview: process started");
 
-            DateTime? lastModifiedDate = req.Headers.GetIfModifiedSince();
-            log.LogInformation("LocationsOverview: lastModifiedDate provided: {lastModifiedDate}", lastModifiedDate);
+            DateTime? passedLastModifiedDate = req.Headers.GetIfModifiedSince();
+            log.LogInformation("LocationsOverview: lastModifiedDate provided: {lastModifiedDate}", passedLastModifiedDate);
 
-            bool shouldGetNewData = await _tableTrackerService.HasTableBeenModifiedSince(lastModifiedDate, typeof(LocationOverviewDto));
+            // todo: why is date being reformatted?
+            DateTime? savedLastModifiedDate = await _tableTrackerService.GetLastDateModified(typeof(LocationOverviewDto));
             
-            if(shouldGetNewData)
+            if(_tableTrackerService.HasTableBeenModified(passedLastModifiedDate, savedLastModifiedDate))
             {
                 IEnumerable<LocationOverviewDto> result = await _locationsOverviewService.Get();
-                return new OkLastModifiedResult(result, req.HttpContext.Response, lastModifiedDate);
+                return new OkLastModifiedResult(result, req.HttpContext.Response, savedLastModifiedDate);
             }
-
-            return new NoContentLastModifiedResult(req.HttpContext.Response, lastModifiedDate);
+            return new NotModifiedResult();
         }
     }
 }

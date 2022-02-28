@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/internal/Observable';
+import { nameof } from 'ts-simple-nameof';
 
 import { YesNoPipe } from '@core/pipes/yes-no.pipe';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
@@ -20,7 +21,7 @@ export class RoapmapService extends GridDataFactoryService {
   }
 
   get(): Observable<GridConfig<RoadmapResponse>> {
-    return this.create<RoadmapResponse, RoadmapTable>('roadmaps', this.createColumnHeaders());
+    return this.create<RoadmapResponse, RoadmapTable>('roadmaps', this.createColumnHeaders(), nameof(RoadmapResponse));
   }
 
   private createColumnHeaders(): RoadmapTable {

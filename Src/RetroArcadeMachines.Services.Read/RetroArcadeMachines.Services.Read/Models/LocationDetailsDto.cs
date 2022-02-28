@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RetroArcadeMachines.Services.Read.Models
 {
-    public class LocationDetailsDto : LocationOverviewDto
+    public class LocationDetailsDto : LocationDto
     {
         public string Synopsis { get; set; }
         public string EmailAddress { get; set; }

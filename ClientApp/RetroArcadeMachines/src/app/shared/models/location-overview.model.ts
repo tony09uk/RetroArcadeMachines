@@ -1,4 +1,4 @@
-export interface LocationOverview {
+export class LocationOverview {
     id: string;
     name: string;
     isRetroGamesOnly: boolean;

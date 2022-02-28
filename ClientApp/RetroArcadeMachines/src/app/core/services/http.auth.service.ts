@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CacheService } from './cache.service';
 
 import { ConfigService } from './config.service';
 
@@ -11,8 +12,9 @@ import { HttpService } from './http.service';
 export class HttpAuthService extends HttpService {
     constructor(
         _http: HttpClient,
+        _cacheService: CacheService,
         _configService: ConfigService ) {
-        super(_http, _configService);
+        super(_http, _cacheService, _configService);
         this.init();
     }
 

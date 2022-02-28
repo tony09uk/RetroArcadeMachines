@@ -1,4 +1,4 @@
-export interface GameOverview {
+export class GameOverview {
     id: string;
     title: string;
     releaseYear: number;

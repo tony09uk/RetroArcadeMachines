@@ -1,4 +1,4 @@
-export interface RoadmapResponse {
+export class RoadmapResponse {
     id: string;
     name: string;
     description: string;

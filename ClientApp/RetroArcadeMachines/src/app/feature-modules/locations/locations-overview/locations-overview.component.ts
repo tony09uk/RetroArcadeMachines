@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { take } from 'rxjs/internal/operators/take';
 
-import { LocationOverview } from '../models/location-overview.model';
 import { LocationOverviewService } from '../services/location-overview.service';
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
-import { Router } from '@angular/router';
+import { LocationOverview } from '@shared/models/location-overview.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-locations-overview',
@@ -29,7 +30,7 @@ export class LocationsOverviewComponent implements OnInit {
       )
       .subscribe(
         (value: GridConfig<LocationOverview>) => { this.table = value; },
-        (error: any) => { console.log(error); }
+        (error: HttpErrorResponse) => { console.log(error); }
       );
   }
 
