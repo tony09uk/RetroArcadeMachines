@@ -1,4 +1,4 @@
-import { YesNoPipe } from './yes-no.pipe';
+import { YesNoPipe } from '../yes-no.pipe';
 
 describe('YesNoPipe', () => {
   it('should create an instance', () => {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, PipeTransform } from '@angular/core';
+import { Component, Input, PipeTransform } from '@angular/core';
 import { CellContentTypes } from '../enums/cell-content-types.enum';
 import { HeaderItem } from '../models/header-item';
 
@@ -7,18 +7,13 @@ import { HeaderItem } from '../models/header-item';
   templateUrl: './cell-content-selector.component.html',
   styleUrls: ['./cell-content-selector.component.scss']
 })
-export class CellContentSelectorComponent<T> implements OnInit {
+export class CellContentSelectorComponent<T> {
 
   @Input() columnHeaderData: HeaderItem;
   @Input() value: T;
   @Input() columnHeaderKey: string;
 
   cellContentTypes = CellContentTypes;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   format(value: any, pipeFormatter: PipeTransform, key: string, pipeFormatParam?: string): any {
     if (!pipeFormatter) {

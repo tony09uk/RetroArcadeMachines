@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { HttpService } from '@core/services/http.service';
@@ -16,7 +16,7 @@ export class GridDataFactoryService {
 
     create<T, K>(value: string | T[], columnHeders: K, objName: string): Observable<GridConfig<T>> {
         if (!value) {
-            throw new Error('the provided value was null. this needs to be an endpoint or the data that will populate the table');
+            return throwError(new Error('the provided value was null. this needs to be an endpoint or the data that will populate the table'));
         }
 
         if (typeof (value) === 'string') {

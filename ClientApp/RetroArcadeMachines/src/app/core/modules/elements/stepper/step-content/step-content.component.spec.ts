@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StepContentComponent } from './step-content.component';
 
 describe('StepContentComponent', () => {
-  let component: StepContentComponent;
-  let fixture: ComponentFixture<StepContentComponent>;
+  let component: StepContentComponent<any>;
+  let fixture: ComponentFixture<StepContentComponent<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

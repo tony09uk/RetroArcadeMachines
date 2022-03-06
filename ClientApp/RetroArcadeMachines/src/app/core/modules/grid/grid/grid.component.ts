@@ -25,7 +25,6 @@ import { GridFilterService } from '../services/grid-filter-service';
   selector: 'app-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
-  providers: [GridFilterService]
 })
 export class GridComponent<T> implements OnInit {
 
@@ -96,17 +95,17 @@ export class GridComponent<T> implements OnInit {
     return propertyName + '-description';
   }
 
-  shouldHideColumnValue(key: any, element: any): boolean {
-    if (!element) {
-      return false;
-    }
+  // shouldHideColumnValue(key: any, element: any): boolean {
+  //   if (!element) {
+  //     return false;
+  //   }
 
-    const item = element as [Column];
+  //   const item = element as [Column];
 
-    const column = item.find(x => x.name === key);
-    const pixelCount = column !== undefined && column?.shouldHideAtPixels !== undefined ? column.shouldHideAtPixels : 0;
-    return this.shouldHideColumn(pixelCount);
-  }
+  //   const column = item.find(x => x.name === key);
+  //   const pixelCount = column !== undefined && column?.shouldHideAtPixels !== undefined ? column.shouldHideAtPixels : 0;
+  //   return this.shouldHideColumn(pixelCount);
+  // }
 
   setVisisibility(key: string, alwaysHide: boolean): boolean {
     if (alwaysHide) {

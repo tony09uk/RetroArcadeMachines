@@ -7,7 +7,7 @@ import { AutocompleteOption } from './models/autocomplete-option.model';
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })
-export class AutocompleteComponent implements OnInit {
+export class AutocompleteComponent {
   // todo: extend BaseinputDirective
   @Input() options: AutocompleteOption[];
   @Input() label: string;
@@ -16,11 +16,6 @@ export class AutocompleteComponent implements OnInit {
   @Output() selectedOption: EventEmitter<AutocompleteOption> = new EventEmitter<AutocompleteOption>();
 
   myControl = new FormControl();
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   clearInput(): void {
     this.myControl.setValue('');

@@ -33,7 +33,7 @@ export class AlertService { // todo: abstract matsnackbar
         vertPos: MatSnackBarVerticalPosition = this._defaultVertPos,
         horiPos: MatSnackBarHorizontalPosition = this._defaultHoriPos,
         duration: number = this._defaultDuration): void {
-        this.showMessage(message, 'bg-primary', vertPos, horiPos, duration);
+        this.showMessage(message, 'bg-accent', vertPos, horiPos, duration);
     }
 
     private showMessage(

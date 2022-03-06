@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ListItem } from './models/list-item.model';
 
 @Component({
@@ -6,17 +6,12 @@ import { ListItem } from './models/list-item.model';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
   @Input() header: string;
   @Input() showDividerAfterList: boolean = false;
   @Input() items: ListItem[] = [];
 
   @Output() itemRemoved: EventEmitter<ListItem> = new EventEmitter<ListItem>();
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   remove(item: ListItem): void {
     const itemIndex = this.items.indexOf(item);

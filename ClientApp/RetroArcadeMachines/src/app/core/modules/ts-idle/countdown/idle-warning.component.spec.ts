@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { IdleService } from '../services/idle.service';
 
 import { IdleWarningComponent } from './idle-warning.component';
 
@@ -8,9 +10,11 @@ describe('IdleWarningComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [
+        { provide: IdleService, useValue: { } }
+      ],
       declarations: [ IdleWarningComponent ]
-    })
-    .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -38,9 +38,11 @@ export class NumberRangeFilterComponent implements OnInit {
       this.width = calculatedWidth.toString();
     }
 
-    const range = this.data.map(v => Number(v));
-    this.minValue = min(range);
-    this.maxValue = max(range);
+    if (this.data) {
+      const range = this.data.map(v => Number(v));
+      this.minValue = min(range);
+      this.maxValue = max(range);
+    }
 
     if (!this.minValue) {
       this.minValue = 0;
@@ -79,12 +81,12 @@ export class NumberRangeFilterComponent implements OnInit {
       return;
     }
 
-    if (column.appliedFilters.length === 0) {
+    if (column.appliedFilters?.length === 0) {
       this.resetSelectedValues();
       return;
     }
 
-    if (column.appliedFilters.length === 1) {
+    if (column.appliedFilters?.length === 1) {
       const filterValue = column.appliedFilters[0].split(this._delimeter);
       this.setSelectedValues(Number(filterValue[0]), Number(filterValue[1]));
     }

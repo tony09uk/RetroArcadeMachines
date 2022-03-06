@@ -7,16 +7,22 @@ import { FilterTypes } from '../enums/filter-types.enum';
 import { Column } from '../models/column.model';
 import { HeaderItem } from '../models/header-item';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class GridFilterService {
     columns: Column[];
-    filterChanged$: Subject<Column> = new Subject<Column>();
+    private _filterChanged$: Subject<Column> = new Subject<Column>();
     get delimiter(): string {
         return '-';
     }
 
     initFilters(headers: any, data: any): void {
         this.columns = [];
+
+        if (!headers) {
+            return;
+        }
 
         Object.keys(headers).forEach((headerKey: string) => {
             const headerItem = headers[headerKey] as HeaderItem;
@@ -41,21 +47,21 @@ export class GridFilterService {
     }
 
     watchColumnFilterChanged(): Observable<Column> {
-        return this.filterChanged$;
+        return this._filterChanged$;
     }
 
     clearFilters(): void {
         const columnsWithFilters = this.columns.filter(c => c.appliedFilters.length > 0);
         for (const column of columnsWithFilters) {
             column.appliedFilters = [];
-            this.filterChanged$.next(column);
+            this._filterChanged$.next(column);
         }
     }
 
     updateFilter(columnName: string, value: string[]): void {
         const column = this.columns.find(x => x.name === columnName);
         column.appliedFilters = value;
-        this.filterChanged$.next(column);
+        this._filterChanged$.next(column);
     }
 
     getColumn(name: string): Column {

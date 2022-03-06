@@ -63,5 +63,4 @@ export class MultiselectFilterComponent implements OnInit, OnDestroy {
     }
     return this._pipe.transform(value);
   }
-
 }

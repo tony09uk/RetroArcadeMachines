@@ -83,5 +83,4 @@ export class FindLocationComponent extends StepBaseComponent<FindLocationEvent> 
 
     this.marker.getPosition();
   }
-
 }
