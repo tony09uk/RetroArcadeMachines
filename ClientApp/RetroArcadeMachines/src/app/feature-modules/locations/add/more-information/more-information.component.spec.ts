@@ -1,13 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { MoreInformationComponent } from './more-information.component';
 
-describe('MoreInformationComponent', () => {
+fdescribe('MoreInformationComponent', () => {
   let component: MoreInformationComponent;
   let fixture: ComponentFixture<MoreInformationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [FormBuilder],
       declarations: [ MoreInformationComponent ]
     })
     .compileComponents();

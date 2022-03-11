@@ -9,7 +9,6 @@ import { StepLabelConstants } from '../../models/step-label-constants.model';
 import { AddService } from '../../services/add.service';
 import { Address } from '../../models/address.model';
 import { MoreInformation } from '../../models/more-information.model';
-import { take } from 'rxjs/operators';
 import { ConfirmLocationEvent } from '../../models/confirm-location-event.model';
 
 @Component({

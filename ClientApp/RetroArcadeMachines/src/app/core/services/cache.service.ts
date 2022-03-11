@@ -6,6 +6,7 @@ import { nameof } from 'ts-simple-nameof';
 import { map, mergeMap, take, tap } from 'rxjs/operators';
 import { LastModified } from '@shared/models/last-modified.model';
 import { HttpStatusCode } from '@angular/common/http';
+import { CacheConfig } from 'src/app/shared/cache-config';
 
 @Injectable({
     providedIn: 'root'
@@ -22,11 +23,16 @@ export class CacheService {
     }
 
     bulkGetOrInsert<T>(value: T, lastModDate: string, updateCode: number, storeName: string): Observable<any> {
+        if (!this.isObjectCacheable(storeName)) {
+            return of(value);
+        }
+
         const isModified = updateCode !== HttpStatusCode.NotModified;
         const lastModified = new LastModified(storeName, lastModDate);
 
         const update$ = this.update(nameof(LastModified), lastModified);
         const add$ = this.add(nameof(LastModified), lastModified);
+
         return this._dbService.count(nameof(LastModified), lastModified.name)
             .pipe(
                 mergeMap((val: number) => iif(() => val > 0, update$, add$)),
@@ -70,11 +76,14 @@ export class CacheService {
         return this._dbService.getByKey(storeName, key);
     }
 
-    // put<T>(storeName: string, key: string): Observable<T> {
-    //     this._
-    // }
-
     getModifiedDate(key: string): Observable<LastModified> {
         return this.getByKey(nameof(LastModified), key);
+    }
+
+    private isObjectCacheable(storeName: string): boolean {
+        const cacheableObjects: string[] = CacheConfig.schema.objectStoresMeta.map(x => x.store);
+        const cacheableObject = cacheableObjects.find(x => x === storeName);
+        const canCache = cacheableObject !== undefined;
+        return canCache;
     }
 }

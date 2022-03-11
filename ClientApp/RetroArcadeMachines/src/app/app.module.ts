@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,9 +15,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
-import { ConfigService } from '@core/services/config.service';
 import { NgxIndexedDBModule } from 'ngx-indexed-db';
 import { CacheConfig } from './shared/cache-config';
+
+const dev = isDevMode() ? '.dev' : '';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { CacheConfig } from './shared/cache-config';
     HttpClientModule,
     BrowserAnimationsModule,
     RuntimeConfigLoaderModule.forRoot(
-      { configUrl: './assets/config.json' }
+      { configUrl: `./assets/config${dev}.json` }
     ),
     NgxIndexedDBModule.forRoot(CacheConfig.schema),
     FooterModule,

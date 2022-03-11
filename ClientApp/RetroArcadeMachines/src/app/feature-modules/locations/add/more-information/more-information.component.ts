@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
 import { StepBaseComponent } from '@core/modules/elements/stepper/step-base/step-base.component';
+
 import { MoreInformationEvent } from '../../models/more-information-event.model';
-import { MoreInformation } from '../../models/more-information.model';
 
 @Component({
   selector: 'app-more-information',

@@ -10,7 +10,7 @@ import { GridDataFactoryService } from '@core/modules/grid/services/grid-data-fa
 import { HeaderItem } from '@core/modules/grid/models/header-item';
 import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
 
-import { RoadmapResponse } from '../models/roadmap-response';
+import { RoadmapResponse } from '../../../shared/models/roadmap-response';
 import { RoadmapTable } from '../models/roadmap-table.model';
 
 @Injectable()

@@ -1,8 +1,14 @@
 # RetroArcadeMachines
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3 CURRENT verion is 13.1.4
 
 ## Development server
+
+copy config.json and create config.dev.json (at same level as config.json) then:
+    add your own google_places_api_key
+
+in environment.ts
+    add your own google_places_api_key      
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 

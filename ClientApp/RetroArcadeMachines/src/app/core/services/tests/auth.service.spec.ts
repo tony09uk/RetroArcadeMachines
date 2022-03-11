@@ -1,13 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { AuthState } from '@shared/models/auth-state.model';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { of } from 'rxjs';
 import { AuthService } from '../auth.service';
 
-
-fdescribe('AuthService', () => {
+describe('AuthService', () => {
     let socialAuthServiceMock: jasmine.SpyObj<SocialAuthService>;
     let sut: AuthService;
     let localStore: Storage;
+
+    const user = { firstName: 'test'} as SocialUser;
 
     beforeEach(() => {
         socialAuthServiceMock = jasmine.createSpyObj<SocialAuthService>('SocialAuthService', [
@@ -15,7 +17,6 @@ fdescribe('AuthService', () => {
             'signOut',
             'refreshAuthToken'
         ]);
-        const user = { firstName: 'test'} as SocialUser;
         const socialAuthServicePropertySpy = jasmine.createSpy().and.returnValue(of({ user: user }));
         Object.defineProperty(socialAuthServiceMock, 'authState', { get: socialAuthServicePropertySpy });
 
@@ -55,30 +56,99 @@ fdescribe('AuthService', () => {
         });
 
         it('should mark loggedIn as true when user exists in localstorage', () => {
-            // localStorage.setItem('user', JSON.stringify(user));
-
-            const service = new AuthService(socialAuthServiceMock);
-
             socialAuthServiceMock.authState
                 .subscribe(
                     (res: SocialUser) => {
-                        expect(res).toEqual({ firstName: 'test' } as SocialUser);
+                        expect(sut.isLoggedIn).toEqual(true);
                     }
                 );
         });
+    });
 
-        xit('should mark loggedIn as false when user NOT in localstorage', () => {
+    describe('signIn', () => {
+        it('should call signIn', () => {
+            socialAuthServiceMock.signIn.and.returnValue(Promise.resolve({ firstName: 'test' } as SocialUser));
 
+            sut.signIn();
+
+            expect(socialAuthServiceMock.signIn).toHaveBeenCalled();
+        });
+
+        it('should set loggedIn as true', () => {
+            socialAuthServiceMock.signIn.and.returnValue(Promise.resolve({ firstName: 'test' } as SocialUser));
+
+            sut.signIn();
+
+            expect(sut.isLoggedIn).toBe(true);
+        });
+
+        it('should set loggedIn as user', () => {
+            socialAuthServiceMock.signIn.and.returnValue(Promise.resolve({ firstName: 'test' } as SocialUser));
+
+            sut.signIn();
+
+            expect(sut.user).toBeTruthy();
+        });
+
+        it('should trigger authStateEvent', () => {
+            socialAuthServiceMock.signIn.and.returnValue(Promise.resolve({ firstName: 'test' } as SocialUser));
+
+            sut.signIn();
+
+            sut.authState$
+                .subscribe(
+                    (val: AuthState) => expect(val.isLoggedIn).toEqual(true),
+                    err => {}
+                );
         });
     });
 
+    describe('signOut', () => {
+        it('should call signIn', () => {
+            socialAuthServiceMock.signOut.and.returnValue(Promise.resolve());
 
-    xit('should open error snackbar with expected parameters', () => {
+            sut.signOut();
 
+            expect(socialAuthServiceMock.signOut).toHaveBeenCalled();
+        });
+
+        it('should set loggedIn as false', () => {
+            socialAuthServiceMock.signOut.and.returnValue(Promise.resolve());
+
+            sut.signOut();
+
+            expect(sut.isLoggedIn).toBe(false);
+        });
+
+        it('should delete user', () => {
+            socialAuthServiceMock.signOut.and.returnValue(Promise.resolve());
+
+            sut.signOut();
+
+            expect(sut.user).toBeFalsy();
+        });
+
+        it('should trigger authStateEvent', () => {
+            socialAuthServiceMock.signOut.and.returnValue(Promise.resolve());
+
+            sut.signOut();
+
+            sut.authState$
+                .subscribe(
+                    (val: AuthState) => expect(val.isLoggedIn).toEqual(false),
+                    err => {}
+                );
+        });
     });
 
-    xit('should open info snackbar with expected parameters', () => {
-        
+    describe('refreshToken', () => {
+        it('should call refreshToken', () => {
+            socialAuthServiceMock.refreshAuthToken.and.returnValue(Promise.resolve());
+
+            sut.refreshToken();
+
+            expect(socialAuthServiceMock.refreshAuthToken).toHaveBeenCalled();
+        });
     });
 
 });

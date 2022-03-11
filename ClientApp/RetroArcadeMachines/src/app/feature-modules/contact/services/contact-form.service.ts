@@ -13,8 +13,7 @@ export class ContactFormService {
     constructor(
         private _formBuilder: FormBuilder,
         private _contactFormFieldsService: ContactFormFieldsService,
-        private _httpService: HttpService,
-        private _messageService: FormValidationMessageService) { }
+        private _httpService: HttpService) { }
 
     private formFields: ContactForm;
 

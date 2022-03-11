@@ -11,7 +11,6 @@ import { GameOverview } from '../../../shared/models/game-overview.model';
 @Component({
   selector: 'app-games-overview',
   templateUrl: './games-overview.component.html',
-  styleUrls: ['./games-overview.component.scss'],
   providers: [ GamesService ]
 })
 export class GamesOverviewComponent implements OnInit {

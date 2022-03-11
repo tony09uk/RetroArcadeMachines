@@ -34,7 +34,7 @@ export class LocationDetailsComponent implements OnInit {
         switchMap(params => this._locationDetailsService.get(params.get('id')))
       )
       .subscribe(
-        (details) => { this.locationsDetails = details; }
+        (details: LocationDetails) => { this.locationsDetails = details; }
       );
     this._viewportScroller.setOffset([0, 100]);
   }

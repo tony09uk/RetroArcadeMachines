@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators';
 
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 
-import { RoadmapResponse } from '../models/roadmap-response';
+import { RoadmapResponse } from '../../../shared/models/roadmap-response';
 import { RoapmapService } from '../services/roapmap.service';
 
 @Component({
