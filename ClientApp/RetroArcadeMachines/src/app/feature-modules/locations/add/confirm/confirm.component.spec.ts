@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { of } from 'rxjs';
+
 import { ButtonsModule } from '@core/modules/buttons/buttons.module';
 import { ElementsModule } from '@core/modules/elements/elements.module';
-import { ListItem } from '@core/modules/elements/list/models/list-item.model';
-import { of } from 'rxjs';
-import { Address } from '../../models/address.model';
+
 import { StepData } from '../../models/step-data.model';
 import { AddService } from '../../services/add.service';
 

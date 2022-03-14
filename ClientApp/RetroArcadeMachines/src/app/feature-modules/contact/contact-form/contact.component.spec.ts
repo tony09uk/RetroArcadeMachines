@@ -1,13 +1,23 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertService } from '@core/services/alert.service';
-import { FormValidationMessageService } from '@core/services/form-validation-message.service';
-import { HttpService } from '@core/services/http.service';
-import { of } from 'rxjs';
-import { ContactFormFieldsService } from '../services/contact-form-fields.service';
-import { ContactFormService } from '../services/contact-form.service';
+import {
+  AbstractControl,
+  ControlContainer,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormGroupDirective
+} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { of } from 'rxjs';
+
+import { ElementsModule } from '@core/modules/elements/elements.module';
+import { FormModule } from '@core/modules/form/form.module';
+import { LoadingModule } from '@core/modules/loading/loading.module';
+import { AlertService } from '@core/services/alert.service';
+import { HttpService } from '@core/services/http.service';
+
+import { ContactFormService } from '../services/contact-form.service';
 import { ContactComponent } from './contact.component';
 
 describe('ContactComponent', () => {
@@ -28,10 +38,28 @@ describe('ContactComponent', () => {
     ]);
     httpServiceSpyObj.post.and.returnValue(of(true));
 
+    const fg: FormGroup = new FormGroup({
+      firstName: new FormControl(''),
+      lastName: new FormControl(''),
+      email: new FormControl(''),
+      subject: new FormControl(''),
+      message: new FormControl(''),
+    });
+
+    const fgd: FormGroupDirective = new FormGroupDirective([], []);
+    fgd.form = fg;
+
     await TestBed.configureTestingModule({
+      imports: [
+        ElementsModule,
+        LoadingModule,
+        FormModule,
+        BrowserAnimationsModule
+      ],
       providers: [
         FormBuilder,
         ContactFormService,
+        { provide: ControlContainer, useValue: fgd },
         { provide: AlertService, useValue: alertServiceSpyObj },
         { provide: HttpService, useValue: httpServiceSpyObj },
       ],

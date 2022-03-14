@@ -1,6 +1,6 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { GameOverview } from 'src/app/shared/models/game-overview.model';
 import { DaysOfTheWeek } from '../models/days-of-the-week.enum';
@@ -31,7 +31,7 @@ export class LocationDetailsComponent implements OnInit {
     this._activatedroute
       .paramMap
       .pipe(
-        switchMap(params => this._locationDetailsService.get(params.get('id')))
+        switchMap((params: ParamMap) => this._locationDetailsService.get(params.get('id')))
       )
       .subscribe(
         (details: LocationDetails) => { this.locationsDetails = details; }

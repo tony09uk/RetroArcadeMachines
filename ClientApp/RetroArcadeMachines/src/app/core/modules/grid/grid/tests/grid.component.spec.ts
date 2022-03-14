@@ -85,11 +85,23 @@ describe('GridComponent', () => {
       expect(component.columnFilters).toBeTruthy();
     });
 
-    it('should setColumnVisibility', () => {
+    it('should have the right number of hideColumns', () => {
       expect(component.hideColumnValues.length).toBe(4);
+    });
+
+    it('should setColumn 0 Visibility', () => {
       expect(component.hideColumnValues[0].value).toBe(false);
-      expect(component.hideColumnValues[1].value).toBe(false);
+    });
+
+    it('should setColumn 1 Visibility', () => {
+      expect(component.hideColumnValues[1].value).toBe(true);
+    });
+
+    it('should setColumn 2 Visibility', () => {
       expect(component.hideColumnValues[2].value).toBe(false);
+    });
+
+    it('should setColumn 3 Visibility', () => {
       expect(component.hideColumnValues[3].value).toBe(false);
     });
   });

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BannerSectionComponent } from '@core/modules/elements/banner-section/banner-section.component';
+import { ElementsModule } from '@core/modules/elements/elements.module';
 
 import { AboutComponent } from './about.component';
 
@@ -8,7 +10,13 @@ describe('AboutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AboutComponent ]
+      imports: [
+        ElementsModule
+      ],
+      declarations: [
+        AboutComponent,
+        BannerSectionComponent
+       ]
     })
     .compileComponents();
   });

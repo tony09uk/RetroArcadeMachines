@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Shared.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Write.Auth", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Auth\RetroArcadeMachines.AzureFunctions.Write.Auth.csproj", "{5A8CBCB8-AC7D-4355-9258-76A236BB4419}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Data.Read.Tests", "Src\RetroArcadeMachines.Data.Read.Tests\RetroArcadeMachines.Data.Read.Tests.csproj", "{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{5A8CBCB8-AC7D-4355-9258-76A236BB4419}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A8CBCB8-AC7D-4355-9258-76A236BB4419}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A8CBCB8-AC7D-4355-9258-76A236BB4419}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

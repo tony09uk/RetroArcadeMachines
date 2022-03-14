@@ -9,8 +9,4 @@ describe('RoapmapService', () => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(RoapmapService);
   });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
 });

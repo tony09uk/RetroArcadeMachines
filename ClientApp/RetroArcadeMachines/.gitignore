@@ -48,4 +48,4 @@ Thumbs.db
 
 #dev config
 **/assets/config.dev.json
-**/environments/environment.ts
+**/environment.ts
