@@ -53,6 +53,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Data.Read.Tests", "Src\RetroArcadeMachines.Data.Read.Tests\RetroArcadeMachines.Data.Read.Tests.csproj", "{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AzureFunctions.Read.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read.Tests\RetroArcadeMachines.AzureFunctions.Read.Tests.csproj", "{5F7CE5F0-E10A-4EB5-B505-400CB7AC6118}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AzureFunctions.Write.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Tests\RetroArcadeMachines.AzureFunctions.Write.Tests.csproj", "{D59E429C-FFBD-47FC-863E-AE0CCA752F4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AzureFunctions.Write.Auth.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Auth.Tests\RetroArcadeMachines.AzureFunctions.Write.Auth.Tests.csproj", "{BB5DB448-09F0-415A-9BF3-22EC112D7D54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +117,18 @@ Global
 		{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7CE5F0-E10A-4EB5-B505-400CB7AC6118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7CE5F0-E10A-4EB5-B505-400CB7AC6118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7CE5F0-E10A-4EB5-B505-400CB7AC6118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7CE5F0-E10A-4EB5-B505-400CB7AC6118}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D59E429C-FFBD-47FC-863E-AE0CCA752F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D59E429C-FFBD-47FC-863E-AE0CCA752F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D59E429C-FFBD-47FC-863E-AE0CCA752F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D59E429C-FFBD-47FC-863E-AE0CCA752F4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB5DB448-09F0-415A-9BF3-22EC112D7D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB5DB448-09F0-415A-9BF3-22EC112D7D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB5DB448-09F0-415A-9BF3-22EC112D7D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB5DB448-09F0-415A-9BF3-22EC112D7D54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

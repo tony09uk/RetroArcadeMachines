@@ -1,3 +1,4 @@
+using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -7,6 +8,8 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RetroArcadeMachines.Services.Read;
+using RetroArcadeMachines.Services.Read.Models;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -18,7 +21,7 @@ namespace RetroArcadeMachines.AzureFunctions.Read
 
         public RoadmapsHttpTriggerFunction(IRoadmapService roadmapService)
         {
-            _roadmapService = roadmapService;
+            _roadmapService = Guard.Against.Null(roadmapService, nameof(roadmapService), nameof(IRoadmapService));
         }
 
         [FunctionName("Roadmaps")]
@@ -32,7 +35,7 @@ namespace RetroArcadeMachines.AzureFunctions.Read
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var result = await _roadmapService.Get();
+            IEnumerable<RoadmapItemDto> result = await _roadmapService.Get();
             return new OkObjectResult(result);
         }
     }

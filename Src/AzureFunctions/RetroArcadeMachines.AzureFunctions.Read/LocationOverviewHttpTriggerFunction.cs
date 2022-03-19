@@ -44,7 +44,6 @@ namespace RetroArcadeMachines.AzureFunctions.Read
             DateTime? passedLastModifiedDate = req.Headers.GetIfModifiedSince();
             log.LogInformation("LocationsOverview: lastModifiedDate provided: {lastModifiedDate}", passedLastModifiedDate);
 
-            // todo: why is date being reformatted?
             DateTime? savedLastModifiedDate = await _tableTrackerService.GetLastDateModified(typeof(LocationOverviewDto));
             
             if(_tableTrackerService.HasTableBeenModified(passedLastModifiedDate, savedLastModifiedDate))
