@@ -54,7 +54,7 @@ namespace RetroArcadeMachines.Services.Read
 
                 return locationDetails;
             } 
-            catch(Exception ex) // todo: watch for specific exception types
+            catch(Exception) // todo: watch for specific exception types
             {
                 throw;
             }

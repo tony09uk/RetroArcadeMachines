@@ -1,4 +1,5 @@
-﻿using RetroArcadeMachines.Data.Write.Interfaces;
+﻿using Ardalis.GuardClauses;
+using RetroArcadeMachines.Data.Write.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace RetroArcadeMachines.Data.Write
 
         public BaseWriteRepository(IProviderWriteRepository<T> providerWriteRepository)
         {
-            _providerWriteRepository = providerWriteRepository;
+            _providerWriteRepository = Guard.Against.Null(providerWriteRepository, nameof(providerWriteRepository), nameof(IProviderWriteRepository<T>));
         }
 
         public Task Add(T item)
