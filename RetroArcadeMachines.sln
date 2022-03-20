@@ -3,27 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp", "ClientApp\", "{9147AED9-E6AD-4107-A7BD-6ECCAD2E90E1}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_50797"
-		Debug.AspNetCompiler.PhysicalPath = "ClientApp\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50797\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_50797"
-		Release.AspNetCompiler.PhysicalPath = "ClientApp\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50797\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "50797"
-		SlnRelativePath = "ClientApp\"
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Read", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read\RetroArcadeMachines.AzureFunctions.Read.csproj", "{11D1122B-FED6-49F6-A18D-9038E181461C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Services.Read", "Src\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read\RetroArcadeMachines.Services.Read.csproj", "{0C31B8E1-952C-4B45-BC22-4D5FCAD265BB}"
@@ -51,19 +30,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Shared.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Write.Auth", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Auth\RetroArcadeMachines.AzureFunctions.Write.Auth.csproj", "{5A8CBCB8-AC7D-4355-9258-76A236BB4419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Data.Read.Tests", "Src\RetroArcadeMachines.Data.Read.Tests\RetroArcadeMachines.Data.Read.Tests.csproj", "{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Data.Read.Tests", "Src\RetroArcadeMachines.Data.Read.Tests\RetroArcadeMachines.Data.Read.Tests.csproj", "{ADB09990-BF8E-4BB2-BB3B-4B13D749DEDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AzureFunctions.Read.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read.Tests\RetroArcadeMachines.AzureFunctions.Read.Tests.csproj", "{5F7CE5F0-E10A-4EB5-B505-400CB7AC6118}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Read.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read.Tests\RetroArcadeMachines.AzureFunctions.Read.Tests.csproj", "{5F7CE5F0-E10A-4EB5-B505-400CB7AC6118}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AzureFunctions.Write.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Tests\RetroArcadeMachines.AzureFunctions.Write.Tests.csproj", "{D59E429C-FFBD-47FC-863E-AE0CCA752F4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Write.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Tests\RetroArcadeMachines.AzureFunctions.Write.Tests.csproj", "{D59E429C-FFBD-47FC-863E-AE0CCA752F4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.AzureFunctions.Write.Auth.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Auth.Tests\RetroArcadeMachines.AzureFunctions.Write.Auth.Tests.csproj", "{BB5DB448-09F0-415A-9BF3-22EC112D7D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.AzureFunctions.Write.Auth.Tests", "Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Write.Auth.Tests\RetroArcadeMachines.AzureFunctions.Write.Auth.Tests.csproj", "{BB5DB448-09F0-415A-9BF3-22EC112D7D54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Data.Write.Tests", "Src\RetroArcadeMachines.Data.Write.Tests\RetroArcadeMachines.Data.Write.Tests.csproj", "{3CDDC825-ABCC-4A6D-8E71-B26610BC3591}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Data.Write.Tests", "Src\RetroArcadeMachines.Data.Write.Tests\RetroArcadeMachines.Data.Write.Tests.csproj", "{3CDDC825-ABCC-4A6D-8E71-B26610BC3591}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Services.Read.Tests", "Src\RetroArcadeMachines.Services.Read.Tests\RetroArcadeMachines.Services.Read.Tests.csproj", "{AD225A56-0B41-445B-B0CA-E941BA05A8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Services.Read.Tests", "Src\RetroArcadeMachines.Services.Read.Tests\RetroArcadeMachines.Services.Read.Tests.csproj", "{AD225A56-0B41-445B-B0CA-E941BA05A8BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroArcadeMachines.Services.Write.Tests", "Src\RetroArcadeMachines.Services.Write.Tests\RetroArcadeMachines.Services.Write.Tests.csproj", "{D90417A6-1C67-41CC-9161-B558DBA0B0F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroArcadeMachines.Services.Write.Tests", "Src\RetroArcadeMachines.Services.Write.Tests\RetroArcadeMachines.Services.Write.Tests.csproj", "{D90417A6-1C67-41CC-9161-B558DBA0B0F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,10 +50,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9147AED9-E6AD-4107-A7BD-6ECCAD2E90E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9147AED9-E6AD-4107-A7BD-6ECCAD2E90E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9147AED9-E6AD-4107-A7BD-6ECCAD2E90E1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{9147AED9-E6AD-4107-A7BD-6ECCAD2E90E1}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{11D1122B-FED6-49F6-A18D-9038E181461C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11D1122B-FED6-49F6-A18D-9038E181461C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11D1122B-FED6-49F6-A18D-9038E181461C}.Release|Any CPU.ActiveCfg = Release|Any CPU
