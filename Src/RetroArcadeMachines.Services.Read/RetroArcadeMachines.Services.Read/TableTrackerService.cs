@@ -30,6 +30,10 @@ namespace RetroArcadeMachines.Services.Read
 
         public async Task<DateTime?> GetLastDateModified(Type modelType)
         {
+            if(modelType == null)
+            {
+                throw new ArgumentNullException("modelType parameter cannot be null");
+            }
             try
             {
                 bool isCacheable = _cachingHelperService.TryGetCacheableTypeName(modelType, out string modelName);
@@ -39,11 +43,11 @@ namespace RetroArcadeMachines.Services.Read
                 }
 
                 TableTrackerModel tableTrackerModel = await _tableTrackerRepository.Get(modelName);
-                DateTime date = DateTime.Parse(tableTrackerModel?.DateTime);
+                var isDate = DateTime.TryParse(tableTrackerModel?.DateTime, out var date);
 
                 _log.LogInformation("HasTableBeenModifiedSince:  Table tracker value was {tableModifiedDate}", date.ToString());
 
-                if (date != default(DateTime))
+                if (isDate && date != default(DateTime))
                 {
                     return date;
                 }

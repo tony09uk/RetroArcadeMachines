@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Ardalis.GuardClauses;
+using AutoMapper;
 using RetroArcadeMachines.Data.Read.Interfaces;
 using RetroArcadeMachines.Services.Read.Models;
 using RetroArcadeMachines.Shared.Models;
@@ -18,8 +19,8 @@ namespace RetroArcadeMachines.Services.Read
             IMapper mapper,
             IReadRepository<RoadmapItemModel> roadmapRepository)
         {
-            _roadmapRepository = roadmapRepository;
-            _mapper = mapper;
+            _roadmapRepository = Guard.Against.Null(roadmapRepository, nameof(roadmapRepository), nameof(IReadRepository<RoadmapItemModel>));
+            _mapper = Guard.Against.Null(mapper, nameof(mapper), nameof(IMapper));
         }
 
         public async Task<IEnumerable<RoadmapItemDto>> Get()
@@ -28,6 +29,12 @@ namespace RetroArcadeMachines.Services.Read
             {
                 IEnumerable<RoadmapItemModel> roadmapitems = await _roadmapRepository.Get();
                 var roadMapItems = _mapper.Map<IEnumerable<RoadmapItemDto>>(roadmapitems);
+                
+                if(roadmapitems == null)
+                {
+                    return new List<RoadmapItemDto>();
+                }
+                
                 return roadMapItems.OrderBy(x => x.Order);
             }
             catch (Exception ex)

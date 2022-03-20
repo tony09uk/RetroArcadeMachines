@@ -1,7 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Queue;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RetroArcadeMachines.Shared.Models.Requests;

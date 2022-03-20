@@ -40,12 +40,15 @@ namespace RetroArcadeMachines.Shared.Models.Validation.Tests
         [Theory]
         [InlineData("missing-at-sign.com")]
         [InlineData("missing-domain@.com")]
-        [InlineData("missing-tld@company")]
         [InlineData("@missing-username.net")]
         public void Given_Email_Invalid_Email_Field_Return_Validation_Error(string email)
         {
             var model = new ContactFormRequestModel
             {
+                FirstName = "dfds",
+                LastName = "fdsfds",
+                Subject = "fdsfds",
+                Message = "fdsgsgfdsgfdsgf gghghseg g af",
                 Email = email,
             };
 
