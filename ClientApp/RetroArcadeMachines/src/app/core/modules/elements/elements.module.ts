@@ -14,6 +14,7 @@ import { StepperComponent } from './stepper/stepper.component';
 import { StepContentComponent } from './stepper/step-content/step-content.component';
 import { StepBaseComponent } from './stepper/step-base/step-base.component';
 import { ListComponent } from './list/list.component';
+import { HelpRequestComponent } from './help-request/help-request.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ListComponent } from './list/list.component';
     StepContentComponent,
     StepBaseComponent,
     ListComponent,
+    HelpRequestComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { ListComponent } from './list/list.component';
     CardComponent,
     IconComponent,
     StepperComponent,
-    ListComponent
+    ListComponent,
+    HelpRequestComponent
   ]
 })
 export class ElementsModule { }
