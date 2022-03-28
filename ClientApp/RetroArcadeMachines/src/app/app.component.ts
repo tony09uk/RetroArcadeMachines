@@ -13,9 +13,6 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'RetroArcadeMachines';
-  tempDis1 = '';
-  tempDis2 = '';
-  tempDis3 = '';
 
   private _isDestroyed$: Subject<void> = new Subject();
   constructor(
@@ -25,9 +22,6 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private _document: Document) { }
 
   ngOnInit(): void {
-    this.tempDis1 = this._configService.read_api_url;
-    this.tempDis2 = this._configService.write_api_url;
-    this.tempDis3 = this._configService.write_api_url_auth;
     // todo: add this only on add.component page load
     const script = this._renderer2.createElement('script');
     const key = this._configService.google_places_api_key;
