@@ -17,8 +17,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          files: 'src/assets/config.json'
           submodules: true
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: 'src/assets/config.json'
         env:
           read_api_url: 'https://retroarcademachinesazurefunctionsread20210430055312.azurewebsites.net/'
           write_api_url: 'https://myWriteUrl'
