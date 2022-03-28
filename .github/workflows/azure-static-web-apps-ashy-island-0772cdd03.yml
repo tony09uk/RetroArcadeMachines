@@ -17,7 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          files: 'sr/assets/config.json'
           submodules: true
+        env:
+          read_api_url: 'https://retroarcademachinesazurefunctionsread20210430055312.azurewebsites.net/'
+          write_api_url: 'https://myWriteUrl'
+          write_api_url_auth: 'https://myWriteUrlAuth'
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -28,7 +33,6 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "./ClientApp/RetroArcadeMachines/" # App source code path
-          api_location: "./Src/AzureFunctions/RetroArcadeMachines.AzureFunctions.Read/" # Api source code path - optional
           output_location: "dist/RetroArcadeMachines" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
