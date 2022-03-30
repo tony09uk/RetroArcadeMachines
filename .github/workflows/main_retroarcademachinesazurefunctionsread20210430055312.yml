@@ -27,6 +27,7 @@ jobs:
       - run: echo "🎉 github.env -> ${{ github.env }}"
       - run: echo "🎉 github.event_path -> ${{ github.event_path }}"
       - run: echo "🎉 github.path -> ${{ github.path }}"
+      - run: echo "🎉 GITHUB_WORKSPACE -> ${{ GITHUB_WORKSPACE }}"
       
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh
