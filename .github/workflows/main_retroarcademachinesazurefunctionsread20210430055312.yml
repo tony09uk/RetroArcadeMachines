@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read\RetroArcadeMachines.AzureFunctions.Read.csproj'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'RetroArcadeMachines.AzureFunctions.Read.csproj'
   DOTNET_VERSION: '3.1.x'
 
 jobs:
@@ -21,18 +21,11 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🎉 github.action_path -> ${{ github.action_path }}"
-      - run: echo "🎉 github.env -> ${{ github.env }}"
-      - run: echo "🎉 github.event_path -> ${{ github.event_path }}"
-      - run: echo "🎉 github.path -> ${{ github.path }}"
-      - run: echo "🎉 GITHUB_WORKSPACE -> $GITHUB_WORKSPACE"
       
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh
         run: |
-          pushd '${{ github.path }}\${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd '.\${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
           popd
 
