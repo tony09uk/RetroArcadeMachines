@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'RetroArcadeMachines.AzureFunctions.Read.csproj'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read\RetroArcadeMachines.AzureFunctions.Read.csproj'
   DOTNET_VERSION: '3.1.x'
 
 jobs:
