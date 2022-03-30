@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read\RetroArcadeMachines.AzureFunctions.Read.csproj'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: 'D:\a\RetroArcadeMachines\RetroArcadeMachines\Src\AzureFunctions\RetroArcadeMachines.AzureFunctions.Read\RetroArcadeMachines.AzureFunctions.Read.csproj'
   DOTNET_VERSION: '3.1.x'
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh
         run:
-          pushd '.\${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
           popd
 
