@@ -22,13 +22,14 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🎉 github.action_path -> ${{ github.action_path }}"
+      - run: echo "🎉 github.env -> ${{ github.env }}"
+      - run: echo "🎉 github.event_path -> ${{ github.event_path }}"
+      - run: echo "🎉 github.path -> ${{ github.path }}"
+      
       - name: 'Resolve Project Dependencies Using Dotnet'
         shell: pwsh
-        run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-        run: echo "🎉 github.action_path -> ${{ github.action_path }}"
-        run: echo "🎉 github.env -> ${{ github.env }}"
-        run: echo "🎉 github.event_path -> ${{ github.event_path }}"
-        run: echo "🎉 github.path -> ${{ github.path }}"
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
