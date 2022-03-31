@@ -1,5 +1,5 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from '@core/services/auth.service';
@@ -26,6 +26,11 @@ export class ErrorInterceptor implements HttpInterceptor {
 
                 if (err.status === HttpStatusCode.NotModified) {
                     console.log('ERROR INTERCEPTOR');
+                    return of(new HttpResponse({
+                        body: '',
+                        headers: request.headers,
+                        status: HttpStatusCode.NoContent,
+                    }));
                 }
               }
 
