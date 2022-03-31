@@ -71,6 +71,8 @@ export class HttpService {
     }
 
     private handleError(val: string | HttpErrorResponse, lastModifiedDate?: string): Observable<HttpResponse<any> | never> {
+        console.log('HTTP SERVICE');
+        
         // The page never sees the 304 code.
         // The browser fakes a 200 response from the server,
         // Therefore, the page can't really distinguish a 304 from a 200 response

@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpStatusCode } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -23,6 +23,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 // The backend returned an unsuccessful response code.
                 // The response body may contain clues as to what went wrong,
                 console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+
+                if (err.status === HttpStatusCode.NotModified) {
+                    console.log('ERROR INTERCEPTOR');
+                }
               }
 
             const error = err.error?.message || err.statusText;
