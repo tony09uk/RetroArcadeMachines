@@ -1,8 +1,11 @@
 <app-banner-section>
     <app-help-request></app-help-request>
     <div class="d-flex justify-content-end">
-        <a class="btn_get btn_hover" href="locations/add">Add Location</a>
+        <a class="btn_get btn_hover"
+           href="locations/add">Add Location</a>
     </div>
     <!-- todo: show grid place holder while loading -->
-    <app-grid *ngIf="table" [gridConfig]="table" (rowClickedEvent)="onRowClick($event)"></app-grid>
+    <app-grid *ngIf="table"
+              [gridConfig]="table"
+              (rowClickedEvent)="onRowClick($event)"></app-grid>
 </app-banner-section>

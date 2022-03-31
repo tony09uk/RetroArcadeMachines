@@ -27,7 +27,7 @@ export class CacheService {
             return of(value);
         }
 
-        const isModified = updateCode !== HttpStatusCode.NotModified;
+        const isModified = updateCode !== HttpStatusCode.NoContent;
         const lastModified = new LastModified(storeName, lastModDate);
 
         const update$ = this.update(nameof(LastModified), lastModified);

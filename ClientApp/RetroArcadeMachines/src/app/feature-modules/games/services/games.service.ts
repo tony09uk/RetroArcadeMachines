@@ -9,8 +9,8 @@ import { FilterTypes } from '@core/modules/grid/enums/filter-types.enum';
 import { HeaderItem } from '@core/modules/grid/models/header-item';
 import { CellContentTypes } from '@core/modules/grid/enums/cell-content-types.enum';
 import { GridDataFactoryService } from '@core/modules/grid/services/grid-data-factory.service';
+import { GameOverview } from '@shared/models/game-overview.model';
 
-import { GameOverview } from '../../../shared/models/game-overview.model';
 import { GamesOverviewTable } from '../models/games-overview-table.model';
 
 @Injectable()

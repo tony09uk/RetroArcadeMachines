@@ -4,9 +4,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
+import { GameOverview } from '@shared/models/game-overview.model';
 
 import { GamesService } from '../services/games.service';
-import { GameOverview } from '../../../shared/models/game-overview.model';
 
 @Component({
   selector: 'app-games-overview',
