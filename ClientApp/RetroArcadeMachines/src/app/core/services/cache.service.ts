@@ -27,16 +27,19 @@ export class CacheService {
             return of(value);
         }
 
-        const isModified = updateCode !== HttpStatusCode.NoContent;
+        if (updateCode === HttpStatusCode.NoContent) {
+            return this.getAll(storeName);
+        }
+
         const lastModified = new LastModified(storeName, lastModDate);
 
-        const update$ = this.update(nameof(LastModified), lastModified);
-        const add$ = this.add(nameof(LastModified), lastModified);
+        const updateLastModified$ = this.update(nameof(LastModified), lastModified);
+        const addLastModified$ = this.add(nameof(LastModified), lastModified);
 
         return this._dbService.count(nameof(LastModified), lastModified.name)
             .pipe(
-                mergeMap((val: number) => iif(() => val > 0, update$, add$)),
-                mergeMap(val => iif(() => isModified, this.bulkAddAndReturnValues(storeName, value), this.getAll(storeName)))
+                mergeMap((val: number) => iif(() => val > 0, updateLastModified$, addLastModified$)),
+                mergeMap(val => this.bulkAddAndReturnValues(storeName, value))
             );
     }
 

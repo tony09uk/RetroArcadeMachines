@@ -31,7 +31,7 @@ export class LocationsOverviewComponent implements OnInit {
       )
       .subscribe(
         (value: GridConfig<LocationOverview>) => { this.table = value; },
-        (error: HttpErrorResponse) => { console.log('ther was an error'); console.log(error); }
+        (error: HttpErrorResponse) => { console.log(error); }
       );
   }
 

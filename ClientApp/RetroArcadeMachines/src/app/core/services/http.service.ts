@@ -71,21 +71,9 @@ export class HttpService {
     }
 
     private handleError(val: string | HttpErrorResponse, lastModifiedDate?: string): Observable<HttpResponse<any> | never> {
-        console.log('HTTP SERVICE');
-        
-        // The page never sees the 304 code.
-        // The browser fakes a 200 response from the server,
-        // Therefore, the page can't really distinguish a 304 from a 200 response
-        // Anyway other than an error is 'OK' - There must be a better way
-        if ((typeof val === 'string' || val instanceof String) && val === 'OK') {
-            return of(new HttpResponse({
-                body: '',
-                headers: this.addIfModifiedSinceHeader(lastModifiedDate),
-                status: HttpStatusCode.NoContent,
-            }));
-        }
-
         // todo: add better error handling
+        // error handling that needs to happen is in the ErrorInterceptor
+        // add logging specific to this class
         return throwError(val);
     }
 
