@@ -7,13 +7,13 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService) { }
+    constructor(private _authService: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
-            if ([401, 403].includes(err.status)) {
+            if ([401, 403].includes(err.status) && this._authService.isLoggedIn) {
                 // auto logout if 401 or 403 response returned from api
-                this.authService.signOut();
+                this._authService.signOut();
             }
 
             if (err.error instanceof Error) {
