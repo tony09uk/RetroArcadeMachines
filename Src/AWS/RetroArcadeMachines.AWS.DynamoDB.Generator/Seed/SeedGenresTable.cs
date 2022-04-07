@@ -1,6 +1,10 @@
-﻿using RetroArcadeMachines.Shared.Models;
+﻿using Newtonsoft.Json;
+using RetroArcadeMachines.AWS.DynamoDB.Generator.Seed.DataFileModels;
+using RetroArcadeMachines.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 {
@@ -8,25 +12,33 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
     {
         public List<GenreModel> Data()
         {
-            return new List<GenreModel>
+            var genreList = new List<GenreModel>();
+
+            IEnumerable<GamesDataModel> loadedGames = LoadGameData();
+            List<string> distinctGenres = loadedGames.GroupBy(x => x.Genres)
+                                                    .Select(x => x.First())
+                                                    .Select(x => x.Genres)
+                                                    .ToList();
+
+            foreach(var genre in distinctGenres)
             {
-                new GenreModel
+                genreList.Add(new GenreModel
                 {
-                    Id = new Guid("a66df0af-4ee8-4fa5-8c91-ec57b30f23dd"),
-                    Name = "Sports",
-                    Description = "Attempts to simulate the practice of sports",
-                    WikipediaUrl = "https://en.wikipedia.org/wiki/Sports_video_game",
-                    Random = 12
-                },
-                new GenreModel
-                {
-                    Id = new Guid("2b205049-fc42-4f2e-8506-2d435c45ce4c"),
-                    Name = "Beat 'em up",
-                    Description = "Feature hand to hand combat against a large number of opponents",
-                    WikipediaUrl = "https://en.wikipedia.org/wiki/Beat_%27em_up",
-                    Random = 10
-                },
-            };
+                    Id = Guid.NewGuid(),
+                    Name = genre
+                });
+            }
+
+            return genreList;
+        }
+
+        private IEnumerable<GamesDataModel> LoadGameData()
+        {
+            using (var reader = new StreamReader("Seed/DataFiles/GamesData.json"))
+            {
+                string json = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<IEnumerable<GamesDataModel>>(json);
+            }
         }
     }
 }

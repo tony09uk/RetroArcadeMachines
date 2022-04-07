@@ -1,7 +1,7 @@
 ﻿using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.Model;
-using Amazon.Runtime;
+using RetroArcadeMachines.Data.Write.Extensions;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using RetroArcadeMachines.Shared.Models;
 using System;
@@ -26,14 +26,22 @@ namespace RetroArcadeMachines.Data.Write.AWS
             return task;
         }
 
-        public async Task<bool> AddMany(List<T> items)
+        public async Task<bool> AddMany(List<T> items, int saveInChunksOf = 1000)
         {
-            _ = UpdateTableTracker();
-            BatchWrite<T> batch = _context.CreateBatchWrite<T>();
-            batch.AddPutItems(items);
-            await batch.ExecuteAsync();
+            if(items.Count > saveInChunksOf)
+            {
+                List<Task> saveRequest = new List<Task>();
+                foreach(var chunk in items.ChunkBy(saveInChunksOf))
+                {
+                    saveRequest.Add(AddManyItems(chunk));
+                }
 
-            return true;
+                await Task.WhenAll(saveRequest);
+                return true; // todo: this will not always be true interogate each result to check is failed
+            }
+            var result = await AddManyItems(items);
+
+            return result;
         }
 
         public Task Update(T item)
@@ -64,6 +72,16 @@ namespace RetroArcadeMachines.Data.Write.AWS
                                 Name = instance.GetType().Name
                             };
             return _context.SaveAsync(tracker);
+        }
+
+        private async Task<bool> AddManyItems(List<T> items)
+        {
+            _ = UpdateTableTracker();
+            BatchWrite<T> batch = _context.CreateBatchWrite<T>();
+            batch.AddPutItems(items);
+            await batch.ExecuteAsync();
+
+            return true;
         }
     }
 }

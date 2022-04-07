@@ -10,8 +10,8 @@ namespace RetroArcadeMachines.Shared.Models
         [DynamoDBHashKey]
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public int ReleaseYear { get; set; }
-        public int MaxPlayers { get; set; }
+        public int? ReleaseYear { get; set; }
+        public int? MaxPlayers { get; set; }
         public string ThumbnailUrl { get; set; }
         public string VideoClipUrl { get; set; }
         public string Description { get; set; }

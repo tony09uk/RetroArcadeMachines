@@ -34,7 +34,8 @@ namespace RetroArcadeMachines.Data.Read
         private static void AddDbProvider(IServiceCollection services, IConfiguration configuration)
         {
             var dbProvider = Environment.GetEnvironmentVariable("DbProvider");
-            if(dbProvider == null)
+            dbProvider = dbProvider == null ? configuration.GetValue<string>("Values:DbProvider") : dbProvider;
+            if (dbProvider == null)
             {
                 throw new NullReferenceException("dbProvider has not been found in configuration");
             }

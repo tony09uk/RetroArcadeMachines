@@ -135,8 +135,8 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
         {
             return new ProvisionedThroughput
             {
-                ReadCapacityUnits = 3,
-                WriteCapacityUnits = 1
+                ReadCapacityUnits = 9,
+                WriteCapacityUnits = 6
             };
         }
 

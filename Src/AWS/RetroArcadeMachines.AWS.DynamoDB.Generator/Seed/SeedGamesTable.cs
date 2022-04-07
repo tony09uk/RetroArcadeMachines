@@ -1,6 +1,10 @@
-﻿using RetroArcadeMachines.Shared.Models;
+﻿using Newtonsoft.Json;
+using RetroArcadeMachines.AWS.DynamoDB.Generator.Extensions;
+using RetroArcadeMachines.AWS.DynamoDB.Generator.Seed.DataFileModels;
+using RetroArcadeMachines.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace RetroArcadeMachines.AWS.DynamoDB.Generator
@@ -20,36 +24,39 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
 
         public List<GameModel> Data()
         {
-            var fightingGenre = _genresSeedTable.Data().FirstOrDefault(x => x.Name == "Beat 'em up");// todo: make this type safe
-            var konamaniDeveloper = _developersSeedTable.Data().FirstOrDefault(x => x.Name == "Konami");
-            //todo: get develer for this seed
-            //todo: run it and see if it works
-            return new List<GameModel>
+            var games = new List<GameModel>();
+            var loadedGames = LoadGameData();
+
+            foreach (GamesDataModel game in loadedGames)
             {
-                new GameModel
+                var id = Guid.NewGuid();
+                if (game.Title == "Teenage Mutant Ninja Turtles")
                 {
-                    Id = new Guid("63c8e8a3-d9e9-4660-8a36-86e241929cb3"),
-                    Title = "Teenage Mutant Ninja Turtles",
-                    Description = "based on the first Teenage Mutant Ninja Turtles animated series that began airing two years earlier. In the game, up to four players control the titular Ninja Turtles, fighting through various levels to defeat the turtles' enemies, including the Shredder, Krang and the Foot Clan",
-                    ReleaseYear = 1989,
-                    MaxPlayers = 4,
-                    ThumbnailUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Teenage_Mutant_Ninja_Turtles_%281989_arcade_game%29.jpg/220px-Teenage_Mutant_Ninja_Turtles_%281989_arcade_game%29.jpg",
-                    VideoClipUrl = "https://youtu.be/uSOFl3e8RSw",
-                    ImageUrlList = new List<string>
-                    {
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGcYgCsKOfGEWMF_d9Y0oyVUI7VcAYGDEr2w&usqp=CAU",
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4Lrmf6Cvot6aQRBmvvIPfQdDljTz78MrC6w&usqp=CAU"
-                    },
-                    GenreList = new List<string>
-                    {
-                        fightingGenre.Name
-                    },
-                    DeveloperList = new List<string>
-                    {
-                        konamaniDeveloper.Name
-                    }
-                },
-            };
+                    // temp solution will be resolved on the next iteration
+                    id = new Guid("63c8e8a3-d9e9-4660-8a36-86e241929cb3");
+                }
+
+                games.Add(new GameModel
+                {
+                    Id = id,
+                    Title = game.Title,
+                    ReleaseYear = game.Year.ToNullableInt(),
+                    MaxPlayers = game.MaxPlayers.ToNullableInt(),
+                    GenreList = game.Genres?.Split(',').ToList(),
+                    DeveloperList = game.Manufacturer?.Split(',').ToList()
+                });
+            }
+
+            return games;
+        }
+
+        private IEnumerable<GamesDataModel> LoadGameData()
+        {
+            using (var reader = new StreamReader("Seed/DataFiles/GamesData.json"))
+            {
+                string json = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<IEnumerable<GamesDataModel>>(json);
+            }
         }
     }
 }

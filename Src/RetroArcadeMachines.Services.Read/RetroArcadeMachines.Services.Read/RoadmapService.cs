@@ -35,7 +35,7 @@ namespace RetroArcadeMachines.Services.Read
                     return new List<RoadmapItemDto>();
                 }
                 
-                return roadMapItems.OrderBy(x => x.Order);
+                return roadMapItems.OrderByDescending(x => x.Order);
             }
             catch (Exception ex)
             {
