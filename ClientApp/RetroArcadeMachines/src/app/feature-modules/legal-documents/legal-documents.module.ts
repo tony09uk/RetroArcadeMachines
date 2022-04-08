@@ -4,11 +4,13 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { LegalDocumentsRoutingModule } from './legal-documents-routing.module';
 import { ElementsModule } from '@core/modules/elements/elements.module';
+import { PersonalDataComponent } from './personal-data/personal-data.component';
 
 @NgModule({
   declarations: [
     PrivacyPolicyComponent,
-    TermsAndConditionsComponent
+    TermsAndConditionsComponent,
+    PersonalDataComponent
   ],
   imports: [
     CommonModule,
