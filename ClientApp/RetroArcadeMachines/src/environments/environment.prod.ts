@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  facebookAppId: '633579277673380',
+  facebookAppId: '1514040955648595',
   google_places_api_key: ''
 };

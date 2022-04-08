@@ -2,6 +2,6 @@
     "read_api_url": "https://localhost:7071/api/",
     "write_api_url": "https://localhost:7072/api/",
     "write_api_url_auth": "https://localhost:7073/api/",
-    "fb_key": "633579277673380",
+    "fb_key": "1514040955648595",
     "google_places_api_key": "AIzaSyDmIUvcrMXPdrkoABp1cTTQuMh-yy4JzjE"
 }
