@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { isDevMode } from '@angular/core';
 
 import { ConfigService } from '@core/services/config.service';
 import { Subject } from 'rxjs';
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private _document: Document) { }
 
   ngOnInit(): void {
+    console.log('is dev mode: ' + isDevMode());
     // todo: add this only on add.component page load
     const script = this._renderer2.createElement('script');
     const key = this._configService.google_places_api_key;
