@@ -14,7 +14,7 @@ namespace RetroArcadeMachines.Data.Write.GCP
             throw new NotImplementedException(NIE_MESSAGE);
         }
 
-        public Task<bool> AddMany(List<T> items)
+        public Task<bool> AddMany(List<T> items, int saveInChunksOf = 1000)
         {
             throw new NotImplementedException(NIE_MESSAGE);
         }

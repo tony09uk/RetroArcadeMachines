@@ -19,9 +19,9 @@ namespace RetroArcadeMachines.Data.Write
             return _providerWriteRepository.Add(item);
         }
 
-        public Task<bool> AddMany(List<T> items)
+        public Task<bool> AddMany(List<T> items, int saveInChunksOf = 1000)
         {
-            return _providerWriteRepository.AddMany(items);
+            return _providerWriteRepository.AddMany(items, saveInChunksOf);
         }
 
         public Task Delete(string id)

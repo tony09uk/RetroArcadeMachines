@@ -145,7 +145,6 @@ namespace RetroArcadeMachines.AWS.DynamoDB.Generator
             string status = null;
             do
             {
-                //Thread.Sleep(5000);
                 try
                 {
                     var res = dynamoDBClient.DescribeTableAsync(
