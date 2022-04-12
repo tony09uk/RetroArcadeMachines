@@ -18,7 +18,7 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { NgxIndexedDBModule } from 'ngx-indexed-db';
 import { CacheConfig } from './shared/cache-config';
 
-const dev = environment.production ? '.dev' : '';
+const dev = environment.production ? '' : '.dev';
 
 @NgModule({
   declarations: [
