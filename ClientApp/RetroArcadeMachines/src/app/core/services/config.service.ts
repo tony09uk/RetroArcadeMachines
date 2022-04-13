@@ -24,6 +24,10 @@ export class ConfigService {
         return this.getConfig('google_places_api_key');
     }
 
+    get is_cache_enabled(): boolean {
+        return this.getConfig('is_cache_enabled');
+    }
+
     static get google_places_api_key(): string {
         return this.getConfig('google_places_api_key');
     }

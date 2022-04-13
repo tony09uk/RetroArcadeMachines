@@ -3,9 +3,11 @@ import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { of } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { CacheService } from '../cache.service';
+import { ConfigService } from '../config.service';
 
 describe('CacheService', () => {
     let ngxIndexedDBServiceMock: jasmine.SpyObj<NgxIndexedDBService>;
+
     let sut: CacheService;
 
     beforeEach(() => {
@@ -22,7 +24,8 @@ describe('CacheService', () => {
         TestBed.configureTestingModule({
             providers: [
                 AuthService,
-                { provide: NgxIndexedDBService, useValue: ngxIndexedDBServiceMock }
+                { provide: NgxIndexedDBService, useValue: ngxIndexedDBServiceMock },
+                { provide: ConfigService, useValue: { is_cache_enabled: true } }
             ]
         });
 

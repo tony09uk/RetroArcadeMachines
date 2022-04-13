@@ -1,5 +1,5 @@
 import { DBConfig, ObjectStoreMeta, ObjectStoreSchema } from 'ngx-indexed-db';
-import { nameof } from 'ts-simple-nameof';
+import { nameof } from 'ts-simple-nameof/src/nameof';
 
 import { GameOverview } from './models/game-overview.model';
 import { LastModified } from './models/last-modified.model';
@@ -56,6 +56,7 @@ export class CacheConfig {
         } as ObjectStoreMeta ]
     };
 
+    // todo: createStoreSchema
     private static createStoreSchema<T>(type: T): ObjectStoreSchema[] {
         const schema: ObjectStoreSchema[] = [];
         Object.keys(type).forEach(element => {

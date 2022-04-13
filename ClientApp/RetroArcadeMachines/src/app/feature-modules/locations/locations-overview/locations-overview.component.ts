@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { take } from 'rxjs/internal/operators/take';
+import { take } from 'rxjs/operators';
 
 import { GridConfig } from '@core/modules/grid/models/grid-config.model';
 import { LocationOverview } from '@shared/models/location-overview.model';

@@ -3,22 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RuntimeConfigLoaderModule } from 'runtime-config-loader';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { FacebookLoginProvider } from 'angularx-social-login';
+import { NgxIndexedDBModule } from 'ngx-indexed-db';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from './core/modules/header/header.module';
 import { FooterModule } from './core/modules/footer/footer.module';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
-import { NgxIndexedDBModule } from 'ngx-indexed-db';
 import { CacheConfig } from './shared/cache-config';
 
-const dev = environment.production ? '' : '.dev';
+const mode = environment.production ? '' : '.dev';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ const dev = environment.production ? '' : '.dev';
     HttpClientModule,
     BrowserAnimationsModule,
     RuntimeConfigLoaderModule.forRoot(
-      { configUrl: `./assets/config${dev}.json` }
+      { configUrl: `./assets/config${mode}.json` }
     ),
     NgxIndexedDBModule.forRoot(CacheConfig.schema),
     FooterModule,

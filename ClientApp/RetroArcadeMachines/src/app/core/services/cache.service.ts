@@ -7,12 +7,15 @@ import { map, mergeMap, take, tap } from 'rxjs/operators';
 import { LastModified } from '@shared/models/last-modified.model';
 import { HttpStatusCode } from '@angular/common/http';
 import { CacheConfig } from 'src/app/shared/cache-config';
+import { ConfigService } from './config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CacheService {
-    constructor(private _dbService: NgxIndexedDBService) { }
+    constructor(
+        private _dbService: NgxIndexedDBService,
+        private _configService: ConfigService) { }
 
     get<T>(storeName: string, id: string): Observable<T> {
         return this._dbService.getByKey(storeName, id);
@@ -23,7 +26,7 @@ export class CacheService {
     }
 
     bulkGetOrInsert<T>(value: T, lastModDate: string, updateCode: number, storeName: string): Observable<any> {
-        if (!this.isObjectCacheable(storeName)) {
+        if (!this.isObjectCacheable(storeName) || !this._configService.is_cache_enabled) {
             return of(value);
         }
 
