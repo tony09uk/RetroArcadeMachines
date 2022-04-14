@@ -18,21 +18,15 @@ export class CacheService {
         private _configService: ConfigService) { }
 
     get<T>(storeName: string, id: string): Observable<T> {
-        console.log('get');
         return this._dbService.getByKey(storeName, id);
     }
 
     getAll<T>(storeName: string): Observable<T[]> {
-        console.log('getAll');
         return this._dbService.getAll(storeName);
     }
 
     bulkGetOrInsert<T>(value: T, lastModDate: string, updateCode: number, storeName: string): Observable<any> {
-        console.log('bulkGetOrInsert');
-        return of(value);
-        console.log('SHOULD NOT SEE THIS');
-
-        if (!this.isObjectCacheable(storeName) || !this._configService.is_cache_enabled) {
+        if (!this._configService.is_cache_enabled || !this.isObjectCacheable(storeName)) {
             return of(value);
         }
 
@@ -53,22 +47,18 @@ export class CacheService {
     }
 
     updateByKey<T>(storeName: string, value: T, key: string): Observable<T> {
-        console.log('updateByKey');
         return this._dbService.updateByKey(storeName, value, key);
     }
 
     update<T>(storeName: string, value: T): Observable<T[]> {
-        console.log('update');
         return this._dbService.update(storeName, value);
     }
 
     add<T>(storeName: string, value: T): Observable<T & WithID> {
-        console.log('add');
         return this._dbService.add(storeName, value);
     }
 
     bulkAddAndReturnValues<T>(storeName: string, values: T): Observable<T> {
-        console.log('bulkAddAndReturnValues');
         const isArray = Array.isArray(values);
         let valuesArray = [];
 
@@ -85,17 +75,14 @@ export class CacheService {
     }
 
     bulkAdd<T>(storeName: string, values: T[]): Observable<number[]> {
-        console.log('bulkAdd');
         return this._dbService.bulkAdd(storeName, values);
     }
 
     getByKey<T>(storeName: string, key: string): Observable<T> {
-        console.log('getByKey');
         return this._dbService.getByKey(storeName, key);
     }
 
     getModifiedDate(key: string): Observable<LastModified> {
-        console.log('getModifiedDate');
         return this.getByKey(nameof(LastModified), key);
     }
 
