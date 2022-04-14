@@ -17,7 +17,7 @@
         </button>
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="selected($event.option)">
-            <mat-option *ngFor="let option of options"
+            <mat-option *ngFor="let option of filteredOptions | async"
                         [id]="option.id"
                         [value]="option.value">
                 <img *ngIf="option.imageUrl"
