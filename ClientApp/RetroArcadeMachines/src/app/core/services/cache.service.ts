@@ -26,7 +26,11 @@ export class CacheService {
     }
 
     bulkGetOrInsert<T>(value: T, lastModDate: string, updateCode: number, storeName: string): Observable<any> {
-        if (!this._configService.is_cache_enabled || !this.isObjectCacheable(storeName)) {
+        if (!this._configService.is_cache_enabled) {
+            return of(value);
+        }
+
+        if (!this.isObjectCacheable(storeName)) {
             return of(value);
         }
 
