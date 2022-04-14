@@ -26,9 +26,9 @@ export class CacheService {
     }
 
     bulkGetOrInsert<T>(value: T, lastModDate: string, updateCode: number, storeName: string): Observable<any> {
-        if (!this._configService.is_cache_enabled) {
-            return of(value);
-        }
+        // todo: re enable caching once the add error is resolved
+        // todo: do not enable caching with testing on an azure test branch first!
+        return of(value);
 
         if (!this.isObjectCacheable(storeName)) {
             return of(value);
