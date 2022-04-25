@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+
+import { Observable, ReplaySubject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 import { FacebookLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
-import { ReplaySubject } from 'rxjs';
+
 import { AuthState } from 'src/app/shared/models/auth-state.model';
+
 
 @Injectable({
     providedIn: 'root'
@@ -17,12 +22,15 @@ export class AuthService {
 
     private USER_STORAGE_KEY = 'user';
 
-    constructor(private socialAuthService: SocialAuthService) {
+    constructor(
+        private _socialAuthService: SocialAuthService,
+        private _httpClient: HttpClient,
+    ) {
         this.onInit();
     }
 
     signIn(): void {
-        this.socialAuthService
+        this._socialAuthService
             .signIn(FacebookLoginProvider.PROVIDER_ID)
             .then((user: SocialUser) => {
                 this.handleAuthState(user);
@@ -30,15 +38,15 @@ export class AuthService {
     }
 
     signOut(): void {
-        this.socialAuthService.signOut(true);
+        this._socialAuthService.signOut(true);
         localStorage.removeItem(this.USER_STORAGE_KEY);
-        this.user = null;
+        this.user = undefined;
         this.isLoggedIn = false;
         this.triggerAuthStateEvent();
     }
 
     refreshToken(): void {
-        this.socialAuthService.refreshAuthToken(FacebookLoginProvider.PROVIDER_ID);
+        this._socialAuthService.refreshAuthToken(FacebookLoginProvider.PROVIDER_ID);
     }
 
     private handleAuthState(user: SocialUser): void {
@@ -57,17 +65,27 @@ export class AuthService {
 
         this.triggerAuthStateEvent();
 
-        this.socialAuthService
+        this._socialAuthService
             .authState
-            .subscribe((user: SocialUser) => {
-                this.user = user;
-                this.triggerAuthStateEvent();
-            });
+            .pipe(
+                tap((user: SocialUser) => this.user = user),
+                map((user: SocialUser) => { this.callAuthProvider(user?.authToken); })
+            )
+            .subscribe(
+                (res: any) => { this.triggerAuthStateEvent(); },
+                (err: HttpErrorResponse) => { this.signOut(); }
+            );
     }
 
     private triggerAuthStateEvent(): void {
         this.isLoggedIn = (this.user != null);
         this.authState$
             .next({user: this.user, isLoggedIn: this.isLoggedIn} as AuthState);
+    }
+
+    private callAuthProvider(authToken: string): Observable<any> {
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this._httpClient
+            .get(`https://graph.facebook.com/me?access_token=${authToken}&debug=all`, { headers: headers });
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace RetroArcadeMachines.Shared.Models.Requests
+﻿namespace RetroArcadeMachines.Services.Write.Models
 {
-    public class AssignedGamesRequestModel
+    public class AssignedGamesDto
     {
         public string Id { get; set; }
         public string Title { get; set; }

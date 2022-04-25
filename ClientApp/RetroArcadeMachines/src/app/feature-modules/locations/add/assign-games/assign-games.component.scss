@@ -1,0 +1,35 @@
+$non-desktop: 750px;
+
+.hidden {
+    visibility: none;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .field {
+        width: 100%;
+
+        &:nth-child(2) {
+            margin-left: auto;
+        }
+
+        &:nth-child(1),
+        &:nth-child(2) {
+            justify-content: space-around;
+            width: calc(49%);
+
+            @media (max-width: #{$non-desktop}) {
+                width: 100%;
+            }
+        }
+    }
+
+    .submitButton {
+        margin-left: auto;
+        margin-right: 0px;
+        display: block;
+    }
+}

@@ -18,7 +18,6 @@ namespace RetroArcadeMachines.Shared.Models.Validation
                 .NotNull().WithMessage(ValidationMessageHelper.ForNotNull(nameof(LocationDetailsRequestModel.Address)));
 
             RuleFor(x => x.Address.LineOne)
-                .NotEmpty().WithMessage(ValidationMessageHelper.ForNotEmpty(nameof(LocationDetailsRequestModel.Address.LineOne)))
                 .MinimumLength(2).WithMessage("'{PropertyName}' must have a minimum of 2 charaters")
                 .MaximumLength(100).WithMessage("'{PropertyName}' must have a maximum of 100 charaters")
                 .Matches("[a-zA-Z0-9_.+-]").WithMessage("'{ PropertyName}' must only contain alphanumeric charaters (a-z, A-Z, 0-9)");

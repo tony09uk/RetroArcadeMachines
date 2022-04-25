@@ -21,7 +21,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
     TextareaComponent,
     BaseinputDirective,
     GooglePlacesInputComponent,
-    AutocompleteComponent,
+    AutocompleteComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +38,7 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
     InputComponent,
     TextareaComponent,
     GooglePlacesInputComponent,
-    AutocompleteComponent,
+    AutocompleteComponent
   ]
 })
 export class FormModule { }

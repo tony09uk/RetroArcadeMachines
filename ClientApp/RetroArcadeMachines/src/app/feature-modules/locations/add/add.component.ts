@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 
+import { nameof } from 'ts-simple-nameof';
+import { finalize, take } from 'rxjs/operators';
+
 import { Step } from '@core/modules/elements/stepper/models/step.model';
+import { AlertService } from '@core/services/alert.service';
+import { StepErrorEvent } from '@core/modules/elements/stepper/models/step-error.event';
 
 import { AddService } from '../services/add.service';
 import { AssignGamesComponent } from './assign-games/assign-games.component';
@@ -11,12 +16,9 @@ import { StepLabelConstants } from '../models/step-label-constants.model';
 import { AssignedGamesEvent } from '../models/assigned-games-event.model';
 import { MoreInformationEvent } from '../models/more-information-event.model';
 import { FindLocationEvent } from '../models/find-location-event.model';
-import { finalize, take } from 'rxjs/operators';
 import { ConfirmLocationEvent } from '../models/confirm-location-event.model';
-import { nameof } from 'ts-simple-nameof';
-import { AlertService } from '@core/services/alert.service';
-import { StepErrorEvent } from '@core/modules/elements/stepper/models/step-error.event';
 import { StepErrors } from '../models/step-errors.enum';
+import { MoreInformation } from '../models/more-information.model';
 
 @Component({
   selector: 'app-add',
@@ -109,13 +111,19 @@ export class AddComponent {
       .find(x => x.event.componentName === nameof(AssignGamesComponent))
       .event as AssignedGamesEvent;
 
-    const moreInfoEvent = this.steps
-      .find(x => x.event.componentName === nameof(MoreInformationComponent))
-      .event as MoreInformationEvent;
+    let moreInformation = { } as MoreInformation;
+
+    const moreInfoStep = this.steps
+                          .find(x => x.event.componentName === nameof(MoreInformationComponent));
+
+    if (moreInfoStep) {
+      const moreInformationEvent = moreInfoStep.event as MoreInformationEvent;
+      moreInformation = moreInformationEvent.moreInformation;
+    }
 
     this.isSaving = true;
     this._addService
-      .saveLocation(addressEvent.address, assignedGamesEvent.assignedGames, moreInfoEvent.moreInformation)
+      .saveLocation(addressEvent.address, assignedGamesEvent.assignedGames, moreInformation)
       .pipe(
         take(1),
         finalize(() => this.isSaving = false)

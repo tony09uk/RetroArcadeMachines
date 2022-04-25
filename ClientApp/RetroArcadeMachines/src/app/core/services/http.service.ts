@@ -25,6 +25,10 @@ export class HttpService {
     }
 
     public get<T>(url: string, objName?: string, params: HttpParams = new HttpParams()): Observable<T> {
+        if (url.startsWith('http')) {
+            return this.getFromThirdPartyApi(url);
+        }
+
         url = this.createUrl(this._readbaseUrl, url);
         let lastModifiedDate = '';
 
@@ -93,5 +97,12 @@ export class HttpService {
         let getRequestHeader = this._headers;
         getRequestHeader = getRequestHeader.set('if-modified-since', dateModified);
         return getRequestHeader;
+    }
+
+    private getFromThirdPartyApi(url: string): any {
+        this._http.get(url, { headers: this._headers })
+            .pipe(
+                catchError(error => this.handleError(error)),
+            );
     }
 }

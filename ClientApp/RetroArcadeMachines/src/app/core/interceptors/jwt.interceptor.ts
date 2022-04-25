@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -15,11 +15,13 @@ export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add auth header with jwt if account is logged in and request is to the api url
         const user = this._authService.user;
-        const isLoggedIn = user?.authToken;
-        const isApiUrl = request.url.startsWith(this._configService.read_api_url);
-        if (isLoggedIn && isApiUrl) {
+        const authToken = user?.authToken;
+        const isApiUrl = request.url.startsWith(this._configService.write_api_url_auth);
+        if (authToken && isApiUrl) {
             request = request.clone({
-                setHeaders: { Authorization: `Bearer ${user.authToken}` }
+                setHeaders: {
+                    Authorization: `Bearer ${user.authToken}`
+                }
             });
         }
 

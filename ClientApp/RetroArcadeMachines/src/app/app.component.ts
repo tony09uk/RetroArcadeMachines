@@ -3,9 +3,10 @@ import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { isDevMode } from '@angular/core';
 
+import { takeUntil } from 'rxjs/operators';
+
 import { ConfigService } from '@core/services/config.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',

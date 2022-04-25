@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -11,7 +13,10 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using Microsoft.OpenApi.Models;
+using RetroArcadeMachines.AzureFunctions.Write.Auth.Models;
+using RetroArcadeMachines.AzureFunctions.Write.Auth.TokenHelpers;
 using RetroArcadeMachines.Services.Write;
 using RetroArcadeMachines.Services.Write.Models;
 using RetroArcadeMachines.Shared.Models.Requests;
@@ -25,11 +30,16 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
     {
         private readonly IMapper _mapper;
         private readonly ILocationDetailsService _locationDetailsService;
+        private readonly ITokenValidator _tokenValidator;
 
-        public LocationHttpTriggerFunction(IMapper mapper, ILocationDetailsService locationDetailsService)
+        public LocationHttpTriggerFunction(
+            IMapper mapper,
+            ILocationDetailsService locationDetailsService,
+            ITokenValidator tokenValidator)
         {
             _mapper = Guard.Against.Null(mapper, nameof(mapper), nameof(IMapper));
             _locationDetailsService = Guard.Against.Null(locationDetailsService, nameof(locationDetailsService), nameof(ILocationDetailsService));
+            _tokenValidator = Guard.Against.Null(tokenValidator, nameof(tokenValidator), nameof(ITokenValidator));
         }
 
         [FunctionName("AddLocation")]
@@ -49,8 +59,19 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
                 {
                     return addLocationRequest.ToBadRequest();
                 }
+                
+                KeyValuePair<string, StringValues> token = req.Headers.FirstOrDefault(x => x.Key == "Authorization");
+                var field = "email";
+                SocialTokenValidationResult tokenValidationResult = await _tokenValidator.TryValidateToken(token.Value, field);
 
-                WriteRequestResult result = await _locationDetailsService.Add(CreateLocationDto(addLocationRequest.Value));
+                if(!tokenValidationResult.IsValid)
+                {
+                    return new StatusCodeResult(StatusCodes.Status401Unauthorized);
+                }
+
+                var username = tokenValidationResult.FieldValues[field];
+
+                WriteRequestResult result = await _locationDetailsService.Add(CreateLocationDto(addLocationRequest.Value), username);
 
                 switch (result.Status)
                 {
@@ -73,7 +94,7 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
         {
             var locationDetailsDto = _mapper.Map<LocationDetailsDto>(requestModel);
             locationDetailsDto.Town = requestModel.Address.Town;
-            locationDetailsDto.GameOverviewList = requestModel.AssignedGamesList.ToDictionary(keySelector: x => x.Id, elementSelector: x => x.ReleaseYear);
+            locationDetailsDto.GameOverviewList = _mapper.Map<List<AssignedGamesDto>>(requestModel.AssignedGamesList);
             return _mapper.Map<LocationDetailsDto>(locationDetailsDto);
         }
 
