@@ -103,6 +103,8 @@ export class AddComponent {
   }
 
   private saveLocation(): void {
+    console.log(nameof(FindLocationComponent));
+    console.log(this.steps);
     const addressEvent = this.steps
       .find(x => x.event.componentName === nameof(FindLocationComponent))
       .event as FindLocationEvent;
@@ -111,19 +113,13 @@ export class AddComponent {
       .find(x => x.event.componentName === nameof(AssignGamesComponent))
       .event as AssignedGamesEvent;
 
-    let moreInformation = { } as MoreInformation;
-
-    const moreInfoStep = this.steps
-                          .find(x => x.event.componentName === nameof(MoreInformationComponent));
-
-    if (moreInfoStep) {
-      const moreInformationEvent = moreInfoStep.event as MoreInformationEvent;
-      moreInformation = moreInformationEvent.moreInformation;
-    }
+    const moreInfoEvent = this.steps
+      .find(x => x.event.componentName === nameof(MoreInformationComponent))
+      .event as MoreInformationEvent;
 
     this.isSaving = true;
     this._addService
-      .saveLocation(addressEvent.address, assignedGamesEvent.assignedGames, moreInformation)
+      .saveLocation(addressEvent.address, assignedGamesEvent.assignedGames, moreInfoEvent.moreInformation)
       .pipe(
         take(1),
         finalize(() => this.isSaving = false)

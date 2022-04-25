@@ -23,6 +23,7 @@ export class AddService {
         private _mapRequestService: MapRequestService) { }
 
     saveLocation(address: Address, assignedGames: AssignedGameRequest[], moreInfo: MoreInformation): Observable<boolean> {
+        console.log(address);
         const request = this._mapRequestService.mapRequest(address, assignedGames, moreInfo);
         return this._httpAuthService.post('addlocation', request);
     }
