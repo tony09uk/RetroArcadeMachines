@@ -19,6 +19,7 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.Tests
     using System.Collections.Generic;
     using System.Linq;
     using RetroArcadeMachines.Services.Write.Models;
+    using RetroArcadeMachines.AzureFunctions.Write.Auth.TokenHelpers;
 
     public class LocationHttpTriggerFunctionTests
     {
@@ -30,6 +31,7 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.Tests
         private Mock<ExecutionContext> _context;
         private Mock<HttpResponse> _httpResponse;
         private Mock<HttpRequestMessage> _httpRequestMessage;
+        private Mock<FacebookTokenValidator> _tokenValidator;
 
         public LocationHttpTriggerFunctionTests()
         {
@@ -39,8 +41,9 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.Tests
             _locationDetailsService = new Mock<ILocationDetailsService>();
             _httpResponse = new Mock<HttpResponse>();
             _httpRequestMessage = new Mock<HttpRequestMessage>();
+            _tokenValidator = new Mock<FacebookTokenValidator>();
 
-            _sut = new LocationHttpTriggerFunction(_mapper.Object, _locationDetailsService.Object);
+            _sut = new LocationHttpTriggerFunction(_mapper.Object, _locationDetailsService.Object, _tokenValidator.Object);
         }
 
         [Fact]
@@ -98,11 +101,11 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.Tests
             _httpRequest.Setup(x => x.Body).Returns(new MemoryStream(formByteArray));
 
             var addResult = new WriteRequestResult { Status = WriteRequestStatus.Success, ItemId = Guid.NewGuid() };
-            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>())).Returns(Task.FromResult(addResult));
+            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>(), It.IsAny<string>())).Returns(Task.FromResult(addResult));
             _mapper.Setup(x => x.Map<LocationDetailsDto>(It.IsAny<LocationDetailsRequestModel>()))
                 .Returns((LocationDetailsRequestModel source) =>
                 {
-                    return new LocationDetailsDto() { GameOverviewList = new Dictionary<string, int>() };
+                    return new LocationDetailsDto() { GameOverviewList = new List<AssignedGamesDto>() };
                 });
             Environment.SetEnvironmentVariable("ReadBaseUrl", "testConfigValue");
 
@@ -121,11 +124,11 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.Tests
             var formByteArray = ToByteArray(locationDetailsRequestModel);
             _httpRequest.Setup(x => x.Body).Returns(new MemoryStream(formByteArray));
 
-            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>())).Throws(new Exception());
+            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>(), It.IsAny<string>())).Throws(new Exception());
             _mapper.Setup(x => x.Map<LocationDetailsDto>(It.IsAny<LocationDetailsRequestModel>()))
                 .Returns((LocationDetailsRequestModel source) =>
                 {
-                    return new LocationDetailsDto() { GameOverviewList = new Dictionary<string, int>() };
+                    return new LocationDetailsDto() { GameOverviewList = new List<AssignedGamesDto>() };
                 });
             Environment.SetEnvironmentVariable("ReadBaseUrl", "testConfigValue");
 
@@ -145,11 +148,11 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.Tests
             _httpRequest.Setup(x => x.Body).Returns(new MemoryStream(formByteArray));
 
             var addResult = new WriteRequestResult { Status = WriteRequestStatus.Failed, ItemId = Guid.NewGuid() };
-            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>())).Returns(Task.FromResult(addResult));
+            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>(), It.IsAny<string>())).Returns(Task.FromResult(addResult));
             _mapper.Setup(x => x.Map<LocationDetailsDto>(It.IsAny<LocationDetailsRequestModel>()))
                 .Returns((LocationDetailsRequestModel source) =>
                 {
-                    return new LocationDetailsDto() { GameOverviewList = new Dictionary<string, int>() };
+                    return new LocationDetailsDto() { GameOverviewList = new List<AssignedGamesDto>() };
                 });
             Environment.SetEnvironmentVariable("ReadBaseUrl", "testConfigValue");
 
@@ -169,11 +172,11 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.Tests
             _httpRequest.Setup(x => x.Body).Returns(new MemoryStream(formByteArray));
 
             var addResult = new WriteRequestResult { Status = WriteRequestStatus.Duplicate, ItemId = Guid.NewGuid() };
-            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>())).Returns(Task.FromResult(addResult));
+            _locationDetailsService.Setup(x => x.Add(It.IsAny<LocationDetailsDto>(), It.IsAny<string>())).Returns(Task.FromResult(addResult));
             _mapper.Setup(x => x.Map<LocationDetailsDto>(It.IsAny<LocationDetailsRequestModel>()))
                 .Returns((LocationDetailsRequestModel source) =>
                 {
-                    return new LocationDetailsDto() { GameOverviewList = new Dictionary<string, int>() };
+                    return new LocationDetailsDto() { GameOverviewList = new List<AssignedGamesDto>() };
                 });
             Environment.SetEnvironmentVariable("ReadBaseUrl", "testConfigValue");
 

@@ -22,7 +22,7 @@ namespace RetroArcadeMachines.Services.Write.Models
         public AddressModel Address { get; set; }
         public IEnumerable<string> PhoneNumberList { get; set; }
         public IEnumerable<BusinessHoursModel> BusinessHoursList { get; set; }
-        public Dictionary<string, int> GameOverviewList { get; set; }
+        public List<AssignedGamesDto> GameOverviewList { get; set; }
         public IEnumerable<string> ImageUrlList { get; set; }
     }
 }

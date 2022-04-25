@@ -14,21 +14,31 @@ import { AssignedGamesEvent } from '../../models/assigned-games-event.model';
 import { StepErrorEvent } from '@core/modules/elements/stepper/models/step-error.event';
 import { nameof } from 'ts-simple-nameof';
 import { StepErrors } from '../../models/step-errors.enum';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { AssignGamesFormService } from './assign-games-form.service';
 
 @Component({
   selector: 'app-assign-games',
   templateUrl: './assign-games.component.html',
   styleUrls: ['./assign-games.component.scss'],
-  providers: [ AssignGamesService ]
+  providers: [ AssignGamesService, AssignGamesFormService ]
 })
 export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> implements OnInit {
 
   gameOptions: AutocompleteOption[] = [];
   selectedGames: ListItem[] = [];
+  showManualAddInputs: boolean = false;
+  manualGameInputForm: FormGroup;
+  selectedGamesMessage: string = 'Location Games';
+
+  title: AbstractControl;
+  category: AbstractControl;
 
   private _gamesOverviewList: GameOverview[] = [];
 
-  constructor(private _assignGamesService: AssignGamesService) {
+  constructor(
+    private _assignGamesService: AssignGamesService,
+    private _assignGamesFormService: AssignGamesFormService) {
     super();
   }
 
@@ -43,10 +53,12 @@ export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> 
       );
   }
 
-  selectedOption(selectedItem: AutocompleteOption): void {
-    const gameInList = this.selectedGames.find(x => x.id === selectedItem.id);
-    if (gameInList) {
-      return;
+  selectedOption(selectedItem: AutocompleteOption, isGameUnlisted: boolean = false): void {
+    if (!isGameUnlisted) {
+      const gameInList = this.selectedGames.find(x => x.id === selectedItem.id);
+      if (gameInList) {
+        return;
+      }
     }
 
     this.selectedGames.push({
@@ -63,6 +75,30 @@ export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> 
     this.emitSelectedItemChanged();
   }
 
+  hintClicked(): void {
+    this.showManualAddInputs = true;
+    this.manualGameInputForm = this._assignGamesFormService.get();
+  }
+
+  addUnlistedGame(): void {
+    const category = this.manualGameInputForm.value.category;
+    const title = this.manualGameInputForm.value.title;
+
+    // todo: this must be added as proper form validation - currently no error is displayed
+    if (!category || !title) {
+      return;
+    }
+
+    const item = {
+      id: '00000000-0000-0000-0000-000000000000',
+      value: `${category}:- ${title}`
+    } as AutocompleteOption;
+
+    this.selectedOption(item, true);
+    this.manualGameInputForm.reset();
+    this.selectedGamesMessage += ' (Manually added games need to be approved by a moderator before showing)';
+  }
+
   private updateAutocomplete(options: GameOverview[]): void {
     this._gamesOverviewList = options;
     this.gameOptions = options.map(x => ({ id: x.id, value: x.title }));
@@ -70,12 +106,21 @@ export class AssignGamesComponent extends StepBaseComponent<AssignedGamesEvent> 
 
   private emitSelectedItemChanged(): void {
     const assignedGames: AssignedGameRequest[] = [];
+
     this.selectedGames.forEach((game: ListItem) => {
+      const assignedGameRequest = {} as AssignedGameRequest;
       const gameOverview = this._gamesOverviewList.find(x => x.id === game.id);
 
       if (gameOverview) {
-        assignedGames.push({id: gameOverview.id, releaseYear: gameOverview.releaseYear, title: gameOverview.title});
+        assignedGameRequest.id = gameOverview.id;
+        assignedGameRequest.releaseYear = gameOverview.releaseYear;
+        assignedGameRequest.title = gameOverview.title;
+      } else {
+        assignedGameRequest.id = game.id;
+        assignedGameRequest.title = game.value;
       }
+
+      assignedGames.push(assignedGameRequest);
     });
 
     this.events.emit(new AssignedGamesEvent(assignedGames));

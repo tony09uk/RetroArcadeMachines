@@ -12,7 +12,9 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
         public MappingConfiguration()
         {
             CreateMap<LocationDetailsRequestModel, LocationDetailsDto>();
+            CreateMap<LocationDetailsDto, LocationDetailsModel>();
             CreateMap<BusinessHoursRequestModel, BusinessHoursModel>();
+            CreateMap<AssignedGamesRequestModel, AssignedGamesDto>();
         }
     }
 }

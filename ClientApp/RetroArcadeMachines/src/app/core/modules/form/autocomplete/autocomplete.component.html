@@ -15,6 +15,9 @@
                 matSuffix>
             <mat-icon>clear</mat-icon>
         </button>
+        <mat-hint *ngIf="showHint"
+            (click)="onHintClicked()"
+            [align]="inputHintMessageAlign">{{inputHintMessage}}</mat-hint>
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="selected($event.option)">
             <mat-option *ngFor="let option of filteredOptions | async"

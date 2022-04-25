@@ -1,7 +1,28 @@
-<app-autocomplete [options]="gameOptions"
-    [placeholder]="'Type to filter the games list'"
-    [label]="'Games'"
-    (selectedOption)="selectedOption($event)"></app-autocomplete>
+<app-autocomplete *ngIf="!showManualAddInputs"
+                  [options]="gameOptions"
+                  [placeholder]="'Type to filter the games list'"
+                  [label]="'Games'"
+                  inputHintMessage="If your game is not showing please click here to add it"
+                  inputHintDispayRule="whenNoResults"
+                  (hintClicked)="hintClicked()"
+                  (selectedOption)="selectedOption($event)"></app-autocomplete>
+<div *ngIf="showManualAddInputs">
+    <form [formGroup]="manualGameInputForm">
+        <app-input formControlName="category"
+                   class="field"
+                   label="System name"
+                   placeholder="e.g. Snes, Megadrive, Atari 2600 etc..."></app-input>
+        <app-input formControlName="title"
+                   class="field"
+                   label="Game Title"
+                   placeholder="Your game here"></app-input>
+        <app-button text="Hide"
+                    (click)="showManualAddInputs = false"></app-button>
+        <app-button class="submitButton"
+                    text="Add"
+                    (click)="addUnlistedGame()"></app-button>
+    </form>
+</div>
 <app-list [items]="selectedGames"
-    [header]="'Location Games'"
-    (itemRemoved)="listItemRemoved($event)"></app-list>
+          [header]="selectedGamesMessage"
+          (itemRemoved)="listItemRemoved($event)"></app-list>

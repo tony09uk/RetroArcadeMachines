@@ -9,7 +9,8 @@ namespace RetroArcadeMachines.Services.Write
         public MappingConfiguration()
         {
             CreateMap<LocationDetailsDto, LocationOverviewModel>();
-            CreateMap<LocationDetailsDto, LocationDetailsModel>();
+            CreateMap<LocationDetailsDto, LocationDetailsModel>()
+                .ForMember(x => x.GameOverviewList, opt => opt.Ignore());
         }
     }
 }
