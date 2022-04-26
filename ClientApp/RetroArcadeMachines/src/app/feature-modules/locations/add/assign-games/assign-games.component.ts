@@ -11,7 +11,6 @@ import { AssignGamesService } from '../../services/assign-games.service';
 import { AssignedGameRequest } from '../../models/assigned-game-request.model';
 import { ListItem } from '@core/modules/elements/list/models/list-item.model';
 import { AssignedGamesEvent } from '../../models/assigned-games-event.model';
-import { StepErrorEvent } from '@core/modules/elements/stepper/models/step-error.event';
 import { nameof } from 'ts-simple-nameof';
 import { StepErrors } from '../../models/step-errors.enum';
 import { AbstractControl, FormGroup } from '@angular/forms';

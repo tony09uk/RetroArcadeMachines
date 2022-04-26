@@ -19,6 +19,8 @@ import { FindLocationEvent } from '../models/find-location-event.model';
 import { ConfirmLocationEvent } from '../models/confirm-location-event.model';
 import { StepErrors } from '../models/step-errors.enum';
 import { MoreInformation } from '../models/more-information.model';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import { AssignedGameRequest } from '../models/assigned-game-request.model';
 
 @Component({
   selector: 'app-add',
@@ -69,6 +71,10 @@ export class AddComponent {
     },
   ];
 
+  _address: Address;
+  _assignedGames: AssignedGameRequest[];
+  _moreInformation: MoreInformation;
+
   constructor(
     private _addService: AddService,
     private _alertService: AlertService) { }
@@ -90,36 +96,36 @@ export class AddComponent {
   }
 
   private updateStepEvent(event: FindLocationEvent | AssignedGamesEvent | MoreInformationEvent | ConfirmLocationEvent): void {
-    if (event instanceof ConfirmLocationEvent) {
-      return;
+    switch (true) {
+      case event instanceof FindLocationEvent: {
+        const findLocationEvent = event as FindLocationEvent;
+        this._address = findLocationEvent.address;
+        break;
+      }
+      case event instanceof AssignedGamesEvent: {
+        const assignedGamesEvent = event as AssignedGamesEvent;
+        this._assignedGames = assignedGamesEvent.assignedGames;
+        break;
+      }
+      case event instanceof MoreInformationEvent: {
+        const moreInformationEvent = event as MoreInformationEvent;
+        this._moreInformation = moreInformationEvent.moreInformation;
+        break;
+      }
+      case event instanceof ConfirmLocationEvent: {
+        break;
+      }
+      default: {
+        throw Error('The event has no associated component');
+        break;
+      }
     }
-
-    const step = this.steps.find(x => nameof(x.component) === event.componentName);
-
-    if (!step) {
-      throw Error('The event has no associated component');
-    }
-    step.event = event;
   }
 
   private saveLocation(): void {
-    console.log(nameof(FindLocationComponent));
-    console.log(this.steps);
-    const addressEvent = this.steps
-      .find(x => x.event.componentName === nameof(FindLocationComponent))
-      .event as FindLocationEvent;
-
-    const assignedGamesEvent = this.steps
-      .find(x => x.event.componentName === nameof(AssignGamesComponent))
-      .event as AssignedGamesEvent;
-
-    const moreInfoEvent = this.steps
-      .find(x => x.event.componentName === nameof(MoreInformationComponent))
-      .event as MoreInformationEvent;
-
     this.isSaving = true;
     this._addService
-      .saveLocation(addressEvent.address, assignedGamesEvent.assignedGames, moreInfoEvent.moreInformation)
+      .saveLocation(this._address, this._assignedGames, this._moreInformation)
       .pipe(
         take(1),
         finalize(() => this.isSaving = false)
