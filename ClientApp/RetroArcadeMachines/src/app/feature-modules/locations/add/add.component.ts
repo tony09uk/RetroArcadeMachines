@@ -130,8 +130,8 @@ export class AddComponent {
         take(1),
         finalize(() => this.isSaving = false)
       ).subscribe(
-        response => { this.showThankyouMessage = true; },
-        error => { this._alertService.error('there was an unexpected error! Please try again.'); }
+        response => { console.log(response); this.showThankyouMessage = true; },
+        error => { console.log(error); this._alertService.error('there was an unexpected error! Please try again.'); }
       );
   }
 

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Ardalis.GuardClauses;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RetroArcadeMachines.AzureFunctions.Write.Auth.Models;
 using System;
 using System.Collections.Generic;
@@ -12,14 +14,17 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.TokenHelpers
     public class FacebookTokenValidator : ITokenValidator
     {
         private readonly HttpClient _httpClient;
+        private readonly ILogger _logger;
 
-        public FacebookTokenValidator(HttpClient httpClient)
+        public FacebookTokenValidator(HttpClient httpClient, ILogger logger)
         {
-            _httpClient = httpClient;
+            _httpClient = Guard.Against.Null(httpClient, nameof(httpClient), nameof(HttpClient));
+            _logger = Guard.Against.Null(logger, nameof(logger), nameof(ILogger));
         }
 
         public async Task<SocialTokenValidationResult> TryValidateToken(string token, params string[] fields)
         {
+            _logger.LogInformation(token);
             if(token == null)
             {
                 return CreateResponse("Token was not provided");
@@ -38,6 +43,8 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.TokenHelpers
 
                 if(facebookErrorResponseMessage.Error != null)
                 {
+                    _logger.LogError($"URL CALLED: {_httpClient.BaseAddress}{uri}");
+                    _logger.LogError($"Facebook auth failed with the following message: {facebookErrorResponseMessage.Error.Message}");
                     return CreateResponse(facebookErrorResponseMessage.Error.Message);
                 }
 
@@ -47,18 +54,17 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.TokenHelpers
             }
             catch(HttpRequestException ex)
             {
-                //ex.Message
-                // log
+                _logger.LogError($"{nameof(FacebookTokenValidator)} threw an {nameof(HttpRequestException)} and was handled with returing failed response: {ex.Message}");
                 return CreateResponse("Token was not provided");
             }
             catch(ArgumentNullException ex)
             {
-                // log
+                _logger.LogError($"{nameof(FacebookTokenValidator)} threw an {nameof(ArgumentNullException)}: {ex.Message}");
                 throw;
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex);
+                _logger.LogError($"{nameof(FacebookTokenValidator)} threw an unexpected {nameof(Exception)}: {ex.Message}");
                 throw;
             }
         }

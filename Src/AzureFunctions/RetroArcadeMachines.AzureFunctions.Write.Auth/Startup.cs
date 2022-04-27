@@ -29,6 +29,8 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
                 client.DefaultRequestHeaders.Add("ContentType", "application/json");
                 
             }).AddPolicyHandler(GetRetryPolicy());
+
+            builder.Services.AddApplicationInsightsTelemetry();
         }
 
         private IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()

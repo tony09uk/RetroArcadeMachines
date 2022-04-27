@@ -48,11 +48,12 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-            ILogger log)
+            ILogger logger)
         {
             try
             {
-                ValidatableRequestModel<LocationDetailsRequestModel> addLocationRequest = await req.GetJsonBody<LocationDetailsRequestModel, LocationDetailsRequestModelValidator>();
+                logger.LogTrace($"RETROARCADE was called on {DateTime.UtcNow.ToShortDateString()} {DateTime.UtcNow.ToShortTimeString()}");
+                ValidatableRequestModel <LocationDetailsRequestModel> addLocationRequest = await req.GetJsonBody<LocationDetailsRequestModel, LocationDetailsRequestModelValidator>();
 
                 if (!addLocationRequest.IsValid)
                 {
@@ -62,29 +63,33 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
                 KeyValuePair<string, StringValues> token = req.Headers.FirstOrDefault(x => x.Key == "Authorization");
                 var field = "email";
                 SocialTokenValidationResult tokenValidationResult = await _tokenValidator.TryValidateToken(token.Value, field);
+                logger.LogTrace($"{tokenValidationResult.IsValid}");
 
-                if(!tokenValidationResult.IsValid)
+                if (!tokenValidationResult.IsValid)
                 {
-                    return new StatusCodeResult(StatusCodes.Status401Unauthorized);
+                    return new CreatedResult(tokenValidationResult.InvalidResultMessage, new { Id = 1 });
+
+                    //return new StatusCodeResult(StatusCodes.Status401Unauthorized);
                 }
 
                 var username = tokenValidationResult.FieldValues[field];
+                logger.LogTrace($"{username}");
 
                 WriteRequestResult result = await _locationDetailsService.Add(CreateLocationDto(addLocationRequest.Value), username);
 
                 switch (result.Status)
                 {
                     case WriteRequestStatus.Success:
-                        return new CreatedResult(GetResourceLocation(result.ItemId, log), new { Id = result.ItemId });
+                        return new CreatedResult(GetResourceLocation(result.ItemId, logger), new { Id = result.ItemId });
                     case WriteRequestStatus.Duplicate:
-                        return new AcceptedResult(GetResourceLocation(result.ItemId, log), new { Id = result.ItemId });
+                        return new AcceptedResult(GetResourceLocation(result.ItemId, logger), new { Id = result.ItemId });
                     default:
                         return new StatusCodeResult(StatusCodes.Status500InternalServerError);
                 }
             }
             catch (Exception ex)
             {
-                log.LogError($"AddLocation had an unexpexpected error: {ex.Message}");
+                logger.LogError($"AddLocation had an unexpexpected error: {ex.Message}");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
