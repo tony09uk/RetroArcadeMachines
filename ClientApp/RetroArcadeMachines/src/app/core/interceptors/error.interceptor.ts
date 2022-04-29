@@ -13,7 +13,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(catchError(err => {
             if ([401, 403].includes(err.status) && this._authService.isLoggedIn) {
                 // auto logout if 401 or 403 response returned from api
-                this._authService.signOut();
+this._authService.signOut();
             }
 
             if (err.error instanceof Error) {

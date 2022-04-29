@@ -47,33 +47,28 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth
         [OpenApiParameter(name: "name", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger logger)
         {
             try
             {
-                logger.LogTrace($"RETROARCADE was called on {DateTime.UtcNow.ToShortDateString()} {DateTime.UtcNow.ToShortTimeString()}");
                 ValidatableRequestModel <LocationDetailsRequestModel> addLocationRequest = await req.GetJsonBody<LocationDetailsRequestModel, LocationDetailsRequestModelValidator>();
 
                 if (!addLocationRequest.IsValid)
                 {
                     return addLocationRequest.ToBadRequest();
                 }
-                
+
                 KeyValuePair<string, StringValues> token = req.Headers.FirstOrDefault(x => x.Key == "Authorization");
                 var field = "email";
                 SocialTokenValidationResult tokenValidationResult = await _tokenValidator.TryValidateToken(token.Value, field);
-                logger.LogTrace($"{tokenValidationResult.IsValid}");
 
                 if (!tokenValidationResult.IsValid)
                 {
-                    return new CreatedResult(tokenValidationResult.InvalidResultMessage, new { Id = 1 });
-
-                    //return new StatusCodeResult(StatusCodes.Status401Unauthorized);
+                    return new StatusCodeResult(StatusCodes.Status401Unauthorized);
                 }
 
                 var username = tokenValidationResult.FieldValues[field];
-                logger.LogTrace($"{username}");
 
                 WriteRequestResult result = await _locationDetailsService.Add(CreateLocationDto(addLocationRequest.Value), username);
 

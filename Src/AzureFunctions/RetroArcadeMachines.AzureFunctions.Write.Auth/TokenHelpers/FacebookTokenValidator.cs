@@ -4,8 +4,6 @@ using Newtonsoft.Json;
 using RetroArcadeMachines.AzureFunctions.Write.Auth.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -16,15 +14,14 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.TokenHelpers
         private readonly HttpClient _httpClient;
         private readonly ILogger _logger;
 
-        public FacebookTokenValidator(HttpClient httpClient, ILogger logger)
+        public FacebookTokenValidator(HttpClient httpClient, ILogger<FacebookTokenValidator> logger)
         {
             _httpClient = Guard.Against.Null(httpClient, nameof(httpClient), nameof(HttpClient));
-            _logger = Guard.Against.Null(logger, nameof(logger), nameof(ILogger));
+            _logger = Guard.Against.Null(logger, nameof(logger), nameof(ILogger<FacebookTokenValidator>));
         }
 
         public async Task<SocialTokenValidationResult> TryValidateToken(string token, params string[] fields)
         {
-            _logger.LogInformation(token);
             if(token == null)
             {
                 return CreateResponse("Token was not provided");
@@ -43,9 +40,7 @@ namespace RetroArcadeMachines.AzureFunctions.Write.Auth.TokenHelpers
 
                 if(facebookErrorResponseMessage.Error != null)
                 {
-                    _logger.LogError($"URL CALLED: {_httpClient.BaseAddress}{uri}");
-                    _logger.LogError($"Facebook auth failed with the following message: {facebookErrorResponseMessage.Error.Message}");
-                    return CreateResponse(facebookErrorResponseMessage.Error.Message);
+                    return CreateResponse($"{facebookErrorResponseMessage.Error.Message}");
                 }
 
                 var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(contents);
