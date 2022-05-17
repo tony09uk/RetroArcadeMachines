@@ -65,6 +65,8 @@ export class AuthService {
 
         this.triggerAuthStateEvent();
 
+        this.refreshToken();
+
         this._socialAuthService
             .authState
             .pipe(
@@ -72,7 +74,7 @@ export class AuthService {
                 map((user: SocialUser) => { this.callAuthProvider(user?.authToken); })
             )
             .subscribe(
-                (res: any) => { this.triggerAuthStateEvent(); },
+                (res: any) => {  console.log(res); this.triggerAuthStateEvent(); },
                 (err: HttpErrorResponse) => { this.signOut(); }
             );
     }

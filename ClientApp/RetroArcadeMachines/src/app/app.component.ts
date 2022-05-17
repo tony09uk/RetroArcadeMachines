@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { ConfigService } from '@core/services/config.service';
 import { Subject } from 'rxjs';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('is dev mode: ' + isDevMode());
+
     // todo: add this only on add.component page load
     const script = this._renderer2.createElement('script');
     const key = this._configService.google_places_api_key;
