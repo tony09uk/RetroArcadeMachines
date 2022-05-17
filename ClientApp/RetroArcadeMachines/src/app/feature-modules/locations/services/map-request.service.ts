@@ -15,8 +15,8 @@ export class MapRequestService {
 
         return {
             name: placesAddress.name,
-            isRetroGamesOnly: moreInfo.isRetroGamesOnly,
-            entryPrice: moreInfo.entryFee,
+            // isRetroGamesOnly: moreInfo.isRetroGamesOnly,
+            entryPrice: this.getEntryPrice(moreInfo),
             rating: placesAddress.rating,
             // isChildFriendly: moreInfo.isChildFriendly,
             // isFoodServed: moreInfo.isFoodServed,
@@ -46,6 +46,13 @@ export class MapRequestService {
             postalcode2: postCode[1],
             town: this.getAddressComponentValue(address.address_components, 'postal_town')
         };
+    }
+
+    private getEntryPrice(moreInfo: MoreInformation): number {
+        if (moreInfo?.entryFee === undefined || !moreInfo.entryFee) {
+            return 0;
+        }
+        return moreInfo.entryFee;
     }
 
     private getAddressComponentValue(addressComponents: AddressComponent[], type: string): string {
