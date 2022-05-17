@@ -52,7 +52,11 @@ export class AutocompleteComponent implements OnInit {
   private filter(value: string): AutocompleteOption[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.value.toLowerCase().includes(filterValue));
+    return this.options
+            .filter(option => option.value
+                                .toLowerCase()
+                                .includes(filterValue)
+            ).slice(0, 10);
   }
 
   private shouldShowHint(length: number): void {
