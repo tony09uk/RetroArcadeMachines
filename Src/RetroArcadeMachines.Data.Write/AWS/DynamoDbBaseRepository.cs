@@ -1,6 +1,4 @@
-﻿using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.DataModel;
-using Amazon.DynamoDBv2.Model;
+﻿using Amazon.DynamoDBv2.DataModel;
 using RetroArcadeMachines.Data.Write.Extensions;
 using RetroArcadeMachines.Data.Write.Interfaces;
 using RetroArcadeMachines.Shared.Models;

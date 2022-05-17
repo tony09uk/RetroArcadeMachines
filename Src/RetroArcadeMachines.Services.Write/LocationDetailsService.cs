@@ -1,5 +1,6 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RetroArcadeMachines.Data.Read.Interfaces;
 using RetroArcadeMachines.Data.Write.Interfaces;
@@ -22,6 +23,7 @@ namespace RetroArcadeMachines.Services.Write
         private readonly IReadRepository<GameModel> _readGamesRepository;
         private readonly IWriteRepository<LocationDetailsModel> _locationDetailsRepository;
         private readonly IWriteRepository<LocationOverviewModel> _locationOverviewRepository;
+        private readonly ILogger<LocationDetailsService> _logger;
         private readonly HttpClient _httpClient;
 
         public LocationDetailsService(
@@ -30,6 +32,7 @@ namespace RetroArcadeMachines.Services.Write
             IReadRepository<GameModel> readGamesRepository,
             IWriteRepository<LocationDetailsModel> locationDetailsRepository,
             IWriteRepository<LocationOverviewModel> locationOverviewRepository,
+            ILogger<LocationDetailsService> logger,
             HttpClient httpClient)
         {
             _mapper = Guard.Against.Null(mapper, nameof(mapper), nameof(IMapper));
@@ -37,11 +40,13 @@ namespace RetroArcadeMachines.Services.Write
             _locationOverviewRepository = Guard.Against.Null(locationOverviewRepository, nameof(locationOverviewRepository), nameof(IWriteRepository<LocationOverviewModel>));
             _readLocationDetailsRepository = Guard.Against.Null(readLocationDetailsRepository, nameof(readLocationDetailsRepository), nameof(IReadRepository<LocationDetailsModel>)); ;
             _readGamesRepository = Guard.Against.Null(readGamesRepository, nameof(readGamesRepository), nameof(IReadRepository<GameModel>));
+            _logger = Guard.Against.Null(logger, nameof(logger), nameof(ILogger<LocationDetailsService>));
             _httpClient = Guard.Against.Null(httpClient, nameof(httpClient), nameof(HttpClient));
         }
 
         public async Task<WriteRequestResult> Add(LocationDetailsDto locationDetails, string email)
         {
+            _logger.LogInformation($"Executing Add in {nameof(LocationDetailsService)}");
             try
             {
                 var locationDetailsModel = _mapper.Map<LocationDetailsModel>(locationDetails);
@@ -50,8 +55,10 @@ namespace RetroArcadeMachines.Services.Write
                 locationDetailsModel.GameOverviewList = await CreateSelectedGamesList(gameIds.ConvertAll(Guid.Parse));
 
                 var locationOverviewModel = _mapper.Map<LocationOverviewModel>(locationDetails);
+                _logger.LogInformation($"{nameof(LocationOverviewModel)}: {JsonConvert.SerializeObject(locationOverviewModel)}");
 
                 var locationExists = await GetLocationIdOrDefault(locationDetailsModel);
+                _logger.LogInformation($"GetLocationIdOrDefault executed and returned {locationExists}");
 
                 if (locationExists != default(Guid))
                 {
@@ -70,29 +77,41 @@ namespace RetroArcadeMachines.Services.Write
                 var locationOverviewTask = _locationOverviewRepository.Add(locationOverviewModel);
                 var handleManuallyAddedGamesTask = HandleManuallyAddedGames(locationDetails.GameOverviewList, email);
 
-                await Task.WhenAll(locationDetailsTask, locationOverviewTask, handleManuallyAddedGamesTask);
+                await Task.WhenAll(locationDetailsTask, locationOverviewTask, handleManuallyAddedGamesTask);              
 
                 return new WriteRequestResult { ItemId = null, Status = WriteRequestStatus.Success };
             }
             catch (ValueNotFoundInDatabaseException ex)
             {
-                // todo: log all exceptions
-                // todo: improve error hadling by extracting these catches into own method
-                // todo: do something when this is found. expectation is that a user will have selected values retrived from the DB only
+                _logger.LogError($"{nameof(ValueNotFoundInDatabaseException)} was thrown with the message {ex.Message}. Request marked as failed");
+                _logger.LogError($"{ex.InnerException}");
+                await HandleError(ex, email);
+
                 return new WriteRequestResult { ItemId = null, Status = WriteRequestStatus.Failed };
             }
             catch (HttpRequestException ex)
             {
-                // todo: handle this better. A location could have been written and then failed to post manually added games
+                _logger.LogError($"{nameof(HttpRequestException)} was thrown with the message {ex.Message}. Request marked as failed");
+                _logger.LogError($"{ex.InnerException}");
+                await HandleError(ex, email);
+
                 return new WriteRequestResult { ItemId = null, Status = WriteRequestStatus.Failed };
             }
             catch (ArgumentNullException ex)
             {
+                _logger.LogError($"{nameof(ArgumentNullException)} was thrown with the message {ex.Message}. Request marked as failed");
+                _logger.LogError($"{ex.InnerException}");
+                await HandleError(ex, email);
+
                 return new WriteRequestResult { ItemId = null, Status = WriteRequestStatus.Failed };
             }
             catch (Exception ex)
             {
                 // todo: revise this to look for specific error
+                _logger.LogError($"{nameof(ArgumentNullException)} was thrown with the message {ex.Message}. Request marked as failed");
+                _logger.LogError($"{ex.InnerException}");
+                await HandleError(ex, email);
+
                 return new WriteRequestResult { ItemId = null, Status = WriteRequestStatus.Failed };
             }
         }
@@ -118,7 +137,7 @@ namespace RetroArcadeMachines.Services.Write
 
         private async Task<Dictionary<string, string>> CreateSelectedGamesList(IEnumerable<Guid> ids)
         {
-            List<GameModel> validGames = await _readGamesRepository.Get(ids);
+            List<GameModel> validGames = await _readGamesRepository.Get(ids.Distinct());
 
             if (validGames.Count > 0)
             {
@@ -137,7 +156,7 @@ namespace RetroArcadeMachines.Services.Write
 
                 var subject = $"Games manually added by {email}";
                 var message = $"{email} has added the following games: {gamesAdded}";
-                await PostManualResolutionContactForm(manuallyAddedGames, email, subject, message);
+                await PostManualResolutionContactForm(email, subject, message);
             }
         }
 
@@ -149,11 +168,23 @@ namespace RetroArcadeMachines.Services.Write
 
                 var subject = $"Duplicate location added by {email}";
                 var message = $"{email} has added the following games: {gamesAdded} to a location that already exists. Check to see if any of these games already exist for that location.";
-                await PostManualResolutionContactForm(gameOverviewList, email, subject, message);
+                await PostManualResolutionContactForm(email, subject, message);
             }
         }
 
-        private async Task PostManualResolutionContactForm(IEnumerable<AssignedGamesDto> gameOverviewList, string email, string subject, string message)
+        private async Task HandleError(Exception ex, string email)
+        {
+            var exception = "";
+            if(ex != null)
+            {
+                exception = JsonConvert.SerializeObject(ex);
+                //exception = $"MESSAGE: {ex.Message} INNER EXCEPTION: {ex.InnerException} STACKTRACE: {ex.StackTrace}, DATA: {ex.Data}";
+            }
+            var subject = $"Exception: {email} added location";
+            await PostManualResolutionContactForm(email, subject, exception);
+        }
+
+        private async Task PostManualResolutionContactForm(string email, string subject, string message)
         {
             var contactFormRequest = new ContactFormRequestModel
             {
@@ -168,5 +199,6 @@ namespace RetroArcadeMachines.Services.Write
             StringContent httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             await _httpClient.PostAsync("contact", httpContent);
         }
+
     }
 }
